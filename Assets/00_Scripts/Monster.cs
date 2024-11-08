@@ -13,6 +13,11 @@ public class Monster : MonoBehaviour
     {
         // animator 객체에 컴포넌트 할당
         animator = GetComponent<Animator>();
+    }
+
+    // 재활용 - Start에서 실행하면 한번 오브젝트가 나갔다 들어오면 실행이 안됨.
+    public void Init()
+    {
         // 몬스터가 스폰될 때 크기가 점점 커지는 효과를 주기 위한 코루틴 함수 실행
         StartCoroutine(Spawn_Start());
     }
