@@ -9,8 +9,8 @@ public class Character : MonoBehaviour
     public double HP;                    // 체력
     public double ATK;                   // 공격력
     public float ATK_Speed;              // 공격 속도
-    protected float Attack_Range = 1.0f; // 공격 범위
-    protected float Target_Range = 3.0f; // 타겟을 공격할 수 있는 인지 범위 
+    protected float Attack_Range = 3.0f; // 공격 범위
+    protected float Target_Range = 5.0f; // 타겟을 공격할 수 있는 인지 범위 
     protected bool isATTACK = false;     // 공격 상태
 
     protected Transform m_Target;        // 타겟
@@ -50,6 +50,7 @@ public class Character : MonoBehaviour
         Base_Mng.Pool.Pooling_Obj("Bullet").Get((value) =>
         {
             value.transform.position = m_BulletTransform.position;
+            value.GetComponent<Bullet>().Init(m_Target, 10, "CH_01");
         });
     }
 
