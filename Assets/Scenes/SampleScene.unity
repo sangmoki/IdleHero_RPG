@@ -308,6 +308,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 55, y: 0, z: 0}
+--- !u!1 &1193439035 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6135853338082228009, guid: ce46c59a86dae6a47a4c3689028319c4, type: 3}
+  m_PrefabInstance: {fileID: 8213512735309453709}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1193439038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1193439035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7157f41e6ab0fe5489071634d6fd945a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1536032095
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,7 +444,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b623282344738be48abc55748816a55b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monster_Prefab: {fileID: 9027475490634367863, guid: ba5208b103f524f44aa94dfd67ed213c, type: 3}
   m_Count: 10
   m_SpawnTime: 3
 --- !u!1 &1677629614
@@ -533,7 +549,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6135853338082228009, guid: ce46c59a86dae6a47a4c3689028319c4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1193439038}
   m_SourcePrefab: {fileID: 100100000, guid: ce46c59a86dae6a47a4c3689028319c4, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

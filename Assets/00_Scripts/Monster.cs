@@ -2,18 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Monster : MonoBehaviour
+public class Monster : Character
 {
     public float m_Speed;   // 몬스터의 이동속도
-    Animator animator;
 
     bool isSpawn = false;   // 스폰 확인 플래그
-
-    private void Start()
-    {
-        // animator 객체에 컴포넌트 할당
-        animator = GetComponent<Animator>();
-    }
 
     // 재활용 - Start에서 실행하면 한번 오브젝트가 나갔다 들어오면 실행이 안됨.
     public void Init()
@@ -73,12 +66,5 @@ public class Monster : MonoBehaviour
         }
     }
 
-    // 몬스터의 동작 변경 함수
-    private void AnimatorChange(string temp)
-    {
-        animator.SetBool("isIDLE", false);
-        animator.SetBool("isMOVE", false);
 
-        animator.SetBool(temp, true);
-    }
 }

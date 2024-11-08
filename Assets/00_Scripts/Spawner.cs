@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    public GameObject monster_Prefab;
-
     public int m_Count;         // 몬스터의 수
     public float m_SpawnTime;   // 몇 초 마다 생성할 것인지
 
@@ -57,7 +55,7 @@ public class Spawner : MonoBehaviour
             });
 
             // 몬스터 풀링 코루틴 실행
-            StartCoroutine(ReturnCoroutine(goObj));
+            // StartCoroutine(ReturnCoroutine(goObj));
         }
 
         // 스폰 시간만큼 대기 후 스폰 실행
@@ -66,9 +64,9 @@ public class Spawner : MonoBehaviour
     }
 
     // 몬스터를 풀링하기 위한 코루틴 함수
-    IEnumerator ReturnCoroutine(GameObject obj)
-    {
-        yield return new WaitForSeconds(1.0f);
-        Base_Mng.Pool.m_pool_Dictionary["Monster"].Return(obj);
-    }
+    //IEnumerator ReturnCoroutine(GameObject obj)
+    //{
+    //    yield return new WaitForSeconds(1.0f);
+    //    Base_Mng.Pool.m_pool_Dictionary["Monster"].Return(obj);
+    //}
 }
