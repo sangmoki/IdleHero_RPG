@@ -39,4 +39,17 @@ public class Base_Mng : MonoBehaviour
     {
         return Instantiate(Resources.Load<GameObject>(path));
     }
+
+    // 반환 코루틴 호출 함수
+    public void Return_Pool(float timer, GameObject obj, string path)
+    {
+        StartCoroutine(Return_Pool_Coroutine(timer, obj, path));
+    }
+
+    // 사용 후 오브젝트 풀에 반환하는 함수
+    IEnumerator Return_Pool_Coroutine(float timer, GameObject obj, string path)
+    {
+        yield return new WaitForSeconds(timer);
+        Pool.m_pool_Dictionary[path].Return(obj);
+    }
 }

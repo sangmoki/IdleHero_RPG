@@ -8,9 +8,20 @@ public class Monster : Character
 
     bool isSpawn = false;   // 스폰 확인 플래그
 
+    // 초기값 설정
+    protected override void Start()
+    {
+        base.Start();
+        HP = 5;
+    }
+
     // 재활용 - Start에서 실행하면 한번 오브젝트가 나갔다 들어오면 실행이 안됨.
     public void Init()
     {
+        // 풀링에서 몬스터가 초기화 될 때 몬스터의 상태 초기화
+        isDead = false;
+        HP = 5;
+
         // 몬스터가 스폰될 때 크기가 점점 커지는 효과를 주기 위한 코루틴 함수 실행
         StartCoroutine(Spawn_Start());
     }
@@ -39,6 +50,34 @@ public class Monster : Character
         isSpawn = true;
     }
 
+    // 몬스터의 피격 함수
+    public void GetDamage(double dmg)
+    {
+        // 몬스터가 이미 죽어있으면 return
+        if (isDead) return;
+
+        HP -= dmg;
+
+        // 몬스터의 체력이 0이하가 되면 몬스터의 죽음
+        if (HP <= 0)
+        {
+            isDead = true;
+            // 몬스터를 찾지 못하게 하기 위해 몬스터 리스트에서 제거
+            Spawner.m_Monsters.Remove(this);
+
+            // 스모크 이펙트 부여
+            var smokeObj = Base_Mng.Pool.Pooling_Obj("Smoke").Get((value) =>
+            {
+                value.transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
+                // 스모크 이펙트가 끝나고 반환
+                Base_Mng.instance.Return_Pool(value.GetComponent<ParticleSystem>().duration, value, "Smoke");
+            });
+
+            // 몬스터를 풀링으로 반환
+            Base_Mng.Pool.m_pool_Dictionary["Monster"].Return(this.gameObject);
+        }
+    }
+
     private void Update()
     {
         // 몬스터가 걸어가는 방향을 쳐다본다.
@@ -65,6 +104,7 @@ public class Monster : Character
             AnimatorChange("isMOVE");
         }
     }
+
 
 
 }

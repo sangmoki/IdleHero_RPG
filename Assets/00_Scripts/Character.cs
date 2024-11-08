@@ -9,6 +9,7 @@ public class Character : MonoBehaviour
     public double HP;                    // 체력
     public double ATK;                   // 공격력
     public float ATK_Speed;              // 공격 속도
+    public bool isDead = false;          // 사망 상태 플래그
     protected float Attack_Range = 3.0f; // 공격 범위
     protected float Target_Range = 5.0f; // 타겟을 공격할 수 있는 인지 범위 
     protected bool isATTACK = false;     // 공격 상태
@@ -46,6 +47,9 @@ public class Character : MonoBehaviour
 
     protected virtual void Bullet()
     {
+        // 타겟이 없다면 불릿이 생성되지 않게 리턴
+        if (m_Target == null) return;
+
         // 생성된 Bullet의 위치는 m_BulletTransform의 위치로 설정
         Base_Mng.Pool.Pooling_Obj("Bullet").Get((value) =>
         {

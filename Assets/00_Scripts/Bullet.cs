@@ -63,7 +63,8 @@ public class Bullet : MonoBehaviour
             {
                 GetHit = true;
                 // 타겟의 HP를 데미지만큼 감소
-                m_Target.GetComponent<Character>().HP -= m_DMG;
+                m_Target.GetComponent<Monster>().GetDamage(10);
+                //m_Target.GetComponent<Character>().HP -= m_DMG;
                 // 총알 발사 이펙트 비활성화
                 m_Projectiles[m_Character_Name].gameObject.SetActive(false);
                 // 머즐 활성화

@@ -20,11 +20,11 @@ public class Player : Character
 
     private void Update()
     {
+        // 가장 가까운 몬스터를 찾아서 타겟으로 지정
+        FindClosetTarget(Spawner.m_Monsters.ToArray());
+
         if (m_Target == null)
         {
-            // 가장 가까운 몬스터를 찾아서 타겟으로 지정
-            FindClosetTarget(Spawner.m_Monsters.ToArray());
-
             // 현재 위치와 시작 위치를 계산한 값
             float targetPos = Vector3.Distance(transform.position, startPos);
             if (targetPos > 0.1f)
@@ -42,6 +42,10 @@ public class Player : Character
             }
             return;
         }
+
+        // 만약 타겟의 상태가 사망 상태라면 다시 타겟을 찾는다.
+        if (m_Target.GetComponent<Character>().isDead) 
+            FindClosetTarget(Spawner.m_Monsters.ToArray());
 
         // 현재 타겟의 위치와 플레이어의 위치를 계산한 값
         float targetDistance = Vector3.Distance(transform.position, m_Target.position);

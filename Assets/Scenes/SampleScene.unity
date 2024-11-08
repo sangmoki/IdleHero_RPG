@@ -354,6 +354,7 @@ MonoBehaviour:
   HP: 0
   ATK: 0
   ATK_Speed: 0
+  isDead: 0
   m_BulletTransform: {fileID: 1090006253}
 --- !u!1 &1536032095
 GameObject:
@@ -474,8 +475,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b623282344738be48abc55748816a55b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Count: 10
-  m_SpawnTime: 3
+  m_Count: 3
+  m_SpawnTime: 5
 --- !u!1 &1677629614
 GameObject:
   m_ObjectHideFlags: 0
