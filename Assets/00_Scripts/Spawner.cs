@@ -7,6 +7,9 @@ public class Spawner : MonoBehaviour
     public int m_Count;         // 몬스터의 수
     public float m_SpawnTime;   // 몇 초 마다 생성할 것인지
 
+    public static List<Monster> m_Monsters = new List<Monster>();
+    public static List<Player> m_Players = new List<Player>();
+
     private void Start()
     {
         // 몬스터 스폰 코루틴 실행
@@ -52,6 +55,8 @@ public class Spawner : MonoBehaviour
                 value.transform.position = pos;
                 // 몬스터가 가운데를 바라보도록 설정
                 value.transform.LookAt(Vector3.zero);
+                // 몬스터 리스트에 몬스터 추가
+                m_Monsters.Add(value.GetComponent<Monster>());
             });
 
             // 몬스터 풀링 코루틴 실행
