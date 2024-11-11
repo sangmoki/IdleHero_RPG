@@ -72,11 +72,17 @@ public class Monster : Character
             Spawner.m_Monsters.Remove(this);
 
             // 스모크 이펙트 부여
-            var smokeObj = Base_Mng.Pool.Pooling_Obj("Smoke").Get((value) =>
+            Base_Mng.Pool.Pooling_Obj("Smoke").Get((value) =>
             {
                 value.transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
                 // 스모크 이펙트가 끝나고 반환
                 Base_Mng.instance.Return_Pool(value.GetComponent<ParticleSystem>().duration, value, "Smoke");
+            });
+
+            // 코인 이펙트 부여하여 현재 몬스터의 위치 값 반환
+            Base_Mng.Pool.Pooling_Obj("COIN_PARENT").Get((value) =>
+            {
+                value.GetComponent<COIN_PARENT>().Init(transform.position);
             });
 
             // 몬스터를 풀링으로 반환

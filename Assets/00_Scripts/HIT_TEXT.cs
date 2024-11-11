@@ -33,7 +33,7 @@ public class HIT_TEXT : MonoBehaviour
 
         target = pos;  // 타겟의 위치 정보
         m_Text.text = dmg.ToString(); // DMG 텍스트 표시
-        transform.parent = Base_Canvas.instance.transform; // 캔버스의 자식으로 설정
+        transform.parent = Base_Canvas.instance.HOLDER_LAYER(1); // 캔버스의 자식으로 설정
 
         m_Critical.SetActive(Critical);
 
