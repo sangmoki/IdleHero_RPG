@@ -116,7 +116,7 @@ public class Pool_Mng
         // 새로운 Object 생성
         // Pool_Mng는 상속을 받지 않으면 기본 제공하는 함수인
         // Instantiate를 사용할 수 없기 때문에
-        // Base_Mng의 Instantiate_Path 함수를 통해 생성v
+        // Base_Mng의 Instantiate_Path 함수를 통해 생성
         var go = Base_Mng.instance.Instantiate_Path(path);
         go.transform.parent = m_pool_Dictionary[path].parentTransform;
 

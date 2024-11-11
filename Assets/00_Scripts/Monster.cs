@@ -56,8 +56,14 @@ public class Monster : Character
         // 몬스터가 이미 죽어있으면 return
         if (isDead) return;
 
-        HP -= dmg;
+        // 몬스터가 피격당했을 경우 HitText를 풀링으로 가져와서 피격당한 텍스트를 생성
+        Base_Mng.Pool.Pooling_Obj("HIT_TEXT").Get((value) =>
+        {
+            value.GetComponent<HIT_TEXT>().Init(transform.position, dmg);
+        });
 
+        HP -= dmg;
+        
         // 몬스터의 체력이 0이하가 되면 몬스터의 죽음
         if (HP <= 0)
         {
