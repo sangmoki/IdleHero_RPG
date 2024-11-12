@@ -27,7 +27,7 @@ public class HIT_TEXT : MonoBehaviour
 
     public void Init(Vector3 pos, double dmg, bool Critical = false)
     {
-        // 스트 텍스트 위치 랜덤 설정 - 가시성 용이함 위해
+        // 텍스트 텍스트 위치 랜덤 설정 - 가시성 용이함 위해
         pos.x += Random.Range(-0.3f, 0.3f);
         pos.z += Random.Range(-0.3f, 0.3f);
 

@@ -85,6 +85,15 @@ public class Monster : Character
                 value.GetComponent<COIN_PARENT>().Init(transform.position);
             });
 
+            // 아이템 드롭 이펙트
+            for (int i = 0; i < 3; i++)
+            {
+                Base_Mng.Pool.Pooling_Obj("Item_OBJ").Get((value) =>
+                {
+                    value.GetComponent<Item_OBJ>().Init(transform.position);
+                });
+            }
+
             // 몬스터를 풀링으로 반환
             Base_Mng.Pool.m_pool_Dictionary["Monster"].Return(this.gameObject);
         }
