@@ -6339,6 +6339,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c949d827ae9c5614ab314ccecbe83243, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_EXP_Slider: {fileID: 0}
+  EXP_Text: {fileID: 0}
+  ATK_Text: {fileID: 0}
+  GoldText: {fileID: 0}
+  HP_Text: {fileID: 0}
+  Get_EXP_Text: {fileID: 0}
 --- !u!1 &1335809920
 GameObject:
   m_ObjectHideFlags: 0

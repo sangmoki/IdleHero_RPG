@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using DG.Tweening;
 
 // IPointerHandler는 마우스 이벤트
 public class LevelUp_Button : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
@@ -29,7 +30,7 @@ public class LevelUp_Button : MonoBehaviour, IPointerDownHandler, IPointerUpHand
             if (timer >= 0.01f)
             {
                 timer = 0.0f;
-                Debug.Log("연속 터치!");
+                EXP_UP();
             }
         }
     }
@@ -37,20 +38,23 @@ public class LevelUp_Button : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     // 경첨히 오르는 함수
     public void EXP_UP()
     {
-
+        // DOTween은 특정 변수 값들을 일정시간동안 원하는 값으로 부드럽게 변화시켜주는 역할
+        // 즉, 모션을 부드럽게 만들어준다.
+        transform.DORewind();
+        transform.DOPunchScale(new Vector3(0.1f, 0.1f, 0.1f), 0.25f);
     }
 
     // 마우스를 눌렀을 때
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("터치 !");
+        // 경험치 상승 함수
+        EXP_UP();
         coroutine = StartCoroutine(Push_Coroutine());
     }
 
     // 마우스를 뗐을 때
     public void OnPointerUp(PointerEventData eventData)
     {
-        Debug.Log("터치 그만!");
         isPush = false;
         if (coroutine != null)
         {
