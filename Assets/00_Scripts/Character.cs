@@ -6,31 +6,31 @@ public class Character : MonoBehaviour
 {
     Animator animator;
 
-    public double HP;                    // Ã¼·Â
-    public double ATK;                   // °ø°İ·Â
-    public float ATK_Speed;              // °ø°İ ¼Óµµ
-    public bool isDead = false;          // »ç¸Á »óÅÂ ÇÃ·¡±×
-    protected float Attack_Range = 3.0f; // °ø°İ ¹üÀ§
-    protected float target_Range = 5.0f; // Å¸°ÙÀ» °ø°İÇÒ ¼ö ÀÖ´Â ÀÎÁö ¹üÀ§ 
-    protected bool isATTACK = false;     // °ø°İ »óÅÂ
+    public double HP;                    // ì²´ë ¥
+    public double ATK;                   // ê³µê²©ë ¥
+    public float ATK_Speed;              // ê³µê²© ì†ë„
+    public bool isDead = false;          // ì‚¬ë§ ìƒíƒœ í”Œë˜ê·¸
+    protected float Attack_Range = 3.0f; // ê³µê²© ë²”ìœ„
+    protected float target_Range = 5.0f; // íƒ€ê²Ÿì„ ê³µê²©í•  ìˆ˜ ìˆëŠ” ì¸ì§€ ë²”ìœ„ 
+    protected bool isATTACK = false;     // ê³µê²© ìƒíƒœ
 
-    protected Transform m_Target;        // Å¸°Ù
+    protected Transform m_Target;        // íƒ€ê²Ÿ
 
     [SerializeField]
-    public Transform m_BulletTransform; // ÃÑ¾Ë »ı¼º À§Ä¡
+    public Transform m_BulletTransform; // ì´ì•Œ ìƒì„± ìœ„ì¹˜
 
-    // virtualÅ°¿öµå´Â - »ó¼Ó¹ŞÀº ³»ºÎ¿¡¼­ override »ç¿ëÀÌ °¡´ÉÇÏ´Ù.
-    // Áï, »ó¼Ó¹ŞÀº ÇÔ¼ö ³»ºÎ¿¡¼­ Ãß°¡ ¼öÁ¤ÀÌ °¡´ÉÇÏ´Ù.
+    // virtualí‚¤ì›Œë“œëŠ” - ìƒì†ë°›ì€ ë‚´ë¶€ì—ì„œ override ì‚¬ìš©ì´ ê°€ëŠ¥í•˜ë‹¤.
+    // ì¦‰, ìƒì†ë°›ì€ í•¨ìˆ˜ ë‚´ë¶€ì—ì„œ ì¶”ê°€ ìˆ˜ì •ì´ ê°€ëŠ¥í•˜ë‹¤.
     protected virtual void Start()
     {
-        // animator °´Ã¼¿¡ ÄÄÆ÷³ÍÆ® ÇÒ´ç
+        // animator ê°ì²´ì— ì»´í¬ë„ŒíŠ¸ í• ë‹¹
         animator = GetComponent<Animator>();
     }
 
-    // °ø°İ »óÅÂ ÃÊ±âÈ­ ÇÔ¼ö
+    // ê³µê²© ìƒíƒœ ì´ˆê¸°í™” í•¨ìˆ˜
     protected void InitAttack() => isATTACK = false;
 
-    // µ¿ÀÛ º¯°æ ÇÔ¼ö
+    // ë™ì‘ ë³€ê²½ í•¨ìˆ˜
     protected void AnimatorChange(string temp)
     {
         if (temp == "isATTACK")
@@ -45,13 +45,13 @@ public class Character : MonoBehaviour
         animator.SetBool(temp, true);
     }
 
-    // ¿ø°Å¸® °ø°İ ÇÔ¼ö
+    // ì›ê±°ë¦¬ ê³µê²© í•¨ìˆ˜
     protected virtual void Bullet()
     {
-        // Å¸°ÙÀÌ ¾ø´Ù¸é ºÒ¸´ÀÌ »ı¼ºµÇÁö ¾Ê°Ô ¸®ÅÏ
+        // íƒ€ê²Ÿì´ ì—†ë‹¤ë©´ ë¶ˆë¦¿ì´ ìƒì„±ë˜ì§€ ì•Šê²Œ ë¦¬í„´
         if (m_Target == null) return;
 
-        // »ı¼ºµÈ BulletÀÇ À§Ä¡´Â m_BulletTransformÀÇ À§Ä¡·Î ¼³Á¤
+        // ìƒì„±ëœ Bulletì˜ ìœ„ì¹˜ëŠ” m_BulletTransformì˜ ìœ„ì¹˜ë¡œ ì„¤ì •
         Base_Mng.Pool.Pooling_Obj("Attack_Helper").Get((value) =>
         {
             value.transform.position = m_BulletTransform.position;
@@ -59,7 +59,7 @@ public class Character : MonoBehaviour
         });
     }
 
-    // ±ÙÁ¢ °ø°İ ÇÔ¼ö
+    // ê·¼ì ‘ ê³µê²© í•¨ìˆ˜
     protected virtual void Attack()
     {
         if (target_Range == null) return;
@@ -71,31 +71,42 @@ public class Character : MonoBehaviour
         });
     }
 
-    // Å¸°ÙÀ» °ø°İÇÒ ¼ö ÀÖ´Â ÀÎÁö ¹üÀ§(ÃßÀû)
+    // ê³µê²© ë°›ì€ í›„ ì´ë²¤íŠ¸ í•¨ìˆ˜
+    public virtual void GetDamage(double dmg)
+    {
+        HP -= dmg;
+        if (HP <= 0)
+        {
+            isDead = true;
+            animator.SetTrigger("isDEAD");
+        }
+    }
+
+    // íƒ€ê²Ÿì„ ê³µê²©í•  ìˆ˜ ìˆëŠ” ì¸ì§€ ë²”ìœ„(ì¶”ì )
     protected void FindClosetTarget<T>(T[] targets) where T : Component
     {
         var monsters = targets;
-        // °¡Àå °¡±î¿î ¸ó½ºÅÍ¸¦ Ã£±â À§ÇÑ º¯¼ö
+        // ê°€ì¥ ê°€ê¹Œìš´ ëª¬ìŠ¤í„°ë¥¼ ì°¾ê¸° ìœ„í•œ ë³€ìˆ˜
         Transform closetTarget = null;
-        // Å¸°Ù °ø°İ ÀÎÁö ¹üÀ§ - ¸¸¾à 5.0f¶ó¸é 5.0f ÀÌ³»ÀÇ ¸ó½ºÅÍ¸¦ Ã£´Â´Ù.
+        // íƒ€ê²Ÿ ê³µê²© ì¸ì§€ ë²”ìœ„ - ë§Œì•½ 5.0fë¼ë©´ 5.0f ì´ë‚´ì˜ ëª¬ìŠ¤í„°ë¥¼ ì°¾ëŠ”ë‹¤.
         float maxDistance = target_Range;
 
-        // ¹İº¹¹®À» ÅëÇØ °¡Àå °¡±î¿î ¸ó½ºÅÍ¿ÍÀÇ °Å¸® °è»ê
+        // ë°˜ë³µë¬¸ì„ í†µí•´ ê°€ì¥ ê°€ê¹Œìš´ ëª¬ìŠ¤í„°ì™€ì˜ ê±°ë¦¬ ê³„ì‚°
         foreach (var monster in monsters)
         {
-            // Àü´Ş¹ŞÀº °´Ã¼¿Í ¸ó½ºÅÍÀÇ °Å¸®¸¦ °è»ê
+            // ì „ë‹¬ë°›ì€ ê°ì²´ì™€ ëª¬ìŠ¤í„°ì˜ ê±°ë¦¬ë¥¼ ê³„ì‚°
             float targetDistance = Vector3.Distance(transform.position, monster.transform.position);
 
-            // Å¸°ÙÀÇ ¹üÀ§°¡ °ø°İ ÀÎÁö ¹üÀ§º¸´Ù ÀÛ´Ù¸é
+            // íƒ€ê²Ÿì˜ ë²”ìœ„ê°€ ê³µê²© ì¸ì§€ ë²”ìœ„ë³´ë‹¤ ì‘ë‹¤ë©´
             if (targetDistance < maxDistance)
             {
-                // Å¸°Ù ÁöÁ¤
+                // íƒ€ê²Ÿ ì§€ì •
                 closetTarget = monster.transform;
                 maxDistance = targetDistance;
             }
             m_Target = closetTarget;
 
-            // ¸¸¾à Å¸°ÙÀÌ ÁöÁ¤µÇ¸é Å¸°ÙÀÇ À§Ä¡¸¦ ¹Ù¶óº¸´Â »óÅÂ·Î º¯°æ
+            // ë§Œì•½ íƒ€ê²Ÿì´ ì§€ì •ë˜ë©´ íƒ€ê²Ÿì˜ ìœ„ì¹˜ë¥¼ ë°”ë¼ë³´ëŠ” ìƒíƒœë¡œ ë³€ê²½
             if (m_Target != null) transform.LookAt(m_Target.position);
         }
 

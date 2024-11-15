@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// ¸ğµç ¸Å´ÏÀú script¸¦ °ü¸®ÇÏ´Â ºÎ¸ğ
-// ¾î´À °÷¿¡¼­³ª Á¢±ÙÀÌ »ç´ÉÇÏ´Ù.
+// ëª¨ë“  ë§¤ë‹ˆì € scriptë¥¼ ê´€ë¦¬í•˜ëŠ” ë¶€ëª¨
+// ì–´ëŠ ê³³ì—ì„œë‚˜ ì ‘ê·¼ì´ ì‚¬ëŠ¥í•˜ë‹¤.
 public class Base_Mng : MonoBehaviour
 {
-    // ½Ì±ÛÅæ ÆĞÅÏÀ» À§ÇÑ º¯¼ö
+    // ì‹±ê¸€í†¤ íŒ¨í„´ì„ ìœ„í•œ ë³€ìˆ˜
     public static Base_Mng instance = null;
 
     public static Pool_Mng s_Pool = new Pool_Mng();
@@ -23,34 +23,34 @@ public class Base_Mng : MonoBehaviour
 
     private void Initalize()
     {
-        // ¾ÀÀ» ÀÌµ¿ÇØµµ ÆÄ°íµÇÁö ¾Ê°í °è¼Ó À¯Áö
+        // ì”¬ì„ ì´ë™í•´ë„ íŒŒê³ ë˜ì§€ ì•Šê³  ê³„ì† ìœ ì§€
         if (instance == null)
         {
             instance = this;
-            // ÇØ´ç º£ÀÌ½º ¸Å´ÏÀú¸¦ °¡Áö°í ÀÖ´Â ¿ÀºêÁ§Æ®°¡ µÈ´Ù.
+            // í•´ë‹¹ ë² ì´ìŠ¤ ë§¤ë‹ˆì €ë¥¼ ê°€ì§€ê³  ìˆëŠ” ì˜¤ë¸Œì íŠ¸ê°€ ëœë‹¤.
             Pool.Initalize(transform);
             DontDestroyOnLoad(this.gameObject);
         }
         else if (instance != this)
         {
-            // º¹Á¦°¡ µÈ´Ù¸é º¹Á¦°¡ µÈ °ÍÀ» »èÁ¦ÇÑ´Ù.
+            // ë³µì œê°€ ëœë‹¤ë©´ ë³µì œê°€ ëœ ê²ƒì„ ì‚­ì œí•œë‹¤.
             Destroy(this.gameObject);
         }
     }
 
-    // Resources Æú´õ¿¡ ÀÖ´Â PrefabÀ» ºÒ·¯¿À±â À§ÇÑ ÇÔ¼ö
+    // Resources í´ë”ì— ìˆëŠ” Prefabì„ ë¶ˆëŸ¬ì˜¤ê¸° ìœ„í•œ í•¨ìˆ˜
     public GameObject Instantiate_Path(string path)
     {
         return Instantiate(Resources.Load<GameObject>(path));
     }
 
-    // ¹İÈ¯ ÄÚ·çÆ¾ È£Ãâ ÇÔ¼ö
+    // ë°˜í™˜ ì½”ë£¨í‹´ í˜¸ì¶œ í•¨ìˆ˜
     public void Return_Pool(float timer, GameObject obj, string path)
     {
         StartCoroutine(Return_Pool_Coroutine(timer, obj, path));
     }
 
-    // »ç¿ë ÈÄ ¿ÀºêÁ§Æ® Ç®¿¡ ¹İÈ¯ÇÏ´Â ÇÔ¼ö
+    // ì‚¬ìš© í›„ ì˜¤ë¸Œì íŠ¸ í’€ì— ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
     IEnumerator Return_Pool_Coroutine(float timer, GameObject obj, string path)
     {
         yield return new WaitForSeconds(timer);

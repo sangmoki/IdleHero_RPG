@@ -4,25 +4,25 @@ using UnityEngine;
 
 public class Player : Character
 {
-    private Character_Scriptable CH_Data; // Ä³¸¯ÅÍ µ¥ÀÌÅÍ
-    public string CH_Name;                // Ä³¸¯ÅÍ ÀÌ¸§
-    Vector3 startPos;                     // ÇÃ·¹ÀÌ¾îÀÇ ½ÃÀÛ À§Ä¡
-    Quaternion rot;                       // ÇÃ·¹ÀÌ¾îÀÇ È¸Àü°ª
+    private Character_Scriptable CH_Data; // ìºë¦­í„° ë°ì´í„°
+    public string CH_Name;                // ìºë¦­í„° ì´ë¦„
+    Vector3 startPos;                     // í”Œë ˆì´ì–´ì˜ ì‹œì‘ ìœ„ì¹˜
+    Quaternion rot;                       // í”Œë ˆì´ì–´ì˜ íšŒì „ê°’
 
     protected override void Start()
     {
         base.Start();
 
-        // Ä³¸¯ÅÍÀÇ ÀÌ¸§À» ÅëÇØ Scriptable¿¡ ¼¼ÆÃÇÑ Ä³¸¯ÅÍÀÇ µ¥ÀÌÅÍ ¼¼ÆÃ 
+        // ìºë¦­í„°ì˜ ì´ë¦„ì„ í†µí•´ Scriptableì— ì„¸íŒ…í•œ ìºë¦­í„°ì˜ ë°ì´í„° ì„¸íŒ… 
         Data_Set(Resources.Load<Character_Scriptable>("Scriptable/" + CH_Name));
 
-        // ÇÃ·¹ÀÌ¾î°¡ »ı¼ºµÇ¾úÀ¸´Ï Spawner¿¡µµ Àü´ŞÇØÁÖ¾î¾ß ÇÑ´Ù.
-        // ±×·¡¾ß ¸ó½ºÅÍ°¡ ÃßÀûÇÒ ¼ö ÀÖ´Â ´ë»óÀÌ µÉ ¼ö ÀÖ´Ù.
+        // í”Œë ˆì´ì–´ê°€ ìƒì„±ë˜ì—ˆìœ¼ë‹ˆ Spawnerì—ë„ ì „ë‹¬í•´ì£¼ì–´ì•¼ í•œë‹¤.
+        // ê·¸ë˜ì•¼ ëª¬ìŠ¤í„°ê°€ ì¶”ì í•  ìˆ˜ ìˆëŠ” ëŒ€ìƒì´ ë  ìˆ˜ ìˆë‹¤.
         Spawner.m_Players.Add(this);
 
-        // ÇÃ·¹ÀÌ¾îÀÇ ÃÊ±â ½ÃÀÛ À§Ä¡¿Í È¸Àü°ªÀ» ÀúÀå
-        // ¸ó½ºÅÍ¸¦ ÃßÀûÇÏ´Ù°¡ ¸ó½ºÅÍ°¡ ¹üÀ§ ³»¿¡¼­ »ç¶óÁö¸é
-        // ´Ù½Ã Á¦ÀÚ¸®·Î µ¹¾Æ¿À±â À§ÇÑ º¯¼ö
+        // í”Œë ˆì´ì–´ì˜ ì´ˆê¸° ì‹œì‘ ìœ„ì¹˜ì™€ íšŒì „ê°’ì„ ì €ì¥
+        // ëª¬ìŠ¤í„°ë¥¼ ì¶”ì í•˜ë‹¤ê°€ ëª¬ìŠ¤í„°ê°€ ë²”ìœ„ ë‚´ì—ì„œ ì‚¬ë¼ì§€ë©´
+        // ë‹¤ì‹œ ì œìë¦¬ë¡œ ëŒì•„ì˜¤ê¸° ìœ„í•œ ë³€ìˆ˜
         startPos = transform.position;
         rot = transform.rotation;
     }
@@ -35,51 +35,51 @@ public class Player : Character
 
     private void Update()
     {
-        // °¡Àå °¡±î¿î ¸ó½ºÅÍ¸¦ Ã£¾Æ¼­ Å¸°ÙÀ¸·Î ÁöÁ¤
+        // ê°€ì¥ ê°€ê¹Œìš´ ëª¬ìŠ¤í„°ë¥¼ ì°¾ì•„ì„œ íƒ€ê²Ÿìœ¼ë¡œ ì§€ì •
         FindClosetTarget(Spawner.m_Monsters.ToArray());
 
         if (m_Target == null)
         {
-            // ÇöÀç À§Ä¡¿Í ½ÃÀÛ À§Ä¡¸¦ °è»êÇÑ °ª
+            // í˜„ì¬ ìœ„ì¹˜ì™€ ì‹œì‘ ìœ„ì¹˜ë¥¼ ê³„ì‚°í•œ ê°’
             float targetPos = Vector3.Distance(transform.position, startPos);
             if (targetPos > 0.1f)
             {
-                // Á¦ÀÚ¸®·Î ÀÌµ¿
+                // ì œìë¦¬ë¡œ ì´ë™
                 transform.position = Vector3.MoveTowards(transform.position, startPos, Time.deltaTime);
                 transform.LookAt(startPos);
                 AnimatorChange("isMOVE");
             } 
             else
             {
-                // ´Ù½Ã µ¹¾Æ¿Ô´Ù¸é ´ë±â»óÅÂ·Î ÀüÈ¯
+                // ë‹¤ì‹œ ëŒì•„ì™”ë‹¤ë©´ ëŒ€ê¸°ìƒíƒœë¡œ ì „í™˜
                 transform.rotation = rot;
                 AnimatorChange("isIDLE");
             }
             return;
         }
 
-        // ¸¸¾à Å¸°ÙÀÇ »óÅÂ°¡ »ç¸Á »óÅÂ¶ó¸é ´Ù½Ã Å¸°ÙÀ» Ã£´Â´Ù.
+        // ë§Œì•½ íƒ€ê²Ÿì˜ ìƒíƒœê°€ ì‚¬ë§ ìƒíƒœë¼ë©´ ë‹¤ì‹œ íƒ€ê²Ÿì„ ì°¾ëŠ”ë‹¤.
         if (m_Target.GetComponent<Character>().isDead) 
             FindClosetTarget(Spawner.m_Monsters.ToArray());
 
-        // ÇöÀç Å¸°ÙÀÇ À§Ä¡¿Í ÇÃ·¹ÀÌ¾îÀÇ À§Ä¡¸¦ °è»êÇÑ °ª
+        // í˜„ì¬ íƒ€ê²Ÿì˜ ìœ„ì¹˜ì™€ í”Œë ˆì´ì–´ì˜ ìœ„ì¹˜ë¥¼ ê³„ì‚°í•œ ê°’
         float targetDistance = Vector3.Distance(transform.position, m_Target.position);
-        // ÇöÀç Å¸°ÙÀÌ ÃßÀû ¹üÀ§ ¾È¿¡ ÀÖÁö¸¸ °ø°İ¹üÀ§ ¾È¿¡ Á¸ÀçÇÏÁö ¾ÊÀ» °æ¿ì
+        // í˜„ì¬ íƒ€ê²Ÿì´ ì¶”ì  ë²”ìœ„ ì•ˆì— ìˆì§€ë§Œ ê³µê²©ë²”ìœ„ ì•ˆì— ì¡´ì¬í•˜ì§€ ì•Šì„ ê²½ìš°
         if (targetDistance <= target_Range && targetDistance > Attack_Range && isATTACK == false)
         {
-            // Å¸°ÙÀ» ÇâÇØ ÀÌµ¿
+            // íƒ€ê²Ÿì„ í–¥í•´ ì´ë™
             AnimatorChange("isMOVE");
             transform.LookAt(m_Target.position);
             transform.position = Vector3.MoveTowards(transform.position, m_Target.position, Time.deltaTime);
         }
         else if (targetDistance <= Attack_Range && isATTACK == false)
         {
-            // Å¸°ÙÀÌ °ø°İ ¹üÀ§ ¾È¿¡ Á¸ÀçÇÒ °æ¿ì
-            // °ø°İ
+            // íƒ€ê²Ÿì´ ê³µê²© ë²”ìœ„ ì•ˆì— ì¡´ì¬í•  ê²½ìš°
+            // ê³µê²©
             isATTACK = true;
             AnimatorChange("isATTACK");
 
-            // °ø°İ ÈÄ °ø°İ »óÅÂ ÃÊ±âÈ­ ÇÔ¼ö È£Ãâ
+            // ê³µê²© í›„ ê³µê²© ìƒíƒœ ì´ˆê¸°í™” í•¨ìˆ˜ í˜¸ì¶œ
             Invoke("InitAttack", 1.0f);
         }
     }

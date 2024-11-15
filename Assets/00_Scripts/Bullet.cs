@@ -6,26 +6,26 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [SerializeField]
-    private float m_Speed;   // ÃÑ¾Ë ¼Óµµ
-    Transform m_Target;      // Å¸°Ù
-    Vector3 m_TargetPos;     // Å¸°ÙÀÇ À§Ä¡
-    double m_DMG;            // µ¥¹ÌÁö
-    string m_Character_Name; // Resources ³»ÀÇ ¿ÀºêÁ§Æ® ÀÌ¸§
-    bool GetHit = false;     // Å¸°ÙÀ» ¸Â¾Ò´ÂÁö È®ÀÎ - ¸ÓÁñÀÌ ¿©·¯¹ø Áßº¹µÇ´Â °Í ¹æÁö
+    private float m_Speed;   // ì´ì•Œ ì†ë„
+    Transform m_Target;      // íƒ€ê²Ÿ
+    Vector3 m_TargetPos;     // íƒ€ê²Ÿì˜ ìœ„ì¹˜
+    double m_DMG;            // ë°ë¯¸ì§€
+    string m_Character_Name; // Resources ë‚´ì˜ ì˜¤ë¸Œì íŠ¸ ì´ë¦„
+    bool GetHit = false;     // íƒ€ê²Ÿì„ ë§ì•˜ëŠ”ì§€ í™•ì¸ - ë¨¸ì¦ì´ ì—¬ëŸ¬ë²ˆ ì¤‘ë³µë˜ëŠ” ê²ƒ ë°©ì§€
 
     public ParticleSystem Attack_Particle;
 
     Dictionary<string, GameObject> m_Projectiles = new Dictionary<string, GameObject>();
     Dictionary<string, ParticleSystem> m_Muzzles = new Dictionary<string, ParticleSystem>();
 
-    // »ı¼ºÀÌ µÇÀÚ¸¶ÀÚ ÀÚ½ÄµéÀ» ²¨³»¿Â´Ù.
+    // ìƒì„±ì´ ë˜ìë§ˆì ìì‹ë“¤ì„ êº¼ë‚´ì˜¨ë‹¤.
     private void Awake()
     {
-        // GetChild(index) - ¼ø¼­´ë·Î ÀÚ½Ä ¿ÀºêÁ§Æ®¸¦ °¡Á®¿Â´Ù.
+        // GetChild(index) - ìˆœì„œëŒ€ë¡œ ìì‹ ì˜¤ë¸Œì íŠ¸ë¥¼ ê°€ì ¸ì˜¨ë‹¤.
         Transform projectiles = transform.GetChild(0);
         Transform muzzles = transform.GetChild(1);
 
-        // ¹İº¹À» ÅëÇØ ÀÚ½Ä ¿ÀºêÁ§Æ®¸¦ Dictionary¿¡ ÀúÀå
+        // ë°˜ë³µì„ í†µí•´ ìì‹ ì˜¤ë¸Œì íŠ¸ë¥¼ Dictionaryì— ì €ì¥
         for (int i = 0; i < projectiles.childCount; i++) 
         {
             m_Projectiles.Add(projectiles.GetChild(i).name, projectiles.GetChild(i).gameObject);
@@ -37,13 +37,13 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    // ±Ù°Å¸® °ø°İ
+    // ê·¼ê±°ë¦¬ ê³µê²©
     public void Attack_Init(Transform target, double dmg)
     {
         m_Target = target;
         if (m_Target != null)
         {
-            m_Target.GetComponent<Monster>().GetDamage(dmg);
+            m_Target.GetComponent<Character>().GetDamage(dmg);
         }
 
         GetHit = true;
@@ -51,7 +51,7 @@ public class Bullet : MonoBehaviour
         StartCoroutine(ReturnObject(Attack_Particle.duration));
     }
 
-    // ¿ø°Å¸® °ø°İ
+    // ì›ê±°ë¦¬ ê³µê²©
     public void Init(Transform target, double dmg, string Character_Name)
     {
         m_Target = target;
@@ -60,40 +60,40 @@ public class Bullet : MonoBehaviour
         m_TargetPos = m_Target.position;
         m_DMG = dmg;
         m_Character_Name = Character_Name;
-        // ÃÑ¾Ë ¹ß»ç ÀÌÆåÆ® È°¼ºÈ­
+        // ì´ì•Œ ë°œì‚¬ ì´í™íŠ¸ í™œì„±í™”
         m_Projectiles[m_Character_Name].gameObject.SetActive(true);
     }
 
     private void Update()
     {
-        // ¸ÂÀº »óÅÂ¶ó¸é return
+        // ë§ì€ ìƒíƒœë¼ë©´ return
         if (GetHit) return;
-        m_TargetPos.y = 0.5f; // ÃÑ¾Ë ³ôÀÌ Á¶Á¤
+        m_TargetPos.y = 0.5f; // ì´ì•Œ ë†’ì´ ì¡°ì •
 
-        // ÃÑ¾ËÀ» Å¸°ÙÀÇ À§Ä¡·Î ÀÌµ¿
+        // ì´ì•Œì„ íƒ€ê²Ÿì˜ ìœ„ì¹˜ë¡œ ì´ë™
         transform.position = Vector3.MoveTowards(transform.position, m_TargetPos, Time.deltaTime * m_Speed);
 
-        // ÃÑ¾Ë°ú Å¸°ÙÀÇ °Å¸®°¡ 0.1fº¸´Ù ÀÛÀ» °æ¿ì
+        // ì´ì•Œê³¼ íƒ€ê²Ÿì˜ ê±°ë¦¬ê°€ 0.1fë³´ë‹¤ ì‘ì„ ê²½ìš°
         if (Vector3.Distance(transform.position, m_TargetPos) <= 0.1f)
         {
             if (m_Target != null)
             {
                 GetHit = true;
-                // Å¸°ÙÀÇ HP¸¦ µ¥¹ÌÁö¸¸Å­ °¨¼Ò
-                m_Target.GetComponent<Monster>().GetDamage(10);
+                // íƒ€ê²Ÿì˜ HPë¥¼ ë°ë¯¸ì§€ë§Œí¼ ê°ì†Œ
+                m_Target.GetComponent<Character>().GetDamage(10);
                 //m_Target.GetComponent<Character>().HP -= m_DMG;
-                // ÃÑ¾Ë ¹ß»ç ÀÌÆåÆ® ºñÈ°¼ºÈ­
+                // ì´ì•Œ ë°œì‚¬ ì´í™íŠ¸ ë¹„í™œì„±í™”
                 m_Projectiles[m_Character_Name].gameObject.SetActive(false);
-                // ¸ÓÁñ È°¼ºÈ­
+                // ë¨¸ì¦ í™œì„±í™”
                 m_Muzzles[m_Character_Name].Play();
 
-                //  MuzzleÀÇ ÀÌÆåÆ®°¡ »ì¾ÆÀÖ´Â ½Ã°£µ¿¾È ±â´Ù¸° ÈÄ ÃÑ¾Ë ¹İÈ¯
+                //  Muzzleì˜ ì´í™íŠ¸ê°€ ì‚´ì•„ìˆëŠ” ì‹œê°„ë™ì•ˆ ê¸°ë‹¤ë¦° í›„ ì´ì•Œ ë°˜í™˜
                 StartCoroutine(ReturnObject(m_Muzzles[m_Character_Name].duration));
             }
         }
     }
 
-    // ºÒ·¿ ¸®ÅÏ ÇÔ¼ö
+    // ë¶ˆë › ë¦¬í„´ í•¨ìˆ˜
     IEnumerator ReturnObject(float timer)
     {
         yield return new WaitForSeconds(timer);

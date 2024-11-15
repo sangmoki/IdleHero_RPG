@@ -4,37 +4,37 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-// ¸ó½ºÅÍ, Åõ»çÃ¼ µîµî ¿©·¯ ¿ÀºêÁ§Æ®¸¦ Ç®¸µ ±â¹ıÀ¸·Î »ç¿ëÇÏ±â À§ÇÑ ÀÎÅÍÆäÀÌ½º
-// ¸Å¹ø »õ·Ó°Ô »ı¼ºÇÏ´Â °Íº¸´Ù È¿À²ÀûÀÌ´Ù.
+// ëª¬ìŠ¤í„°, íˆ¬ì‚¬ì²´ ë“±ë“± ì—¬ëŸ¬ ì˜¤ë¸Œì íŠ¸ë¥¼ í’€ë§ ê¸°ë²•ìœ¼ë¡œ ì‚¬ìš©í•˜ê¸° ìœ„í•œ ì¸í„°í˜ì´ìŠ¤
+// ë§¤ë²ˆ ìƒˆë¡­ê²Œ ìƒì„±í•˜ëŠ” ê²ƒë³´ë‹¤ íš¨ìœ¨ì ì´ë‹¤.
 public interface IPool
 {
-    // Hierachy »óÀÇ ºÎ¸ğ ¿ÀºêÁ§Æ®¸¦ ¸¸µé±â À§ÇÔ
-    // °¡µ¶¼ºÀ» ¿ëÀÌÇÏ±â À§ÇØ »ç¿ë
+    // Hierachy ìƒì˜ ë¶€ëª¨ ì˜¤ë¸Œì íŠ¸ë¥¼ ë§Œë“¤ê¸° ìœ„í•¨
+    // ê°€ë…ì„±ì„ ìš©ì´í•˜ê¸° ìœ„í•´ ì‚¬ìš©
     Transform parentTransform { get; set; }
 
-    // Queue : ¼±ÀÔ¼±Ãâ(FIFO) ±¸Á¶ÀÇ ÀÚ·á±¸Á¶
+    // Queue : ì„ ì…ì„ ì¶œ(FIFO) êµ¬ì¡°ì˜ ìë£Œêµ¬ì¡°
     Queue<GameObject> pool { get; set; }
 
-    // GetÀ» ÅëÇØ ¿ÀºêÁ§Æ®(¸ó½ºÅÍ µî)¸¦ °¡Á®¿Â´Ù.
+    // Getì„ í†µí•´ ì˜¤ë¸Œì íŠ¸(ëª¬ìŠ¤í„° ë“±)ë¥¼ ê°€ì ¸ì˜¨ë‹¤.
     GameObject Get(Action<GameObject> action = null);
 
-    // °¡Á®¿Â ¿ÀºêÁ§Æ®(¸ó½ºÅÍ µî)¸¦ ¹İÈ¯ÇÑ´Ù.
+    // ê°€ì ¸ì˜¨ ì˜¤ë¸Œì íŠ¸(ëª¬ìŠ¤í„° ë“±)ë¥¼ ë°˜í™˜í•œë‹¤.
     void Return(GameObject obj, Action<GameObject> action = null);
 }
 
-// À§¿¡ »ı¼ºÇÑ Interface¸¦ »ó¼Ó¹Ş¾Æ ±¸Çö
+// ìœ„ì— ìƒì„±í•œ Interfaceë¥¼ ìƒì†ë°›ì•„ êµ¬í˜„
 public class Object_Pool : IPool
 {
-    // Dequeue : Queue¿¡¼­ °¡Àå ¾Õ¿¡ ÀÖ´Â ¿ä¼Ò¸¦ Á¦°ÅÇÏ°í ¹İÈ¯
-    // Enqueue : QueueÀÇ ³¡¿¡ ¿ä¼Ò¸¦ Ãß°¡
+    // Dequeue : Queueì—ì„œ ê°€ì¥ ì•ì— ìˆëŠ” ìš”ì†Œë¥¼ ì œê±°í•˜ê³  ë°˜í™˜
+    // Enqueue : Queueì˜ ëì— ìš”ì†Œë¥¼ ì¶”ê°€
 
     public Queue<GameObject> pool { get; set; } = new Queue<GameObject>();
     public Transform parentTransform { get; set; }
     public GameObject Get(Action<GameObject> action = null)
     {
-        // pool¿¡¼­ ¸Ç ¾ÕÀÇ ¿ä¼Ò¸¦ ²¨³»¿Â´Ù.
+        // poolì—ì„œ ë§¨ ì•ì˜ ìš”ì†Œë¥¼ êº¼ë‚´ì˜¨ë‹¤.
         GameObject obj = pool.Dequeue();
-        // ¿ÀºêÁ§Æ®¸¦ È°¼ºÈ­ ÇÑ´Ù.
+        // ì˜¤ë¸Œì íŠ¸ë¥¼ í™œì„±í™” í•œë‹¤.
         obj.SetActive(true);
         if (action != null)
         {
@@ -46,11 +46,11 @@ public class Object_Pool : IPool
 
     public void Return(GameObject obj, Action<GameObject> action = null)
     {
-        // ¸Å°³º¯¼ö·Î Àü´ŞµÈ ¿ÀºêÁ§Æ®¸¦ pool¿¡ ³Ö´Â´Ù.
+        // ë§¤ê°œë³€ìˆ˜ë¡œ ì „ë‹¬ëœ ì˜¤ë¸Œì íŠ¸ë¥¼ poolì— ë„£ëŠ”ë‹¤.
         pool.Enqueue(obj);
-        // Á¤¸®µÈ »óÅÂ·Î º¸ÀÌ±â À§ÇØ ºÎ¸ğ¿¡ ³Ö´Â´Ù.
+        // ì •ë¦¬ëœ ìƒíƒœë¡œ ë³´ì´ê¸° ìœ„í•´ ë¶€ëª¨ì— ë„£ëŠ”ë‹¤.
         obj.transform.parent = parentTransform;
-        // ¿ÀºêÁ§Æ®¸¦ ºñÈ°¼ºÈ­ ÇÑ´Ù.
+        // ì˜¤ë¸Œì íŠ¸ë¥¼ ë¹„í™œì„±í™” í•œë‹¤.
         obj.SetActive(false);
         if (action != null)
         {
@@ -60,20 +60,20 @@ public class Object_Pool : IPool
 
 }
 
-// Ç®¸µ ±â¹ı »ç¿ë - Queue¸¦ »ç¿ëÇÏ¿© ±¸Çö
-// ¿ÀºêÁ§Æ® Ç®¸µÀ» »ç¿ëÇÏ¸é ¸Ş¸ğ¸®¸¦ È¿À²ÀûÀ¸·Î »ç¿ëÇÒ ¼ö ÀÖ´Ù.
-// ¿¹½Ã·Î, ¼ö¿µÀå¿¡¼­ ¿ÀºêÁ§Æ® ÇÏ³ª°¡ µé¾î°¬´Ù ³ª°¬´Ù ÇÏ´Â°ÍÀ» ÀÇ¹ÌÇÑ´Ù.
-// Áï, ¿ÀºêÁ§Æ®¸¦ ²¯´Ù Ä×´Ù ÇÏ´Â ¹æ¹ı°ú °°Àº ´À³¦
+// í’€ë§ ê¸°ë²• ì‚¬ìš© - Queueë¥¼ ì‚¬ìš©í•˜ì—¬ êµ¬í˜„
+// ì˜¤ë¸Œì íŠ¸ í’€ë§ì„ ì‚¬ìš©í•˜ë©´ ë©”ëª¨ë¦¬ë¥¼ íš¨ìœ¨ì ìœ¼ë¡œ ì‚¬ìš©í•  ìˆ˜ ìˆë‹¤.
+// ì˜ˆì‹œë¡œ, ìˆ˜ì˜ì¥ì—ì„œ ì˜¤ë¸Œì íŠ¸ í•˜ë‚˜ê°€ ë“¤ì–´ê°”ë‹¤ ë‚˜ê°”ë‹¤ í•˜ëŠ”ê²ƒì„ ì˜ë¯¸í•œë‹¤.
+// ì¦‰, ì˜¤ë¸Œì íŠ¸ë¥¼ ê»ë‹¤ ì¼°ë‹¤ í•˜ëŠ” ë°©ë²•ê³¼ ê°™ì€ ëŠë‚Œ
 public class Pool_Mng
 {
-    // Dictionary : Key¿Í Value·Î ÀÌ·ç¾îÁø ÀÚ·á±¸Á¶
-    // ContainsKey : Dictionary¿¡ Å°°¡ Æ÷ÇÔµÇ¾î ÀÖ´ÂÁö È®ÀÎ - return : true or false
+    // Dictionary : Keyì™€ Valueë¡œ ì´ë£¨ì–´ì§„ ìë£Œêµ¬ì¡°
+    // ContainsKey : Dictionaryì— í‚¤ê°€ í¬í•¨ë˜ì–´ ìˆëŠ”ì§€ í™•ì¸ - return : true or false
     public Dictionary<string, IPool> m_pool_Dictionary = new Dictionary<string, IPool>();
 
-    // ¸ğµç Ç®¸µµéÀ» ´ã±â À§ÇÑ ºÎ¸ğ ¿ÀºêÁ§Æ®
+    // ëª¨ë“  í’€ë§ë“¤ì„ ë‹´ê¸° ìœ„í•œ ë¶€ëª¨ ì˜¤ë¸Œì íŠ¸
     Transform base_Obj = null;
 
-    // BaseMng ¾ÈÀ¸·Î ³Ö±â À§ÇÑ ÇÔ¼ö
+    // BaseMng ì•ˆìœ¼ë¡œ ë„£ê¸° ìœ„í•œ í•¨ìˆ˜
     public void Initalize(Transform T)
     {
         base_Obj = T;
@@ -81,25 +81,25 @@ public class Pool_Mng
 
     public IPool Pooling_Obj(string path)
     {
-        // Dictionary¿¡ path°¡ ¾ø´Ù¸é Add_Pool ÇÔ¼ö ½ÇÇà
+        // Dictionaryì— pathê°€ ì—†ë‹¤ë©´ Add_Pool í•¨ìˆ˜ ì‹¤í–‰
         if (m_pool_Dictionary.ContainsKey(path) == false)
         {
             Add_Pool(path);
         }
 
-        // Å¥¿¡ ÀÖ´Â ¿ÀºêÁ§Æ®ÀÇ ¼ö°¡ 1º¸´Ù ÀÛ´Ù¸é
-        // Áï, ¾Æ¹«°Íµµ ¾ø´Ù¸é »õ ¿ÀºêÁ§Æ® »ı¼º
+        // íì— ìˆëŠ” ì˜¤ë¸Œì íŠ¸ì˜ ìˆ˜ê°€ 1ë³´ë‹¤ ì‘ë‹¤ë©´
+        // ì¦‰, ì•„ë¬´ê²ƒë„ ì—†ë‹¤ë©´ ìƒˆ ì˜¤ë¸Œì íŠ¸ ìƒì„±
         if (m_pool_Dictionary[path].pool.Count <= 0) Add_Queue(path);
         return m_pool_Dictionary[path];
     }
 
     public GameObject Add_Pool(string path)
     {
-        // ºÎ¸ğ ¿ÀºêÁ§Æ® »ı¼º
-        // ÀÌ ¿ÀºêÁ§Æ® ÇÏÀ§¿¡ DestroyµÈ ¿ÀºêÁ§Æ®µéÀ» ³Ö¾îµÎ±â À§ÇÔ
+        // ë¶€ëª¨ ì˜¤ë¸Œì íŠ¸ ìƒì„±
+        // ì´ ì˜¤ë¸Œì íŠ¸ í•˜ìœ„ì— Destroyëœ ì˜¤ë¸Œì íŠ¸ë“¤ì„ ë„£ì–´ë‘ê¸° ìœ„í•¨
         GameObject obj = new GameObject(path + "##POOL");
 
-        // »ı¼ºµÈ ¿ÀºêÁ§Æ®¸¦ base_ObjÀÇ ÀÚ½ÄÀ¸·Î ¼³Á¤
+        // ìƒì„±ëœ ì˜¤ë¸Œì íŠ¸ë¥¼ base_Objì˜ ìì‹ìœ¼ë¡œ ì„¤ì •
         obj.transform.SetParent(base_Obj);
 
         Object_Pool T_Component = new Object_Pool();
@@ -110,17 +110,17 @@ public class Pool_Mng
         return obj;
     }
 
-    // »õ·Î¿î ¿ÀºêÁ§Æ® »ı¼º ÇÔ¼ö
+    // ìƒˆë¡œìš´ ì˜¤ë¸Œì íŠ¸ ìƒì„± í•¨ìˆ˜
     public void Add_Queue(string path)
     {
-        // »õ·Î¿î Object »ı¼º
-        // Pool_Mng´Â »ó¼ÓÀ» ¹ŞÁö ¾ÊÀ¸¸é ±âº» Á¦°øÇÏ´Â ÇÔ¼öÀÎ
-        // Instantiate¸¦ »ç¿ëÇÒ ¼ö ¾ø±â ¶§¹®¿¡
-        // Base_MngÀÇ Instantiate_Path ÇÔ¼ö¸¦ ÅëÇØ »ı¼º
+        // ìƒˆë¡œìš´ Object ìƒì„±
+        // Pool_MngëŠ” ìƒì†ì„ ë°›ì§€ ì•Šìœ¼ë©´ ê¸°ë³¸ ì œê³µí•˜ëŠ” í•¨ìˆ˜ì¸
+        // Instantiateë¥¼ ì‚¬ìš©í•  ìˆ˜ ì—†ê¸° ë•Œë¬¸ì—
+        // Base_Mngì˜ Instantiate_Path í•¨ìˆ˜ë¥¼ í†µí•´ ìƒì„±
         var go = Base_Mng.instance.Instantiate_Path("Pool_OBJ/" + path);
         go.transform.parent = m_pool_Dictionary[path].parentTransform;
 
-        // »ı¼ºÇÑ Object ¸®ÅÏ
+        // ìƒì„±í•œ Object ë¦¬í„´
         m_pool_Dictionary[path].Return(go);
     }
 }

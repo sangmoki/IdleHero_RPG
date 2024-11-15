@@ -4,86 +4,93 @@ using UnityEngine;
 
 public class Monster : Character
 {
-    public float m_Speed;   // ¸ó½ºÅÍÀÇ ÀÌµ¿¼Óµµ
+    public float m_Speed;   // ëª¬ìŠ¤í„°ì˜ ì´ë™ì†ë„
 
-    bool isSpawn = false;   // ½ºÆù È®ÀÎ ÇÃ·¡±×
+    bool isSpawn = false;   // ìŠ¤í° í™•ì¸ í”Œë˜ê·¸
 
-    // ÃÊ±â°ª ¼³Á¤
+    // ì´ˆê¸°ê°’ ì„¤ì •
     protected override void Start()
     {
         base.Start();
     }
 
-    // ÀçÈ°¿ë - Start¿¡¼­ ½ÇÇàÇÏ¸é ÇÑ¹ø ¿ÀºêÁ§Æ®°¡ ³ª°¬´Ù µé¾î¿À¸é ½ÇÇàÀÌ ¾ÈµÊ.
+    // ì¬í™œìš© - Startì—ì„œ ì‹¤í–‰í•˜ë©´ í•œë²ˆ ì˜¤ë¸Œì íŠ¸ê°€ ë‚˜ê°”ë‹¤ ë“¤ì–´ì˜¤ë©´ ì‹¤í–‰ì´ ì•ˆë¨.
     public void Init()
     {
-        // Ç®¸µ¿¡¼­ ¸ó½ºÅÍ°¡ ÃÊ±âÈ­ µÉ ¶§ ¸ó½ºÅÍÀÇ »óÅÂ ÃÊ±âÈ­
+        // í’€ë§ì—ì„œ ëª¬ìŠ¤í„°ê°€ ì´ˆê¸°í™” ë  ë•Œ ëª¬ìŠ¤í„°ì˜ ìƒíƒœ ì´ˆê¸°í™”
         isDead = false;
-        HP = 5;
+        HP = 500;
         Attack_Range = 0.5f;
 
-        // ¸ó½ºÅÍ°¡ ½ºÆùµÉ ¶§ Å©±â°¡ Á¡Á¡ Ä¿Áö´Â È¿°ú¸¦ ÁÖ±â À§ÇÑ ÄÚ·çÆ¾ ÇÔ¼ö ½ÇÇà
+        // ëª¬ìŠ¤í„°ê°€ ìŠ¤í°ë  ë•Œ í¬ê¸°ê°€ ì ì  ì»¤ì§€ëŠ” íš¨ê³¼ë¥¼ ì£¼ê¸° ìœ„í•œ ì½”ë£¨í‹´ í•¨ìˆ˜ ì‹¤í–‰
         StartCoroutine(Spawn_Start());
     }
     private void Update()
     {
-        // isSpawnÀÌ falseÀÌ¸é return
+        // isSpawnì´ falseì´ë©´ return
         if (isSpawn == false) return;
 
-        // °¡Àå °¡±î¿î ÇÃ·¹ÀÌ¾î¸¦ Ã£¾Æ¼­ Å¸°ÙÀ¸·Î ÁöÁ¤
-        FindClosetTarget(Spawner.m_Players.ToArray());
+        // ê°€ì¥ ê°€ê¹Œìš´ í”Œë ˆì´ì–´ë¥¼ ì°¾ì•„ì„œ íƒ€ê²Ÿìœ¼ë¡œ ì§€ì •
+        if (m_Target == null)
+            FindClosetTarget(Spawner.m_Players.ToArray());
 
-        // ¸¸¾à Å¸°ÙÀÇ »óÅÂ°¡ »ç¸Á »óÅÂ¶ó¸é ´Ù½Ã Å¸°ÙÀ» Ã£´Â´Ù.
-        if (m_Target.GetComponent<Character>().isDead) FindClosetTarget(Spawner.m_Players.ToArray());
-
-        // ÇöÀç Å¸°ÙÀÇ À§Ä¡¿Í ÇÃ·¹ÀÌ¾îÀÇ À§Ä¡¸¦ °è»êÇÑ °ª
-        float targetDistance = Vector3.Distance(transform.position, m_Target.position);
-        // ÇöÀç Å¸°ÙÀÌ ÃßÀû ¹üÀ§ ¾È¿¡ ÀÖÁö¸¸ °ø°İ ¹üÀ§ ¾È¿¡ Á¸ÀçÇÏÁö ¾ÊÀ» °æ¿ì
-        if (targetDistance <= target_Range && targetDistance > Attack_Range && isATTACK == false)
+        if (m_Target != null)
         {
-            // Å¸°ÙÀ» ÇâÇØ ÀÌµ¿
-            AnimatorChange("isMOVE");
-            transform.LookAt(m_Target.position);
-            transform.position = Vector3.MoveTowards(transform.position, m_Target.position, Time.deltaTime);
-        }
-        else if (targetDistance <= Attack_Range && isATTACK == false)
-        {
-            // Å¸°ÙÀÌ °ø°İ ¹üÀ§ ¾È¿¡ Á¸ÀçÇÒ °æ¿ì
-            // °ø°İ
-            isATTACK = true;
-            AnimatorChange("isATTACK");
+            // ë§Œì•½ íƒ€ê²Ÿì˜ ìƒíƒœê°€ ì‚¬ë§ ìƒíƒœë¼ë©´ ë‹¤ì‹œ íƒ€ê²Ÿì„ ì°¾ëŠ”ë‹¤.
+            if (m_Target.GetComponent<Character>().isDead)
+            {
+                FindClosetTarget(Spawner.m_Players.ToArray());
+            }
 
-            // °ø°İ ÈÄ °ø°İ »óÅÂ ÃÊ±âÈ­ ÇÔ¼ö È£Ãâ
-            Invoke("InitAttack", 1.0f);
+            // í˜„ì¬ íƒ€ê²Ÿì˜ ìœ„ì¹˜ì™€ í”Œë ˆì´ì–´ì˜ ìœ„ì¹˜ë¥¼ ê³„ì‚°í•œ ê°’
+            float targetDistance = Vector3.Distance(transform.position, m_Target.position);
+            // í˜„ì¬ íƒ€ê²Ÿì´ ì¶”ì  ë²”ìœ„ ì•ˆì— ìˆì§€ë§Œ ê³µê²© ë²”ìœ„ ì•ˆì— ì¡´ì¬í•˜ì§€ ì•Šì„ ê²½ìš°
+            if (targetDistance > Attack_Range && isATTACK == false)
+            {
+                // íƒ€ê²Ÿì„ í–¥í•´ ì´ë™
+                AnimatorChange("isMOVE");
+                transform.LookAt(m_Target.position);
+                transform.position = Vector3.MoveTowards(transform.position, m_Target.position, Time.deltaTime);
+            }
+            else if (targetDistance <= Attack_Range && isATTACK == false)
+            {
+                // íƒ€ê²Ÿì´ ê³µê²© ë²”ìœ„ ì•ˆì— ì¡´ì¬í•  ê²½ìš°
+                // ê³µê²©
+                isATTACK = true;
+                AnimatorChange("isATTACK");
+
+                // ê³µê²© í›„ ê³µê²© ìƒíƒœ ì´ˆê¸°í™” í•¨ìˆ˜ í˜¸ì¶œ
+                Invoke("InitAttack", 1.0f);
+            }
         }
 
-        /* °¡¿îµ¥¸¦ ¹Ù¶óº¸´Â »óÈ² ÀÏ ¶§
-        // ¸ó½ºÅÍ°¡ °É¾î°¡´Â ¹æÇâÀ» ÃÄ´Ùº»´Ù.
+        /* ê°€ìš´ë°ë¥¼ ë°”ë¼ë³´ëŠ” ìƒí™© ì¼ ë•Œ
+        // ëª¬ìŠ¤í„°ê°€ ê±¸ì–´ê°€ëŠ” ë°©í–¥ì„ ì³ë‹¤ë³¸ë‹¤.
         // transform.LookAt(Vector3.zero);
 
 
-        // Distance´Â Ã¹¹øÂ° ÀÎÀÚ¿Í µÎ¹øÂ° ÀÎÀÚÀÇ »çÀÕ°ª
-        // transform.position : ¸ó½ºÅÍÀÇ ÇöÀç À§Ä¡
-        // Vector3.zero : (0, 0, 0) - °¡¿îµ¥ À§Ä¡
-        // Áï, targetDistance = transform.position°ú (0, 0, 0) »çÀÌÀÇ °Å¸®
+        // DistanceëŠ” ì²«ë²ˆì§¸ ì¸ìì™€ ë‘ë²ˆì§¸ ì¸ìì˜ ì‚¬ì‡ê°’
+        // transform.position : ëª¬ìŠ¤í„°ì˜ í˜„ì¬ ìœ„ì¹˜
+        // Vector3.zero : (0, 0, 0) - ê°€ìš´ë° ìœ„ì¹˜
+        // ì¦‰, targetDistance = transform.positionê³¼ (0, 0, 0) ì‚¬ì´ì˜ ê±°ë¦¬
         float targetDistance = Vector3.Distance(transform.position, Vector3.zero);
         if (targetDistance <= 0.5f)
         {
-            // ¸ó½ºÅÍ°¡ °¡¿îµ¥¿¡ µµÂøÇÏ¸é IDLE »óÅÂ·Î º¯°æ
+            // ëª¬ìŠ¤í„°ê°€ ê°€ìš´ë°ì— ë„ì°©í•˜ë©´ IDLE ìƒíƒœë¡œ ë³€ê²½
             AnimatorChange("isIDLE");
         }
         else
         {
-            // ¸ó½ºÅÍ°¡ (0, 0, 0) - °¡¿îµ¥·Î ÀÌµ¿
+            // ëª¬ìŠ¤í„°ê°€ (0, 0, 0) - ê°€ìš´ë°ë¡œ ì´ë™
             transform.position = Vector3.MoveTowards(transform.position, Vector3.zero, Time.deltaTime * m_Speed);
-            // ¸ó½ºÅÍ°¡ °¡¿îµ¥·Î ÀÌµ¿ÁßÀÌ¸é MOVE »óÅÂ·Î º¯°æ
+            // ëª¬ìŠ¤í„°ê°€ ê°€ìš´ë°ë¡œ ì´ë™ì¤‘ì´ë©´ MOVE ìƒíƒœë¡œ ë³€ê²½
             AnimatorChange("isMOVE");
         }
          */
     }
 
-    // ¸ó½ºÅÍ°¡ ½ºÆùµÉ ¶§ ¹ß»ıÇÏ´Â ÄÚ·çÆ¾ ÇÔ¼ö
-    // ¸ó½ºÅÍ°¡ ½ºÆùµÉ ¶§ Å©±â°¡ Á¡Á¡ Ä¿Áö´Â È¿°ú - ½ºÆùÀ» Á» ´õ ÀÚ¿¬½º·´°Ô ÇÏ±â À§ÇÔ
+    // ëª¬ìŠ¤í„°ê°€ ìŠ¤í°ë  ë•Œ ë°œìƒí•˜ëŠ” ì½”ë£¨í‹´ í•¨ìˆ˜
+    // ëª¬ìŠ¤í„°ê°€ ìŠ¤í°ë  ë•Œ í¬ê¸°ê°€ ì ì  ì»¤ì§€ëŠ” íš¨ê³¼ - ìŠ¤í°ì„ ì¢€ ë” ìì—°ìŠ¤ëŸ½ê²Œ í•˜ê¸° ìœ„í•¨
     IEnumerator Spawn_Start()
     {
         float current = 0.0f;
@@ -91,13 +98,13 @@ public class Monster : Character
         float start = 0.0f;
         float end = transform.localScale.x;
 
-        // percent°¡ 1º¸´Ù ³·À» ¶§¸¸ ½ÇÇà
+        // percentê°€ 1ë³´ë‹¤ ë‚®ì„ ë•Œë§Œ ì‹¤í–‰
         while (percent < 1)
         {
-            current += Time.deltaTime;  // 1ÃÊ¿¡ °É¸®´Â ½Ã°£
-            percent = current / 0.2f;   // 1ÃÊ¿¡ °É¸®´Â ½Ã°£À» 1·Î ³ª´©¾î 0~1 »çÀÌÀÇ °ªÀ¸·Î º¯È¯
+            current += Time.deltaTime;  // 1ì´ˆì— ê±¸ë¦¬ëŠ” ì‹œê°„
+            percent = current / 0.2f;   // 1ì´ˆì— ê±¸ë¦¬ëŠ” ì‹œê°„ì„ 1ë¡œ ë‚˜ëˆ„ì–´ 0~1 ì‚¬ì´ì˜ ê°’ìœ¼ë¡œ ë³€í™˜
 
-            // ½ÃÀÛ°ª(0.0f)¿¡¼­ ³¡Á¡(¸ó½ºÅÍ.x) ±îÁöÀÇ °É¸®´Â Æ¯Á¤ ½Ã°£ ¼Óµµ·Î ÀÌµ¿
+            // ì‹œì‘ê°’(0.0f)ì—ì„œ ëì (ëª¬ìŠ¤í„°.x) ê¹Œì§€ì˜ ê±¸ë¦¬ëŠ” íŠ¹ì • ì‹œê°„ ì†ë„ë¡œ ì´ë™
             float LerpPos = Mathf.Lerp(start, end, percent);
             transform.localScale = new Vector3(LerpPos, LerpPos, LerpPos);
             yield return null;
@@ -106,13 +113,13 @@ public class Monster : Character
         isSpawn = true;
     }
 
-    // ¸ó½ºÅÍÀÇ ÇÇ°İ ÇÔ¼ö
-    public void GetDamage(double dmg)
+    // ëª¬ìŠ¤í„°ì˜ í”¼ê²© í•¨ìˆ˜
+    public override void GetDamage(double dmg)
     {
-        // ¸ó½ºÅÍ°¡ ÀÌ¹Ì Á×¾îÀÖÀ¸¸é return
+        // ëª¬ìŠ¤í„°ê°€ ì´ë¯¸ ì£½ì–´ìˆìœ¼ë©´ return
         if (isDead) return;
 
-        // ¸ó½ºÅÍ°¡ ÇÇ°İ´çÇßÀ» °æ¿ì HitText¸¦ Ç®¸µÀ¸·Î °¡Á®¿Í¼­ ÇÇ°İ´çÇÑ ÅØ½ºÆ®¸¦ »ı¼º
+        // ëª¬ìŠ¤í„°ê°€ í”¼ê²©ë‹¹í–ˆì„ ê²½ìš° HitTextë¥¼ í’€ë§ìœ¼ë¡œ ê°€ì ¸ì™€ì„œ í”¼ê²©ë‹¹í•œ í…ìŠ¤íŠ¸ë¥¼ ìƒì„±
         Base_Mng.Pool.Pooling_Obj("HIT_TEXT").Get((value) =>
         {
             value.GetComponent<HIT_TEXT>().Init(transform.position, dmg);
@@ -120,28 +127,28 @@ public class Monster : Character
 
         HP -= dmg;
         
-        // ¸ó½ºÅÍÀÇ Ã¼·ÂÀÌ 0ÀÌÇÏ°¡ µÇ¸é ¸ó½ºÅÍÀÇ Á×À½
+        // ëª¬ìŠ¤í„°ì˜ ì²´ë ¥ì´ 0ì´í•˜ê°€ ë˜ë©´ ëª¬ìŠ¤í„°ì˜ ì£½ìŒ
         if (HP <= 0)
         {
             isDead = true;
-            // ¸ó½ºÅÍ¸¦ Ã£Áö ¸øÇÏ°Ô ÇÏ±â À§ÇØ ¸ó½ºÅÍ ¸®½ºÆ®¿¡¼­ Á¦°Å
+            // ëª¬ìŠ¤í„°ë¥¼ ì°¾ì§€ ëª»í•˜ê²Œ í•˜ê¸° ìœ„í•´ ëª¬ìŠ¤í„° ë¦¬ìŠ¤íŠ¸ì—ì„œ ì œê±°
             Spawner.m_Monsters.Remove(this);
 
-            // ½º¸ğÅ© ÀÌÆåÆ® ºÎ¿©
+            // ìŠ¤ëª¨í¬ ì´í™íŠ¸ ë¶€ì—¬
             Base_Mng.Pool.Pooling_Obj("Smoke").Get((value) =>
             {
                 value.transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
-                // ½º¸ğÅ© ÀÌÆåÆ®°¡ ³¡³ª°í ¹İÈ¯
+                // ìŠ¤ëª¨í¬ ì´í™íŠ¸ê°€ ëë‚˜ê³  ë°˜í™˜
                 Base_Mng.instance.Return_Pool(value.GetComponent<ParticleSystem>().duration, value, "Smoke");
             });
 
-            // ÄÚÀÎ ÀÌÆåÆ® ºÎ¿©ÇÏ¿© ÇöÀç ¸ó½ºÅÍÀÇ À§Ä¡ °ª ¹İÈ¯
+            // ì½”ì¸ ì´í™íŠ¸ ë¶€ì—¬í•˜ì—¬ í˜„ì¬ ëª¬ìŠ¤í„°ì˜ ìœ„ì¹˜ ê°’ ë°˜í™˜
             Base_Mng.Pool.Pooling_Obj("COIN_PARENT").Get((value) =>
             {
                 value.GetComponent<COIN_PARENT>().Init(transform.position);
             });
 
-            // ¾ÆÀÌÅÛ µå·Ó ÀÌÆåÆ®
+            // ì•„ì´í…œ ë“œë¡­ ì´í™íŠ¸
             for (int i = 0; i < 3; i++)
             {
                 Base_Mng.Pool.Pooling_Obj("Item_OBJ").Get((value) =>
@@ -150,7 +157,7 @@ public class Monster : Character
                 });
             }
 
-            // ¸ó½ºÅÍ¸¦ Ç®¸µÀ¸·Î ¹İÈ¯
+            // ëª¬ìŠ¤í„°ë¥¼ í’€ë§ìœ¼ë¡œ ë°˜í™˜
             Base_Mng.Pool.m_pool_Dictionary["Monster"].Return(this.gameObject);
         }
     }
