@@ -6339,12 +6339,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c949d827ae9c5614ab314ccecbe83243, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EXP_Slider: {fileID: 0}
-  EXP_Text: {fileID: 0}
-  ATK_Text: {fileID: 0}
-  GoldText: {fileID: 0}
-  HP_Text: {fileID: 0}
-  Get_EXP_Text: {fileID: 0}
+  m_EXP_Slider: {fileID: 190098750}
+  EXP_Text: {fileID: 415085632}
+  ATK_Text: {fileID: 804405872}
+  GoldText: {fileID: 256055695}
+  HP_Text: {fileID: 1160614768}
+  Get_EXP_Text: {fileID: 2063459814}
 --- !u!1 &1335809920
 GameObject:
   m_ObjectHideFlags: 0
@@ -8241,8 +8241,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -215.25818, y: 4.2583}
-  m_SizeDelta: {x: 677.8719, y: 219.2302}
+  m_AnchoredPosition: {x: -221.3536, y: 10.3538}
+  m_SizeDelta: {x: 665.681, y: 207.0393}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1798196279
 MonoBehaviour:
@@ -8908,7 +8908,7 @@ GameObject:
   - component: {fileID: 1905971029}
   - component: {fileID: 1905971028}
   m_Layer: 5
-  m_Name: Text_EXP_Bar
+  m_Name: EXP_DECO_TEXT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9497,7 +9497,7 @@ GameObject:
   - component: {fileID: 2063459815}
   - component: {fileID: 2063459814}
   m_Layer: 5
-  m_Name: Text_EXP (1)
+  m_Name: Text_Next_EXP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

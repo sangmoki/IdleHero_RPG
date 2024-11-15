@@ -20,6 +20,11 @@ public class LevelUp_Button : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     // 연속 터치를 진행할 코루틴
     Coroutine coroutine;
 
+    void Start()
+    {
+        InitEXP();
+    }
+
     void Update()
     {
         // 마우스가 눌렸을 때
@@ -35,9 +40,11 @@ public class LevelUp_Button : MonoBehaviour, IPointerDownHandler, IPointerUpHand
         }
     }
 
-    // 경첨히 오르는 함수
+    // 경험치 오르는 함수
     public void EXP_UP()
     {
+        Base_Mng.Player.EXP_UP();
+        InitEXP();
         // DOTween은 특정 변수 값들을 일정시간동안 원하는 값으로 부드럽게 변화시켜주는 역할
         // 즉, 모션을 부드럽게 만들어준다.
         transform.DORewind();
@@ -61,6 +68,15 @@ public class LevelUp_Button : MonoBehaviour, IPointerDownHandler, IPointerUpHand
             StopCoroutine(coroutine);
         }
         timer = 0.0f;
+    }
+
+    private void InitEXP()
+    {
+        m_EXP_Slider.fillAmount = Base_Mng.Player.EXP_Percentage();
+        EXP_Text.text = string.Format("{0:0.00}%", Base_Mng.Player.EXP_Percentage() * 100.0f);
+        ATK_Text.text = "+" + StringMethod.ToCurrencyString(Base_Mng.Player.Next_ATK());
+        HP_Text.text = "+" + StringMethod.ToCurrencyString(Base_Mng.Player.Next_HP());
+        Get_EXP_Text.text = "<color=#00FF00>EXP</color> +" + string.Format("{0:0.00}", Base_Mng.Player.Next_EXP()) + "%";
     }
 
     // 마우스 눌림 여부를 확인하는 코루틴
