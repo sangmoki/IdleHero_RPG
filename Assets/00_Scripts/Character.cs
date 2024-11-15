@@ -45,16 +45,29 @@ public class Character : MonoBehaviour
         animator.SetBool(temp, true);
     }
 
+    // 원거리 공격 함수
     protected virtual void Bullet()
     {
         // 타겟이 없다면 불릿이 생성되지 않게 리턴
         if (m_Target == null) return;
 
         // 생성된 Bullet의 위치는 m_BulletTransform의 위치로 설정
-        Base_Mng.Pool.Pooling_Obj("Bullet").Get((value) =>
+        Base_Mng.Pool.Pooling_Obj("Attack_Helper").Get((value) =>
         {
             value.transform.position = m_BulletTransform.position;
             value.GetComponent<Bullet>().Init(m_Target, 10, "CH_01");
+        });
+    }
+
+    // 근접 공격 함수
+    protected virtual void Attack()
+    {
+        if (Target_Range == null) return;
+
+        Base_Mng.Pool.Pooling_Obj("Attack_Helper").Get((value) =>
+        {
+            value.transform.position = m_Target.position;
+            value.GetComponent<Bullet>().Attack_Init(m_Target, 10);
         });
     }
 

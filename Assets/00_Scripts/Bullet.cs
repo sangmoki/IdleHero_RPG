@@ -13,6 +13,8 @@ public class Bullet : MonoBehaviour
     string m_Character_Name; // Resources 내의 오브젝트 이름
     bool GetHit = false;     // 타겟을 맞았는지 확인 - 머즐이 여러번 중복되는 것 방지
 
+    public ParticleSystem Attack_Particle;
+
     Dictionary<string, GameObject> m_Projectiles = new Dictionary<string, GameObject>();
     Dictionary<string, ParticleSystem> m_Muzzles = new Dictionary<string, ParticleSystem>();
 
@@ -35,6 +37,21 @@ public class Bullet : MonoBehaviour
         }
     }
 
+    // 근거리 공격
+    public void Attack_Init(Transform target, double dmg)
+    {
+        m_Target = target;
+        if (m_Target != null)
+        {
+            m_Target.GetComponent<Monster>().GetDamage(dmg);
+        }
+
+        GetHit = true;
+        Attack_Particle.Play();
+        StartCoroutine(ReturnObject(Attack_Particle.duration));
+    }
+
+    // 원거리 공격
     public void Init(Transform target, double dmg, string Character_Name)
     {
         m_Target = target;
@@ -80,6 +97,6 @@ public class Bullet : MonoBehaviour
     IEnumerator ReturnObject(float timer)
     {
         yield return new WaitForSeconds(timer);
-        Base_Mng.Pool.m_pool_Dictionary["Bullet"].Return(this.gameObject);
+        Base_Mng.Pool.m_pool_Dictionary["Attack_Helper"].Return(this.gameObject);
     }
 }

@@ -4,18 +4,29 @@ using UnityEngine;
 
 public class Player : Character
 {
-    Vector3 startPos;  // 플레이어의 시작 위치
-    Quaternion rot;    // 플레이어의 회전값
+    private Character_Scriptable CH_Data; // 캐릭터 데이터
+    public string CH_Name;                // 캐릭터 이름
+    Vector3 startPos;                     // 플레이어의 시작 위치
+    Quaternion rot;                       // 플레이어의 회전값
 
     protected override void Start()
     {
         base.Start();
+
+        // 캐릭터의 이름을 통해 Scriptable에 세팅한 캐릭터의 데이터 세팅 
+        Data_Set(Resources.Load<Character_Scriptable>("Scriptable/" + CH_Name));
 
         // 플레이어의 초기 시작 위치와 회전값을 저장
         // 몬스터를 추적하다가 몬스터가 범위 내에서 사라지면
         // 다시 제자리로 돌아오기 위한 변수
         startPos = transform.position;
         rot = transform.rotation;
+    }
+
+    private void Data_Set(Character_Scriptable data)
+    {
+        CH_Data = data;
+        Attack_Range = data.m_Attack_Range;
     }
 
     private void Update()
