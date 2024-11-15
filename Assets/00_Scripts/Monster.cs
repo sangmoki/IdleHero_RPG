@@ -12,7 +12,6 @@ public class Monster : Character
     protected override void Start()
     {
         base.Start();
-        HP = 5;
     }
 
     // 재활용 - Start에서 실행하면 한번 오브젝트가 나갔다 들어오면 실행이 안됨.
@@ -21,9 +20,66 @@ public class Monster : Character
         // 풀링에서 몬스터가 초기화 될 때 몬스터의 상태 초기화
         isDead = false;
         HP = 5;
+        Attack_Range = 0.5f;
 
         // 몬스터가 스폰될 때 크기가 점점 커지는 효과를 주기 위한 코루틴 함수 실행
         StartCoroutine(Spawn_Start());
+    }
+    private void Update()
+    {
+        // isSpawn이 false이면 return
+        if (isSpawn == false) return;
+
+        // 가장 가까운 플레이어를 찾아서 타겟으로 지정
+        FindClosetTarget(Spawner.m_Players.ToArray());
+
+        // 만약 타겟의 상태가 사망 상태라면 다시 타겟을 찾는다.
+        if (m_Target.GetComponent<Character>().isDead) FindClosetTarget(Spawner.m_Players.ToArray());
+
+        // 현재 타겟의 위치와 플레이어의 위치를 계산한 값
+        float targetDistance = Vector3.Distance(transform.position, m_Target.position);
+        // 현재 타겟이 추적 범위 안에 있지만 공격 범위 안에 존재하지 않을 경우
+        if (targetDistance <= target_Range && targetDistance > Attack_Range && isATTACK == false)
+        {
+            // 타겟을 향해 이동
+            AnimatorChange("isMOVE");
+            transform.LookAt(m_Target.position);
+            transform.position = Vector3.MoveTowards(transform.position, m_Target.position, Time.deltaTime);
+        }
+        else if (targetDistance <= Attack_Range && isATTACK == false)
+        {
+            // 타겟이 공격 범위 안에 존재할 경우
+            // 공격
+            isATTACK = true;
+            AnimatorChange("isATTACK");
+
+            // 공격 후 공격 상태 초기화 함수 호출
+            Invoke("InitAttack", 1.0f);
+        }
+
+        /* 가운데를 바라보는 상황 일 때
+        // 몬스터가 걸어가는 방향을 쳐다본다.
+        // transform.LookAt(Vector3.zero);
+
+
+        // Distance는 첫번째 인자와 두번째 인자의 사잇값
+        // transform.position : 몬스터의 현재 위치
+        // Vector3.zero : (0, 0, 0) - 가운데 위치
+        // 즉, targetDistance = transform.position과 (0, 0, 0) 사이의 거리
+        float targetDistance = Vector3.Distance(transform.position, Vector3.zero);
+        if (targetDistance <= 0.5f)
+        {
+            // 몬스터가 가운데에 도착하면 IDLE 상태로 변경
+            AnimatorChange("isIDLE");
+        }
+        else
+        {
+            // 몬스터가 (0, 0, 0) - 가운데로 이동
+            transform.position = Vector3.MoveTowards(transform.position, Vector3.zero, Time.deltaTime * m_Speed);
+            // 몬스터가 가운데로 이동중이면 MOVE 상태로 변경
+            AnimatorChange("isMOVE");
+        }
+         */
     }
 
     // 몬스터가 스폰될 때 발생하는 코루틴 함수
@@ -98,34 +154,4 @@ public class Monster : Character
             Base_Mng.Pool.m_pool_Dictionary["Monster"].Return(this.gameObject);
         }
     }
-
-    private void Update()
-    {
-        // 몬스터가 걸어가는 방향을 쳐다본다.
-        transform.LookAt(Vector3.zero);
-
-        // isSpawn이 false이면 return
-        if (isSpawn == false) return;
-
-        // Distance는 첫번째 인자와 두번째 인자의 사잇값
-        // transform.position : 몬스터의 현재 위치
-        // Vector3.zero : (0, 0, 0) - 가운데 위치
-        // 즉, targetDistance = transform.position과 (0, 0, 0) 사이의 거리
-        float targetDistance = Vector3.Distance(transform.position, Vector3.zero);
-        if (targetDistance <= 0.5f)
-        {
-            // 몬스터가 가운데에 도착하면 IDLE 상태로 변경
-            AnimatorChange("isIDLE");
-        }
-        else
-        {
-            // 몬스터가 (0, 0, 0) - 가운데로 이동
-            transform.position = Vector3.MoveTowards(transform.position, Vector3.zero, Time.deltaTime * m_Speed);
-            // 몬스터가 가운데로 이동중이면 MOVE 상태로 변경
-            AnimatorChange("isMOVE");
-        }
-    }
-
-
-
 }

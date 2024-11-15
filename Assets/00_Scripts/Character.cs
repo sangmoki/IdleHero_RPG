@@ -11,7 +11,7 @@ public class Character : MonoBehaviour
     public float ATK_Speed;              // 공격 속도
     public bool isDead = false;          // 사망 상태 플래그
     protected float Attack_Range = 3.0f; // 공격 범위
-    protected float Target_Range = 5.0f; // 타겟을 공격할 수 있는 인지 범위 
+    protected float target_Range = 5.0f; // 타겟을 공격할 수 있는 인지 범위 
     protected bool isATTACK = false;     // 공격 상태
 
     protected Transform m_Target;        // 타겟
@@ -62,7 +62,7 @@ public class Character : MonoBehaviour
     // 근접 공격 함수
     protected virtual void Attack()
     {
-        if (Target_Range == null) return;
+        if (target_Range == null) return;
 
         Base_Mng.Pool.Pooling_Obj("Attack_Helper").Get((value) =>
         {
@@ -78,7 +78,7 @@ public class Character : MonoBehaviour
         // 가장 가까운 몬스터를 찾기 위한 변수
         Transform closetTarget = null;
         // 타겟 공격 인지 범위 - 만약 5.0f라면 5.0f 이내의 몬스터를 찾는다.
-        float maxDistance = Target_Range;
+        float maxDistance = target_Range;
 
         // 반복문을 통해 가장 가까운 몬스터와의 거리 계산
         foreach (var monster in monsters)
@@ -96,7 +96,7 @@ public class Character : MonoBehaviour
             m_Target = closetTarget;
 
             // 만약 타겟이 지정되면 타겟의 위치를 바라보는 상태로 변경
-            if(m_Target != null) transform.LookAt(m_Target.position);
+            if (m_Target != null) transform.LookAt(m_Target.position);
         }
 
     }

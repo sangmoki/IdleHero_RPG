@@ -16,6 +16,10 @@ public class Player : Character
         // 캐릭터의 이름을 통해 Scriptable에 세팅한 캐릭터의 데이터 세팅 
         Data_Set(Resources.Load<Character_Scriptable>("Scriptable/" + CH_Name));
 
+        // 플레이어가 생성되었으니 Spawner에도 전달해주어야 한다.
+        // 그래야 몬스터가 추적할 수 있는 대상이 될 수 있다.
+        Spawner.m_Players.Add(this);
+
         // 플레이어의 초기 시작 위치와 회전값을 저장
         // 몬스터를 추적하다가 몬스터가 범위 내에서 사라지면
         // 다시 제자리로 돌아오기 위한 변수
@@ -61,7 +65,7 @@ public class Player : Character
         // 현재 타겟의 위치와 플레이어의 위치를 계산한 값
         float targetDistance = Vector3.Distance(transform.position, m_Target.position);
         // 현재 타겟이 추적 범위 안에 있지만 공격범위 안에 존재하지 않을 경우
-        if (targetDistance <= Target_Range && targetDistance > Attack_Range && isATTACK == false)
+        if (targetDistance <= target_Range && targetDistance > Attack_Range && isATTACK == false)
         {
             // 타겟을 향해 이동
             AnimatorChange("isMOVE");
