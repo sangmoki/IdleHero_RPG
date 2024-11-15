@@ -5,56 +5,61 @@ using UnityEngine;
 
 public class HIT_TEXT : MonoBehaviour
 {
-    // Å¸°Ù ´ë»óÀÇ À§Ä¡
+    // íƒ€ê²Ÿ ëŒ€ìƒì˜ ìœ„ì¹˜
     Vector3 target;
-    // Ä«¸Ş¶ó¿¡ ºñÃçÁö´Â ¸ó½ºÅÍÀÇ À§Ä¡¸¦ ¹Ş¾Æ¿À±â À§ÇÑ º¯¼ö
+    // ì¹´ë©”ë¼ì— ë¹„ì¶°ì§€ëŠ” ëª¬ìŠ¤í„°ì˜ ìœ„ì¹˜ë¥¼ ë°›ì•„ì˜¤ê¸° ìœ„í•œ ë³€ìˆ˜
     Camera cam;
     public TextMeshProUGUI m_Text;
 
     [SerializeField] private GameObject m_Critical;
 
-    // Inspector¸¦ ²Ù¹Ì´Â ¿ëµµ
-    // [Header("Å×½ºÆ®!")] - Çì´õ
-    // [Space(20f)]        - °Å¸®
-    // [Range(0.0f, 5.0f)] // - ¹üÀ§
-    float UpRange = 0.0f; // ÅØ½ºÆ®°¡ À§·Î ¿Ã¶ó°¡´Â ¼Óµµ
-    // ÀÏÁ¤ ºÎºĞÀÇ °ªÀ» ´õÇØÁØ´Ù. (À§·Î ¹æÇâ)
+    // Inspectorë¥¼ ê¾¸ë¯¸ëŠ” ìš©ë„
+    // [Header("í…ŒìŠ¤íŠ¸!")] - í—¤ë”
+    // [Space(20f)]        - ê±°ë¦¬
+    // [Range(0.0f, 5.0f)] // - ë²”ìœ„
+    float UpRange = 0.0f; // í…ìŠ¤íŠ¸ê°€ ìœ„ë¡œ ì˜¬ë¼ê°€ëŠ” ì†ë„
+    // ì¼ì • ë¶€ë¶„ì˜ ê°’ì„ ë”í•´ì¤€ë‹¤. (ìœ„ë¡œ ë°©í–¥)
 
     private void Start()
     {
         cam = Camera.main;
     }
 
-    public void Init(Vector3 pos, double dmg, bool Critical = false)
+    public void Init(Vector3 pos, double dmg, bool monster = false, bool Critical = false)
     {
-        // ÅØ½ºÆ® ÅØ½ºÆ® À§Ä¡ ·£´ı ¼³Á¤ - °¡½Ã¼º ¿ëÀÌÇÔ À§ÇØ
-        pos.x += Random.Range(-0.3f, 0.3f);
-        pos.z += Random.Range(-0.3f, 0.3f);
+        // í…ìŠ¤íŠ¸ í…ìŠ¤íŠ¸ ìœ„ì¹˜ ëœë¤ ì„¤ì • - ê°€ì‹œì„± ìš©ì´í•¨ ìœ„í•´
+        pos.x += Random.Range(-0.1f, 0.1f);
+        pos.z += Random.Range(-0.1f, 0.1f);
 
-        target = pos;  // Å¸°ÙÀÇ À§Ä¡ Á¤º¸
-        m_Text.text = dmg.ToString(); // DMG ÅØ½ºÆ® Ç¥½Ã
-        transform.parent = Base_Canvas.instance.HOLDER_LAYER(1); // Äµ¹ö½ºÀÇ ÀÚ½ÄÀ¸·Î ¼³Á¤
+        target = pos;  // íƒ€ê²Ÿì˜ ìœ„ì¹˜ ì •ë³´
+        m_Text.text = StringMethod.ToCurrencyString(dmg); // DMG í…ìŠ¤íŠ¸ í‘œì‹œ
+
+        // ëª¬ìŠ¤í„°ì™€ í”Œë ˆì´ì–´ì˜ ê³µê²© í…ìŠ¤íŠ¸ êµ¬ë¶„
+        if (monster) m_Text.color = Color.red;
+        else m_Text.color = Color.white;
+
+        transform.parent = Base_Canvas.instance.HOLDER_LAYER(1); // ìº”ë²„ìŠ¤ì˜ ìì‹ìœ¼ë¡œ ì„¤ì •
 
         m_Critical.SetActive(Critical);
 
-        // »ç¿ëÀÌ ³¡³ª¸é 2ÃÊ ÈÄ¿¡ ¹İÈ¯
+        // ì‚¬ìš©ì´ ëë‚˜ë©´ 2ì´ˆ í›„ì— ë°˜í™˜
         Base_Mng.instance.Return_Pool(2.0f, this.gameObject, "HIT_TEXT"); 
     }
 
     private void Update()
     {
-        // ÅØ½ºÆ®°¡ ¸ó½ºÅÍº¸´Ù À§·Î º¸ÀÌ°Ô ¼³Á¤
+        // í…ìŠ¤íŠ¸ê°€ ëª¬ìŠ¤í„°ë³´ë‹¤ ìœ„ë¡œ ë³´ì´ê²Œ ì„¤ì •
         Vector3 tragetPost = new Vector3(target.x, target.y + UpRange, target.z);
-        // ¿ùµåÁÂÇ¥·Î È­¸é¿¡ Ç¥½Ã
+        // ì›”ë“œì¢Œí‘œë¡œ í™”ë©´ì— í‘œì‹œ
         transform.position = cam.WorldToScreenPoint(tragetPost); 
         if (UpRange <= 0.3f)
         {
-            // ÇÇ°İ ÅØ½ºÆ®°¡ À§·Î ¿Ã¶ó°¡´Â ¼Óµµ
+            // í”¼ê²© í…ìŠ¤íŠ¸ê°€ ìœ„ë¡œ ì˜¬ë¼ê°€ëŠ” ì†ë„
             UpRange += Time.deltaTime;
         }
     }
 
-    // ¿ÀºêÁ§Æ® Ç®¿¡ ¹İÈ¯
+    // ì˜¤ë¸Œì íŠ¸ í’€ì— ë°˜í™˜
     private void ReturnText()
     {
         Base_Mng.Pool.m_pool_Dictionary["HIT_TEXT"].Return(this.gameObject);

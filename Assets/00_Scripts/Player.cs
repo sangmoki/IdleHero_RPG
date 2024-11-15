@@ -83,4 +83,18 @@ public class Player : Character
             Invoke("InitAttack", 1.0f);
         }
     }
+
+    // 공격 받은 후 이벤트 함수
+    public override void GetDamage(double dmg)
+    {
+        base.GetDamage(dmg);
+
+        var goObj = Base_Mng.Pool.Pooling_Obj("HIT_TEXT").Get((value) =>
+        {
+            value.transform.position = transform.position;
+            value.GetComponent<HIT_TEXT>().Init(transform.position, dmg, true);
+        });
+
+        HP -= dmg;
+    }
 }
