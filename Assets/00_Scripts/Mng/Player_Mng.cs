@@ -18,6 +18,7 @@ public class Player_Mng
         if (EXP >= float.Parse(CSV_Importer.EXP[Level]["EXP"].ToString()))
         {
             Level++;
+            Main_UI.instance.TextCheck();
         }
     }
 
