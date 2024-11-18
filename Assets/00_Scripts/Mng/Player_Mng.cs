@@ -4,22 +4,32 @@ using UnityEngine;
 
 public class Player_Mng
 {
-    public int Level;
-    public double EXP;
-    public double ATK = 10;
-    public double HP = 50;
+    public int Level;                        // ë ˆë²¨
+    public double EXP;                       // ê²½í—˜ì¹˜  
+    public double ATK = 10;                  // ê³µê²©ë ¥
+    public double HP = 50;                   // ì²´ë ¥
 
+    public float Critical_Percent = 20.0f;   // í¬ë¦¬í‹°ì»¬ í™•ë¥ 
+    public double Ciritical_Damage = 140.0d; // í¬ë¦¬í‹°ì»¬ ë°ë¯¸ì§€
+
+    // ê²½í—˜ì¹˜ ì¦ê°€ ì‹œ ì´ë²¤íŠ¸
     public void EXP_UP()
     {
-        // ÇöÀç ·¹º§¿¡¼­ ¾ò´Â °æÇèÄ¡
+        // ê²½í—˜ì¹˜, ê³µê²©ë ¥, ì²´ë ¥ ì¦ê°€
         EXP += float.Parse(CSV_Importer.EXP[Level]["Get_EXP"].ToString());
+        ATK += Next_ATK();
+        HP += Next_HP();
 
-        // ÇöÀç ·¹º§¿¡¼­ ¾ò´Â °æÇèÄ¡°¡ ·¹º§¾÷¿¡ ÇÊ¿äÇÑ °æÇèÄ¡º¸´Ù ³ôÀ¸¸é
+        // í˜„ì¬ ë ˆë²¨ì—ì„œ ì–»ëŠ” ê²½í—˜ì¹˜ê°€ ë ˆë²¨ì—…ì— í•„ìš”í•œ ê²½í—˜ì¹˜ë³´ë‹¤ ë†’ìœ¼ë©´
         if (EXP >= float.Parse(CSV_Importer.EXP[Level]["EXP"].ToString()))
         {
             Level++;
             Main_UI.instance.TextCheck();
         }
+
+        // ëª¨ë“  í”Œë ˆì´ì–´ ìºë¦­í„°ì˜ ê³µê²©ë ¥, ì²´ë ¥ì„ ê°±ì‹ 
+        for (int i = 0; i < Spawner.m_Players.Count; i++)
+            Spawner.m_Players[i].Set_ATKHP();
     }
 
     public float EXP_Percentage()
@@ -29,7 +39,7 @@ public class Player_Mng
 
         if (Level >= 1)
         {
-            // ÀÌÀü ·¹º§ÀÇ exp ¸¸Å­ »©ÁÖ±â -> ´ÙÀ½ ·¹º§ÀÌ µÇ¾úÀ» ¶§ 0%ºÎÅÍ ½ÃÀÛÇÏ±â À§ÇÔ
+            // ì´ì „ ë ˆë²¨ì˜ exp ë§Œí¼ ë¹¼ì£¼ê¸° -> ë‹¤ìŒ ë ˆë²¨ì´ ë˜ì—ˆì„ ë•Œ 0%ë¶€í„° ì‹œì‘í•˜ê¸° ìœ„í•¨
             exp -= float.Parse(CSV_Importer.EXP[Level - 1]["EXP"].ToString());
             myEXP -= float.Parse(CSV_Importer.EXP[Level - 1]["EXP"].ToString());
         }
@@ -38,7 +48,7 @@ public class Player_Mng
 
     public float Next_EXP()
     {
-        // ´ÙÀ½ ·¹º§¿¡ ÇÊ¿äÇÑ °æÇèÄ¡
+        // ë‹¤ìŒ ë ˆë²¨ì— í•„ìš”í•œ ê²½í—˜ì¹˜
         float exp = float.Parse(CSV_Importer.EXP[Level]["EXP"].ToString());
         float myExp = float.Parse(CSV_Importer.EXP[Level]["Get_EXP"].ToString());
 
@@ -49,15 +59,33 @@ public class Player_Mng
         return (myExp / exp) * 100.0f;
     }
 
-    // ·¹º§¾÷ ÇÒ¶§¸¶´Ù Áõ°¡ÇÏ´Â ATK
+    // ë ˆë²¨ì—… í• ë•Œë§ˆë‹¤ ì¦ê°€í•˜ëŠ” ATK
     public double Next_ATK()
     {
         return float.Parse(CSV_Importer.EXP[Level]["Get_EXP"].ToString()) * (Level + 1) / 5;
     }
 
-    // ·¹º§¾÷ ÇÒ¶§¸¶´Ù Áõ°¡ÇÏ´Â HP
+    // ë ˆë²¨ì—… í• ë•Œë§ˆë‹¤ ì¦ê°€í•˜ëŠ” HP
     public double Next_HP()
     {
         return float.Parse(CSV_Importer.EXP[Level]["Get_EXP"].ToString()) * (Level + 1) / 3;
+    }
+
+    // ê³µê²©ë ¥ = ê³µê²©ë ¥ * ì•„ì´í…œ ë“±ê¸‰
+    public double Get_ATK(Rarity rarity)
+    {
+        return ATK * ((int)rarity + 1);
+    }
+
+    // HP = ì²´ë ¥ * ì•„ì´í…œ ë“±ê¸‰
+    public double Get_HP(Rarity rarity)
+    {
+        return HP * ((int) rarity + 1);
+    }
+
+    // DPS = ê³µê²©ë ¥ + ì²´ë ¥
+    public double Average_DPS()
+    {
+        return ATK + HP;
     }
 }

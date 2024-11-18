@@ -8,6 +8,7 @@ public class Main_UI : MonoBehaviour
     public static Main_UI instance = null; 
 
     [SerializeField] private TextMeshProUGUI m_Level_Text;
+    [SerializeField] private TextMeshProUGUI m_AvgDPS_Text;
 
     private void Awake()
     {
@@ -26,9 +27,10 @@ public class Main_UI : MonoBehaviour
         TextCheck();
     }
 
-    // ·¹º§¾÷ÀÌ µÉ ¶§¸¶´Ù UI »ó´Ü ·¹º§ ÅØ½ºÆ®¸¦ º¯°æ
+    // ë ˆë²¨ì—…ì´ ë  ë•Œë§ˆë‹¤ UI ìƒë‹¨ í…ìŠ¤íŠ¸ë¥¼ ë³€ê²½
     public void TextCheck()
     {
         m_Level_Text.text = "LV." + (Base_Mng.Player.Level + 1).ToString();
+        m_AvgDPS_Text.text = StringMethod.ToCurrencyString(Base_Mng.Player.Average_DPS());
     }
 }

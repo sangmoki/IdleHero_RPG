@@ -32,6 +32,14 @@ public class Player : Character
     {
         CH_Data = data;
         Attack_Range = data.m_Attack_Range;
+
+        Set_ATKHP();
+    }
+
+    public void Set_ATKHP()
+    {
+        ATK = Base_Mng.Player.Get_ATK(CH_Data.m_Rarity);
+        HP = Base_Mng.Player.Get_HP(CH_Data.m_Rarity);
     }
 
     private void Update()
@@ -83,6 +91,11 @@ public class Player : Character
             // 공격 후 공격 상태 초기화 함수 호출
             Invoke("InitAttack", 1.0f);
         }
+    }
+
+    private bool Ciritical()
+    {
+        return false;
     }
 
     // 공격 받은 후 이벤트 함수

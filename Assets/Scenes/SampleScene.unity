@@ -1336,6 +1336,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Level_Text: {fileID: 894171735}
+  m_AvgDPS_Text: {fileID: 692002462}
 --- !u!1 &362334959
 GameObject:
   m_ObjectHideFlags: 0
@@ -3002,7 +3003,7 @@ GameObject:
   - component: {fileID: 692002463}
   - component: {fileID: 692002462}
   m_Layer: 5
-  m_Name: Text_ATK
+  m_Name: Text_DPS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

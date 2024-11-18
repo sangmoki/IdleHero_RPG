@@ -19,7 +19,8 @@ public class Monster : Character
     {
         // 풀링에서 몬스터가 초기화 될 때 몬스터의 상태 초기화
         isDead = false;
-        HP = 500;
+        ATK = 10;
+        HP = 5000;
         Attack_Range = 0.5f;
 
         // 몬스터가 스폰될 때 크기가 점점 커지는 효과를 주기 위한 코루틴 함수 실행
