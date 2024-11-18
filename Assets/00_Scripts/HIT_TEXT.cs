@@ -40,7 +40,18 @@ public class HIT_TEXT : MonoBehaviour
 
         transform.parent = Base_Canvas.instance.HOLDER_LAYER(1); // 캔버스의 자식으로 설정
 
+        // 크리티컬 bool 결과에 따른
         m_Critical.SetActive(Critical);
+        
+        // 피격 텍스트 색상 설정
+        Color color_yellow = Color.yellow;
+        Color color_white = Color.white;
+
+        // 크리티컬일 경우 노란색으로 변경
+        if (Critical) 
+            m_Text.colorGradient = new VertexGradient(color_yellow, color_yellow, color_white, color_white);
+        else
+            m_Text.colorGradient = new VertexGradient(color_white, color_white, color_white, color_white);
 
         // 사용이 끝나면 2초 후에 반환
         Base_Mng.instance.Return_Pool(2.0f, this.gameObject, "HIT_TEXT"); 

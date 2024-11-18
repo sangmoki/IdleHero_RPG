@@ -26,6 +26,7 @@ public class Monster : Character
         // 몬스터가 스폰될 때 크기가 점점 커지는 효과를 주기 위한 코루틴 함수 실행
         StartCoroutine(Spawn_Start());
     }
+
     private void Update()
     {
         // isSpawn이 false이면 return
@@ -120,10 +121,12 @@ public class Monster : Character
         // 몬스터가 이미 죽어있으면 return
         if (isDead) return;
 
+        bool critical = Critical(ref dmg);
+
         // 몬스터가 피격당했을 경우 HitText를 풀링으로 가져와서 피격당한 텍스트를 생성
         Base_Mng.Pool.Pooling_Obj("HIT_TEXT").Get((value) =>
         {
-            value.GetComponent<HIT_TEXT>().Init(transform.position, dmg);
+            value.GetComponent<HIT_TEXT>().Init(transform.position, dmg, false, critical);
         });
 
         HP -= dmg;
@@ -162,4 +165,22 @@ public class Monster : Character
             Base_Mng.Pool.m_pool_Dictionary["Monster"].Return(this.gameObject);
         }
     }
+
+    // 크리티컬 확률 함수
+    private bool Critical(ref double dmg)
+    {
+        // 0.0f ~ 100.0f 사이의 랜덤값을 생성
+        float RandomValue = Random.Range(0.0f, 100.0f);
+
+        // 랜덤값이 플레이어의 크리티컬 확률보다 낮다면
+        if (RandomValue <= Base_Mng.Player.Critical_Percent)
+        {
+            // 데미지에 크리티컬 데미지를 곱하여 크리티컬 데미지 적용
+            dmg *= Base_Mng.Player.Critical_Damage / 100; 
+            return true;
+        }
+
+        return false;
+    }
+
 }

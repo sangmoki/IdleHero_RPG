@@ -10,7 +10,7 @@ public class Player_Mng
     public double HP = 50;                   // 체력
 
     public float Critical_Percent = 20.0f;   // 크리티컬 확률
-    public double Ciritical_Damage = 140.0d; // 크리티컬 데미지
+    public double Critical_Damage = 140.0d; // 크리티컬 데미지
 
     // 경험치 증가 시 이벤트
     public void EXP_UP()

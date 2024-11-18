@@ -93,11 +93,6 @@ public class Player : Character
         }
     }
 
-    private bool Ciritical()
-    {
-        return false;
-    }
-
     // 공격 받은 후 이벤트 함수
     public override void GetDamage(double dmg)
     {
