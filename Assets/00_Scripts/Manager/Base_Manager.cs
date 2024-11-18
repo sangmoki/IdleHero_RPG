@@ -9,11 +9,11 @@ public class Base_Mng : MonoBehaviour
     // 싱글톤 패턴을 위한 변수
     public static Base_Mng instance = null;
 
-    public static Pool_Mng s_Pool = new Pool_Mng();
-    public static Player_Mng s_Player = new Player_Mng();
+    public static Pool_Manager s_Pool = new Pool_Manager();
+    public static Player_Manager s_Player = new Player_Manager();
 
-    public static Pool_Mng Pool { get { return s_Pool; } }
-    public static Player_Mng Player { get { return s_Player; } }
+    public static Pool_Manager Pool { get { return s_Pool; } }
+    public static Player_Manager Player { get { return s_Player; } }
 
 
     private void Awake()

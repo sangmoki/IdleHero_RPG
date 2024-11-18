@@ -64,7 +64,7 @@ public class Object_Pool : IPool
 // 오브젝트 풀링을 사용하면 메모리를 효율적으로 사용할 수 있다.
 // 예시로, 수영장에서 오브젝트 하나가 들어갔다 나갔다 하는것을 의미한다.
 // 즉, 오브젝트를 껏다 켰다 하는 방법과 같은 느낌
-public class Pool_Mng
+public class Pool_Manager
 {
     // Dictionary : Key와 Value로 이루어진 자료구조
     // ContainsKey : Dictionary에 키가 포함되어 있는지 확인 - return : true or false

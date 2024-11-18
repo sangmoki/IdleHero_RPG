@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player_Mng
+public class Player_Manager
 {
     public int Level;                        // 레벨
     public double EXP;                       // 경험치  
