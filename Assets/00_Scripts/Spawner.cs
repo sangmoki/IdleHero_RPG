@@ -4,71 +4,71 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    public int m_Count;         // ¸ó½ºÅÍÀÇ ¼ö
-    public float m_SpawnTime;   // ¸î ÃÊ ¸¶´Ù »ı¼ºÇÒ °ÍÀÎÁö
+    public int m_Count;         // ëª¬ìŠ¤í„°ì˜ ìˆ˜
+    public float m_SpawnTime;   // ëª‡ ì´ˆ ë§ˆë‹¤ ìƒì„±í•  ê²ƒì¸ì§€
 
     public static List<Monster> m_Monsters = new List<Monster>();
     public static List<Player> m_Players = new List<Player>();
 
     private void Start()
     {
-        // ¸ó½ºÅÍ ½ºÆù ÄÚ·çÆ¾ ½ÇÇà
+        // ëª¬ìŠ¤í„° ìŠ¤í° ì½”ë£¨í‹´ ì‹¤í–‰
         StartCoroutine(SpawnCoroutine());
     }
 
 
-    // ¸ó½ºÅÍ ½ºÆù ÄÚ·çÆ¾ ÇÔ¼ö
-    // ¸ó½ºÅÍÀÇ ½ºÆù ±âÁØ
-    // 1. ¸ó½ºÅÍ´Â ¿©·¯ ¸¶¸®°¡ ¸î ÃÊ ¸¶´Ù ¼ö½Ã·Î ½ºÆùµÇ¾î¾ß ÇÑ´Ù.
+    // ëª¬ìŠ¤í„° ìŠ¤í° ì½”ë£¨í‹´ í•¨ìˆ˜
+    // ëª¬ìŠ¤í„°ì˜ ìŠ¤í° ê¸°ì¤€
+    // 1. ëª¬ìŠ¤í„°ëŠ” ì—¬ëŸ¬ ë§ˆë¦¬ê°€ ëª‡ ì´ˆ ë§ˆë‹¤ ìˆ˜ì‹œë¡œ ìŠ¤í°ë˜ì–´ì•¼ í•œë‹¤.
     IEnumerator SpawnCoroutine()
     {
         Vector3 pos;
 
-        // Random.insideUnitSphere == Vector3(x, y, z) <- Vector3 ±âÁØ ·£´ıÁÂÇ¥
-        // Random.insideUnitCircle == Vector2(x, y) <- Vector2 ±âÁØ ·£´ıÁÂÇ¥
+        // Random.insideUnitSphere == Vector3(x, y, z) <- Vector3 ê¸°ì¤€ ëœë¤ì¢Œí‘œ
+        // Random.insideUnitCircle == Vector2(x, y) <- Vector2 ê¸°ì¤€ ëœë¤ì¢Œí‘œ
         for (int i = 0; i < m_Count; i++)
         {
-            // ¸ó½ºÅÍ´Â °¡¿îµ¥¸¦ ±âÁ¡À¸·Î ¿øÇüÀ¸·Î »ı¼ºµÇ¾î¾ß ÇÑ´Ù.
-            // 5~10ÀÇ °ª = »ı¼ºµÇ´Â ¹İ¿øÀÇ À§Ä¡ °ª
+            // ëª¬ìŠ¤í„°ëŠ” ê°€ìš´ë°ë¥¼ ê¸°ì ìœ¼ë¡œ ì›í˜•ìœ¼ë¡œ ìƒì„±ë˜ì–´ì•¼ í•œë‹¤.
+            // 5~10ì˜ ê°’ = ìƒì„±ë˜ëŠ” ë°˜ì›ì˜ ìœ„ì¹˜ ê°’
             pos = Vector3.zero + Random.insideUnitSphere * 5.0f; 
-            // posÀÇ yÀÇ °ªÀÌ -³ª +°¡ µÇ¸é ¾ÈµÇ±â ¶§¹®¿¡ 0À¸·Î ÃÊ±âÈ­
+            // posì˜ yì˜ ê°’ì´ -ë‚˜ +ê°€ ë˜ë©´ ì•ˆë˜ê¸° ë•Œë¬¸ì— 0ìœ¼ë¡œ ì´ˆê¸°í™”
             pos.y = 0.0f;
 
-            // ¸ó½ºÅÍ°¡ »ı¼ºµÈ À§Ä¡°¡ Áß¾ÓÁ¡°ú °¡±î¿ì¸é posÁÂÇ¥¸¦ ´Ù½Ã »ı¼ºÇÑ´Ù.
-            // 3~5ÀÇ °ª = Áß¾ÓÁ¡À» ±âÁØÀ¸·Î »ı¼ºµÇ´Â À§Ä¡ °ªÀÇ ¹İ°æ
+            // ëª¬ìŠ¤í„°ê°€ ìƒì„±ëœ ìœ„ì¹˜ê°€ ì¤‘ì•™ì ê³¼ ê°€ê¹Œìš°ë©´ posì¢Œí‘œë¥¼ ë‹¤ì‹œ ìƒì„±í•œë‹¤.
+            // 3~5ì˜ ê°’ = ì¤‘ì•™ì ì„ ê¸°ì¤€ìœ¼ë¡œ ìƒì„±ë˜ëŠ” ìœ„ì¹˜ ê°’ì˜ ë°˜ê²½
             while (Vector3.Distance(pos, Vector3.zero) <= 3.0f)
             {
-                pos = Vector3.zero + Random.insideUnitSphere * 10.0f;
+                pos = Vector3.zero + Random.insideUnitSphere * 5.0f;
                 pos.y = 0.0f;
             }
 
-            // È¸Àü°ªÀ» °¡ÁöÁö ¾ÊÀº »óÅÂ·Î posÁÂÇ¥¿¡ ¸ó½ºÅÍ »ı¼º
-            // Instantiate (»ı¼ºÀÚ) Destroy (ÆÄ±«ÀÚ)
-            // À§ µÎ°³´Â GC(Garbage Collection)ÀÌ ¹ß»ıÇÑ´Ù.
-            // °è¼Ó ´©ÀûµÇ´Ùº¸¸é ¸Ş¸ğ¸®°¡ °úºÎÈ­ µÈ´Ù.
-            // ÀÌ°ÍÀ» ¹æÁöÇÏ±â À§ÇØ Ç®¸µ ±â¹ı(Pool_Mng)À» »ç¿ëÇÑ´Ù.
+            // íšŒì „ê°’ì„ ê°€ì§€ì§€ ì•Šì€ ìƒíƒœë¡œ posì¢Œí‘œì— ëª¬ìŠ¤í„° ìƒì„±
+            // Instantiate (ìƒì„±ì) Destroy (íŒŒê´´ì)
+            // ìœ„ ë‘ê°œëŠ” GC(Garbage Collection)ì´ ë°œìƒí•œë‹¤.
+            // ê³„ì† ëˆ„ì ë˜ë‹¤ë³´ë©´ ë©”ëª¨ë¦¬ê°€ ê³¼ë¶€í™” ëœë‹¤.
+            // ì´ê²ƒì„ ë°©ì§€í•˜ê¸° ìœ„í•´ í’€ë§ ê¸°ë²•(Pool_Mng)ì„ ì‚¬ìš©í•œë‹¤.
             var goObj = Base_Mng.Pool.Pooling_Obj("Monster").Get((value) =>
             {
-                // °¡Á®¿Â Object ¸ó½ºÅÍ »ı¼º
+                // ê°€ì ¸ì˜¨ Object ëª¬ìŠ¤í„° ìƒì„±
                 value.GetComponent<Monster>().Init();
-                // ¸ó½ºÅÍÀÇ À§Ä¡¸¦ pos·Î ¼³Á¤
+                // ëª¬ìŠ¤í„°ì˜ ìœ„ì¹˜ë¥¼ posë¡œ ì„¤ì •
                 value.transform.position = pos;
-                // ¸ó½ºÅÍ°¡ °¡¿îµ¥¸¦ ¹Ù¶óº¸µµ·Ï ¼³Á¤
+                // ëª¬ìŠ¤í„°ê°€ ê°€ìš´ë°ë¥¼ ë°”ë¼ë³´ë„ë¡ ì„¤ì •
                 value.transform.LookAt(Vector3.zero);
-                // ¸ó½ºÅÍ ¸®½ºÆ®¿¡ ¸ó½ºÅÍ Ãß°¡
+                // ëª¬ìŠ¤í„° ë¦¬ìŠ¤íŠ¸ì— ëª¬ìŠ¤í„° ì¶”ê°€
                 m_Monsters.Add(value.GetComponent<Monster>());
             });
 
-            // ¸ó½ºÅÍ Ç®¸µ ÄÚ·çÆ¾ ½ÇÇà
+            // ëª¬ìŠ¤í„° í’€ë§ ì½”ë£¨í‹´ ì‹¤í–‰
             // StartCoroutine(ReturnCoroutine(goObj));
         }
 
-        // ½ºÆù ½Ã°£¸¸Å­ ´ë±â ÈÄ ½ºÆù ½ÇÇà
+        // ìŠ¤í° ì‹œê°„ë§Œí¼ ëŒ€ê¸° í›„ ìŠ¤í° ì‹¤í–‰
         yield return new WaitForSeconds(m_SpawnTime);
         StartCoroutine(SpawnCoroutine());
     }
 
-    // ¸ó½ºÅÍ¸¦ Ç®¸µÇÏ±â À§ÇÑ ÄÚ·çÆ¾ ÇÔ¼ö
+    // ëª¬ìŠ¤í„°ë¥¼ í’€ë§í•˜ê¸° ìœ„í•œ ì½”ë£¨í‹´ í•¨ìˆ˜
     //IEnumerator ReturnCoroutine(GameObject obj)
     //{
     //    yield return new WaitForSeconds(1.0f);

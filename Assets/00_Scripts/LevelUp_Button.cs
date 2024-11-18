@@ -6,18 +6,18 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using DG.Tweening;
 
-// IPointerHandler´Â ¸¶¿ì½º ÀÌº¥Æ®
+// IPointerHandlerëŠ” ë§ˆìš°ìŠ¤ ì´ë²¤íŠ¸
 public class LevelUp_Button : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 { 
-    // °æÇèÄ¡ ½½¶óÀÌ´õ
+    // ê²½í—˜ì¹˜ ìŠ¬ë¼ì´ë”
     [SerializeField] private Image m_EXP_Slider;   
-    // °¢ object º° ÅØ½ºÆ®
+    // ê° object ë³„ í…ìŠ¤íŠ¸
     [SerializeField] private TextMeshProUGUI EXP_Text, ATK_Text, GoldText, HP_Text, Get_EXP_Text;
-    // ¸¶¿ì½º ´­¸² ¿©ºÎ
+    // ë§ˆìš°ìŠ¤ ëˆŒë¦¼ ì—¬ë¶€
     bool isPush = false;
-    // ´­¸®´Â ½Ã°£
+    // ëˆŒë¦¬ëŠ” ì‹œê°„
     float timer = 0.0f;
-    // ¿¬¼Ó ÅÍÄ¡¸¦ ÁøÇàÇÒ ÄÚ·çÆ¾
+    // ì—°ì† í„°ì¹˜ë¥¼ ì§„í–‰í•  ì½”ë£¨í‹´
     Coroutine coroutine;
 
     void Start()
@@ -27,10 +27,10 @@ public class LevelUp_Button : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
     void Update()
     {
-        // ¸¶¿ì½º°¡ ´­·ÈÀ» ¶§
+        // ë§ˆìš°ìŠ¤ê°€ ëˆŒë ¸ì„ ë•Œ
         if (isPush)
         {
-            // 0.01ÃÊ¸¶´Ù ¿¬¼Ó ÅÍÄ¡¸¦ È®ÀÎ
+            // 0.01ì´ˆë§ˆë‹¤ ì—°ì† í„°ì¹˜ë¥¼ í™•ì¸
             timer += Time.deltaTime;
             if (timer >= 0.01f)
             {
@@ -40,26 +40,26 @@ public class LevelUp_Button : MonoBehaviour, IPointerDownHandler, IPointerUpHand
         }
     }
 
-    // °æÇèÄ¡ ¿À¸£´Â ÇÔ¼ö
+    // ê²½í—˜ì¹˜ ì˜¤ë¥´ëŠ” í•¨ìˆ˜
     public void EXP_UP()
     {
         Base_Mng.Player.EXP_UP();
         InitEXP();
-        // DOTweenÀº Æ¯Á¤ º¯¼ö °ªµéÀ» ÀÏÁ¤½Ã°£µ¿¾È ¿øÇÏ´Â °ªÀ¸·Î ºÎµå·´°Ô º¯È­½ÃÄÑÁÖ´Â ¿ªÇÒ
-        // Áï, ¸ğ¼ÇÀ» ºÎµå·´°Ô ¸¸µé¾îÁØ´Ù.
+        // DOTweenì€ íŠ¹ì • ë³€ìˆ˜ ê°’ë“¤ì„ ì¼ì •ì‹œê°„ë™ì•ˆ ì›í•˜ëŠ” ê°’ìœ¼ë¡œ ë¶€ë“œëŸ½ê²Œ ë³€í™”ì‹œì¼œì£¼ëŠ” ì—­í• 
+        // ì¦‰, ëª¨ì…˜ì„ ë¶€ë“œëŸ½ê²Œ ë§Œë“¤ì–´ì¤€ë‹¤.
         transform.DORewind();
         transform.DOPunchScale(new Vector3(0.1f, 0.1f, 0.1f), 0.25f);
     }
 
-    // ¸¶¿ì½º¸¦ ´­·¶À» ¶§
+    // ë§ˆìš°ìŠ¤ë¥¼ ëˆŒë €ì„ ë•Œ
     public void OnPointerDown(PointerEventData eventData)
     {
-        // °æÇèÄ¡ »ó½Â ÇÔ¼ö
+        // ê²½í—˜ì¹˜ ìƒìŠ¹ í•¨ìˆ˜
         EXP_UP();
         coroutine = StartCoroutine(Push_Coroutine());
     }
 
-    // ¸¶¿ì½º¸¦ ¶ÃÀ» ¶§
+    // ë§ˆìš°ìŠ¤ë¥¼ ë—ì„ ë•Œ
     public void OnPointerUp(PointerEventData eventData)
     {
         isPush = false;
@@ -79,11 +79,11 @@ public class LevelUp_Button : MonoBehaviour, IPointerDownHandler, IPointerUpHand
         Get_EXP_Text.text = "<color=#00FF00>EXP</color> +" + string.Format("{0:0.00}", Base_Mng.Player.Next_EXP()) + "%";
     }
 
-    // ¸¶¿ì½º ´­¸² ¿©ºÎ¸¦ È®ÀÎÇÏ´Â ÄÚ·çÆ¾
+    // ë§ˆìš°ìŠ¤ ëˆŒë¦¼ ì—¬ë¶€ë¥¼ í™•ì¸í•˜ëŠ” ì½”ë£¨í‹´
     IEnumerator Push_Coroutine()
     {
-        // 1ÃÊ°£ ´ë±âÇÏ´Â ÀÌÀ¯´Â ¸¶¿ì½º°¡ °è¼Ó ´­¸² »óÅÂÀÎÁö ‹÷ »óÅÂÀÎÁö ±¸ºĞÇÏ±â À§ÇÔ
-        yield return new WaitForSeconds(1.0f);
+        // 1ì´ˆê°„ ëŒ€ê¸°í•˜ëŠ” ì´ìœ ëŠ” ë§ˆìš°ìŠ¤ê°€ ê³„ì† ëˆŒë¦¼ ìƒíƒœì¸ì§€ ë—¸ ìƒíƒœì¸ì§€ êµ¬ë¶„í•˜ê¸° ìœ„í•¨
+        yield return new WaitForSeconds(0.5f);
         isPush = true;
     }
 }
