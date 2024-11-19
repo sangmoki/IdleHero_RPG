@@ -35,7 +35,6 @@ public class Camera_Manager : MonoBehaviour
         foreach(var player in players)
         {
             float targetDistance = Vector3.Distance(Vector3.zero, player.transform.position) + Distance_Value;
-            Debug.Log(targetDistance);
 
             if (targetDistance > maxDistance)
                 maxDistance = targetDistance;
