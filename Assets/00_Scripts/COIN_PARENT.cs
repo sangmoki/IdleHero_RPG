@@ -6,16 +6,16 @@ public class COIN_PARENT : MonoBehaviour
 {
     Vector3 target;
     Camera cam;                                     
-    RectTransform[] childs = new RectTransform[5]; // ÄÚÀÎ ¿¬Ãâ À§ÇÑ º¯¼ö
+    RectTransform[] childs = new RectTransform[5]; // ì½”ì¸ ì—°ì¶œ ìœ„í•œ ë³€ìˆ˜
 
     [Range(0.0f, 500.0f)]
-    [SerializeField] private float m_Distance_Range, speed; // ÄÚÀÎÀÌ Æ¢¾î³ª°¡´Â ¹üÀ§, ¼Óµµ
+    [SerializeField] private float m_Distance_Range, speed; // ì½”ì¸ì´ íŠ€ì–´ë‚˜ê°€ëŠ” ë²”ìœ„, ì†ë„
 
     private void Awake()
     {
         cam = Camera.main;
 
-        // ÀÚ½Ä ¿ÀºêÁ§Æ®ÀÇ RectTransform ÄÄÆ÷³ÍÆ®¸¦ °¡Á®¿Â´Ù.
+        // ìì‹ ì˜¤ë¸Œì íŠ¸ì˜ RectTransform ì»´í¬ë„ŒíŠ¸ë¥¼ ê°€ì ¸ì˜¨ë‹¤.
         for (int i = 0; i < childs.Length; i++)
         {
             childs[i] = transform.GetChild(i).GetComponent<RectTransform>();
@@ -26,16 +26,16 @@ public class COIN_PARENT : MonoBehaviour
     {
         target = pos;
 
-        // Äµ¹ö½º ÁÂÇ¥·Î º¯°æ
+        // ìº”ë²„ìŠ¤ ì¢Œí‘œë¡œ ë³€ê²½
         transform.position = cam.WorldToScreenPoint(target);
 
-        // ÄÚÀÎµé °¢°¢ÀÇ À§Ä¡¸¦ ÃÊ±âÈ­ÇØÁØ´Ù.
+        // ì½”ì¸ë“¤ ê°ê°ì˜ ìœ„ì¹˜ë¥¼ ì´ˆê¸°í™”í•´ì¤€ë‹¤.
         for (int i = 0; i < 5; i++)
         {
             childs[i].anchoredPosition = Vector2.zero;
         }
 
-        // Äµ¹ö½ºÀÇ ÀÚ½ÄÀ¸·Î ¼³Á¤
+        // ìº”ë²„ìŠ¤ì˜ ìì‹ìœ¼ë¡œ ì„¤ì •
         transform.parent = Base_Canvas.instance.HOLDER_LAYER(0);
 
         StartCoroutine(Coin_Effect());
@@ -46,38 +46,38 @@ public class COIN_PARENT : MonoBehaviour
         Vector2[] RandomPos = new Vector2[childs.Length];
         for (int i = 0; i < childs.Length; i++)
         {
-            // Å¸°ÙÀÇ À§Ä¡ + ·£´ıÇÑ À§Ä¡ÀÇ ·£´ıÇÑ ¹üÀ§
+            // íƒ€ê²Ÿì˜ ìœ„ì¹˜ + ëœë¤í•œ ìœ„ì¹˜ì˜ ëœë¤í•œ ë²”ìœ„
             RandomPos[i] = new Vector2(target.x, target.y) + Random.insideUnitCircle * Random.Range(-m_Distance_Range, m_Distance_Range);
         }
 
-        // ¸ğµç ÄÚÀÎµéÀÌ µµÂøÁöÁ¡¿¡ µµÂøÇÏ´Â ¸ğ¼Ç
+        // ëª¨ë“  ì½”ì¸ë“¤ì´ ë„ì°©ì§€ì ì— ë„ì°©í•˜ëŠ” ëª¨ì…˜
         while (true)
         {
             for (int i = 0; i < childs.Length; i++)
             {
-                // °¢°¢ RectTransformÀ» °¡Á®¿Â´Ù.
+                // ê°ê° RectTransformì„ ê°€ì ¸ì˜¨ë‹¤.
                 RectTransform rect = childs[i];
-                // rectÀÇ anchoredPositionÀ» RandomPos[i]·Î ÀÌµ¿½ÃÅ²´Ù.
+                // rectì˜ anchoredPositionì„ RandomPos[i]ë¡œ ì´ë™ì‹œí‚¨ë‹¤.
                 rect.anchoredPosition = Vector2.MoveTowards(rect.anchoredPosition, RandomPos[i], Time.deltaTime * speed);
             }
 
-            // ¸ğµç ÄÚÀÎµéÀÌ µµÂøÁöÁ¡¿¡ µµÂøÇß´Ù¸é break
+            // ëª¨ë“  ì½”ì¸ë“¤ì´ ë„ì°©ì§€ì ì— ë„ì°©í–ˆë‹¤ë©´ break
             if (Distance_Boolean(RandomPos, 0.5f)) break;
 
-            // ÇÑ ¹øÀÇ ÇÁ·¹ÀÓÀ» ´ë±â
+            // í•œ ë²ˆì˜ í”„ë ˆì„ì„ ëŒ€ê¸°
             yield return null;
         }
 
         yield return new WaitForSeconds(0.3f);
 
-        // ÄÚÀÎµéÀÌ µµÂøÁöÁ¡¿¡ µµÂø ÈÄ¿¡ ÇÑ°÷À¸·Î ÀÌµ¿ÇÏ´Â ¸ğ¼Ç
+        // ì½”ì¸ë“¤ì´ ë„ì°©ì§€ì ì— ë„ì°© í›„ì— í•œê³³ìœ¼ë¡œ ì´ë™í•˜ëŠ” ëª¨ì…˜
         while (true)
         {
             for (int i = 0; i < childs.Length; i++)
             {
                 RectTransform rect = childs[i];
-                // ±âÁ¸ anchoredPositionÀº ºÎ¸ğÀÇ ·ÎÄÃ ÁÂÇ¥ ±âÁØÀÌ±â ¶§¹®¿¡
-                // World ÁÂÇ¥ÀÎ positionÀ» »ç¿ë
+                // ê¸°ì¡´ anchoredPositionì€ ë¶€ëª¨ì˜ ë¡œì»¬ ì¢Œí‘œ ê¸°ì¤€ì´ê¸° ë•Œë¬¸ì—
+                // World ì¢Œí‘œì¸ positionì„ ì‚¬ìš©
                 rect.position = Vector2.MoveTowards(rect.position, Base_Canvas.instance.COIN.position, Time.deltaTime * (speed * 15));
             }
 
@@ -91,13 +91,13 @@ public class COIN_PARENT : MonoBehaviour
         yield return null;
     }
 
-    // ·ÎÄÃ ÁÂÇ¥°ª ±âÁØ (anchoredPosition)
+    // ë¡œì»¬ ì¢Œí‘œê°’ ê¸°ì¤€ (anchoredPosition)
     private bool Distance_Boolean(Vector2[] end, float range)
     {
         for (int i = 0; i < childs.Length; i++)
         {
-            // °¢°¢ÀÇ °Å¸® °ªÀÌ Rangeº¸´Ù Å©¸é false¸¦ ¹İÈ¯ÇÑ´Ù.
-            // Áï, ÇÏ³ª¶óµµ µµÂøÁöÁ¡¿¡ µµÂøÇÏÁö ¸øÇß´Ù¸é false, ¾Æ´Ï¶ó¸é true
+            // ê°ê°ì˜ ê±°ë¦¬ ê°’ì´ Rangeë³´ë‹¤ í¬ë©´ falseë¥¼ ë°˜í™˜í•œë‹¤.
+            // ì¦‰, í•˜ë‚˜ë¼ë„ ë„ì°©ì§€ì ì— ë„ì°©í•˜ì§€ ëª»í–ˆë‹¤ë©´ false, ì•„ë‹ˆë¼ë©´ true
             float distance = Vector2.Distance(childs[i].anchoredPosition, end[i]);
             if (distance > range)
             {
@@ -107,13 +107,13 @@ public class COIN_PARENT : MonoBehaviour
         return true;
     }
 
-    // ¿ùµå ÁÂÇ¥°ª ±âÁØ - À§¿¡´Â ºÎ¸ğ¸¦ ¹Ù¶óº¸°í ¿òÁ÷¿©¾ß ÇßÁö¸¸
-    // Áö±İÀº ÄÚÀÎÀÌ ¸ğ¿©¼­ °íÁ¤µÈ ÄÚÀÎ¿¡ µé¾î°¡¾ß ÇÏ±â ¶§¹®
+    // ì›”ë“œ ì¢Œí‘œê°’ ê¸°ì¤€ - ìœ„ì—ëŠ” ë¶€ëª¨ë¥¼ ë°”ë¼ë³´ê³  ì›€ì§ì—¬ì•¼ í–ˆì§€ë§Œ
+    // ì§€ê¸ˆì€ ì½”ì¸ì´ ëª¨ì—¬ì„œ ê³ ì •ëœ ì½”ì¸ì— ë“¤ì–´ê°€ì•¼ í•˜ê¸° ë•Œë¬¸
     private bool Distance_Boolean_World (float range)
     {
         for (int i = 0; i < childs.Length; i++)
         {
-            // Áï, ÇÏ³ª¶óµµ µµÂøÁöÁ¡¿¡ µµÂøÇÏÁö ¸øÇß´Ù¸é false, ¾Æ´Ï¶ó¸é true
+            // ì¦‰, í•˜ë‚˜ë¼ë„ ë„ì°©ì§€ì ì— ë„ì°©í•˜ì§€ ëª»í–ˆë‹¤ë©´ false, ì•„ë‹ˆë¼ë©´ true
             float distance = Vector2.Distance(childs[i].position, Base_Canvas.instance.COIN.position);
             if (distance > range)
             {
