@@ -1,9 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D;
 
-public class Utils : MonoBehaviour
+public class Utils
 {
+    // Resources폴더에 있는 SpriteAtlas 불러오기
+    public static SpriteAtlas m_Atlas = Resources.Load<SpriteAtlas>("Atlas"); 
+
+    // Sprite 아틀라스 불러오는 함수
+    public static Sprite Get_Atlas(string temp)
+    {
+        return m_Atlas.GetSprite(temp);
+    }
+
+    // 레어도에 따른 컬러 조정
     public static string String_Color_Rarity(Rarity rare)
     {
         switch(rare)
