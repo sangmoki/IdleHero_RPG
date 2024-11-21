@@ -6,7 +6,28 @@ using UnityEngine.U2D;
 public class Utils
 {
     // Resources폴더에 있는 SpriteAtlas 불러오기
-    public static SpriteAtlas m_Atlas = Resources.Load<SpriteAtlas>("Atlas"); 
+    public static SpriteAtlas m_Atlas = Resources.Load<SpriteAtlas>("Atlas");
+
+    // UI를 담아둘 Stack - LIFO : 가장 늦게 들어온 요소가 가장 먼저 나간다.
+    public static Stack<UI_Base> UI_Holder = new Stack<UI_Base>();
+
+    public static void CloseAllPopupUI()
+    {
+        while(UI_Holder.Count > 0)
+            ClosePopupUI();
+    }
+
+    public static void ClosePopupUI()
+    {
+        if (UI_Holder.Count == 0)
+            return;
+
+        // Push(스택에 값 삽입)
+        // Peek(스택에 마지막 들어온 값 반환)
+        // Pop(마지막 들어온 값 반환하면서 Stack에서 제거)
+        UI_Base popup = UI_Holder.Peek();
+        popup.DisableOBJ();
+    }
 
     // Sprite 아틀라스 불러오는 함수
     public static Sprite Get_Atlas(string temp)
@@ -30,7 +51,6 @@ public class Utils
             case Rarity.Legendary:
                 return "<color=#DB8A33>";
         }
-
         return "<color=#B3C0C4>";
     }
 }

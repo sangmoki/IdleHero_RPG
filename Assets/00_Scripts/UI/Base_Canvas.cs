@@ -6,10 +6,10 @@ public class Base_Canvas : MonoBehaviour
 {
     public static Base_Canvas instance = null;
 
-    // ÄÚÀÎÀÇ À§Ä¡ Á¤º¸¸¦ ÀúÀåÇÏ±â À§ÇÑ ÇÔ¼ö
+    // ì½”ì¸ì˜ ìœ„ì¹˜ ì •ë³´ë¥¼ ì €ì¥í•˜ê¸° ìœ„í•œ í•¨ìˆ˜
     public Transform COIN;
 
-    // ¼ø¼­¸¦ Á¶Á¤ÇÏ±â À§ÇÑ ·¹ÀÌ¾î º¯¼ö
+    // ìˆœì„œë¥¼ ì¡°ì •í•˜ê¸° ìœ„í•œ ë ˆì´ì–´ ë³€ìˆ˜
     [SerializeField] private Transform LAYER;
 
     private void Awake()
@@ -23,9 +23,27 @@ public class Base_Canvas : MonoBehaviour
         else Destroy(this.gameObject);
     }
 
-    // ·¹ÀÌ¾îÀÇ ¼ø¼­ Á¶Á¤ - value°¡ ³·À»¼ö·Ï ¾Æ·¡ÂÊ¿¡ ±ò¸°´Ù.
+    private void Update()
+    {
+        // ESCí‚¤ë¥¼ ëˆ„ë¥´ë©´ íŒì—… UIë¥¼ ë‹«ëŠ”ë‹¤.
+        if (Input.GetKeyDown(KeyCode.Escape))
+            Utils.ClosePopupUI();
+        else
+        {
+            Debug.Log("ê²Œì„ ì¢…ë£Œ íŒì—… ë…¸ì¶œ");
+        }
+    }
+
+    // ë ˆì´ì–´ì˜ ìˆœì„œ ì¡°ì • - valueê°€ ë‚®ì„ìˆ˜ë¡ ì•„ë˜ìª½ì— ê¹”ë¦°ë‹¤.
     public Transform HOLDER_LAYER(int value)
     {
         return LAYER.GetChild(value);
+    }
+
+    public void GetUI(string temp)
+    {
+        // ê°€ì ¸ì˜¨ UIë¥¼ UI_Holderì— ì €ì¥
+        var go = Instantiate(Resources.Load<UI_Base>("UI/" + temp), transform);
+        Utils.UI_Holder.Push(go);
     }
 }

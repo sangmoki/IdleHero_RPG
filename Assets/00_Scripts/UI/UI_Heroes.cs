@@ -11,7 +11,7 @@ public class UI_Heroes : UI_Base
     // 정렬 위한 Dictionary
     Dictionary<string, Character_Scriptable> m_Dictionarys = new Dictionary<string, Character_Scriptable>();
 
-    private void Start()
+    public override bool Init()
     {
         var Data = Resources.LoadAll<Character_Scriptable>("Scriptable");
 
@@ -19,18 +19,19 @@ public class UI_Heroes : UI_Base
         {
             // 딕셔너리에 데이터 저장
             m_Dictionarys.Add(Data[i].m_Character_Name, Data[i]);
-
         }
 
         // 딕셔너리 정렬
         var sort_dictionary = m_Dictionarys.OrderByDescending(x => x.Value.m_Rarity);
 
         // 반복 돌며 레어도에 따른 정렬
-        foreach(var data in sort_dictionary)
+        foreach (var data in sort_dictionary)
         {
             // Content를 부모 오브젝트로 Part(Prefabs화 한 Hero_Panel)를 생성한다.
             var go = Instantiate(Part, Content).GetComponent<UI_Heroes_Part>();
             go.Initalize(data.Value);
         }
+
+        return base.Init();
     }
 }
