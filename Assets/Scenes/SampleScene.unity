@@ -1668,7 +1668,7 @@ MonoBehaviour:
   m_Level_Text: {fileID: 894171735}
   m_AvgDPS_Text: {fileID: 692002462}
   m_Fade: {fileID: 88718501}
-  m_FadeDuration: 1
+  m_FadeDuration: 0.3
 --- !u!1001 &355942393
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6032,19 +6032,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 998459801}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1715464257}
-        m_TargetAssemblyTypeName: Base_Canvas, Assembly-CSharp
-        m_MethodName: GetUI
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: '#Heroes'
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &998459801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10027,6 +10015,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   COIN: {fileID: 659585391}
   LAYER: {fileID: 1886418809}
+  HERO_BUTTON: {fileID: 998459800}
 --- !u!1 &1724974921
 GameObject:
   m_ObjectHideFlags: 0
@@ -10908,7 +10897,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1804548172}
   - component: {fileID: 1804548174}
-  - component: {fileID: 1804548173}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -10931,14 +10919,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 34594272}
   m_LocalEulerAnglesHint: {x: 55, y: 0, z: 0}
---- !u!81 &1804548173
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1804548171}
-  m_Enabled: 1
 --- !u!20 &1804548174
 Camera:
   m_ObjectHideFlags: 0

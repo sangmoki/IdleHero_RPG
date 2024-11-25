@@ -26,20 +26,6 @@ public class Main_UI : MonoBehaviour
         TextCheck();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            FadeInOut(true);
-            Debug.Log("Test");
-        } 
-        else if (Input.GetKeyDown(KeyCode.S))
-        {
-            FadeInOut(false);
-            Debug.Log("Test22");
-        }
-    }
-
     // 메인 UI 텍스트 변수
     [SerializeField] private TextMeshProUGUI m_Level_Text;
     [SerializeField] private TextMeshProUGUI m_AvgDPS_Text;
@@ -48,13 +34,31 @@ public class Main_UI : MonoBehaviour
     [SerializeField] private Image m_Fade;
     [SerializeField] private float m_FadeDuration;
 
-    public void FadeInOut(bool FadeInOut)
+    public void FadeInOut(bool FadeInOut, bool Sibling = false, Action action = null)
     {
-        StartCoroutine(FadeInOut_Coroutine(FadeInOut));
+        // Sibling 작업을 통하여 Fade Object의 인덱스 위치를 이동시킨다.
+        if (!Sibling)
+        {
+            m_Fade.transform.parent = this.transform;
+            m_Fade.transform.SetSiblingIndex(0);
+        } 
+        else
+        {
+            m_Fade.transform.parent = Base_Canvas.instance.transform;
+            m_Fade.transform.SetAsLastSibling();
+        }
+
+        StartCoroutine(FadeInOut_Coroutine(FadeInOut, action));
     }
 
     IEnumerator FadeInOut_Coroutine(bool FadeInOut, Action action = null)
     {
+        // FadeIn일 때 Button 클릭 방지
+        if (FadeInOut == false)
+        {
+            m_Fade.raycastTarget = true;
+        }
+
         float current = 0.0f;
         float percent = 0.0f;
         float start = FadeInOut ? 1.0f : 0.0f; // 1이면 255, 0이면 0
@@ -71,6 +75,11 @@ public class Main_UI : MonoBehaviour
 
             yield return null;
         }
+
+        if (action != null) action?.Invoke();
+
+        // FadeInOut일 경우 RaycastTarget을 false로 변경하여 클릭을 막는다.
+        m_Fade.raycastTarget = false;
     }
 
     // 레벨업이 될 때마다 UI 상단 텍스트를 변경
