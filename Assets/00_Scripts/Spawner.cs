@@ -10,12 +10,17 @@ public class Spawner : MonoBehaviour
     public static List<Monster> m_Monsters = new List<Monster>();
     public static List<Player> m_Players = new List<Player>();
 
+    Coroutine coroutine;
+
     private void Start()
     {
-        // 몬스터 스폰 코루틴 실행
-        StartCoroutine(SpawnCoroutine());
+        Stage_Manager.m_PlayEvent += Initalize;
     }
 
+    public void Initalize()
+    {
+        coroutine = StartCoroutine(SpawnCoroutine());
+    }
 
     // 몬스터 스폰 코루틴 함수
     // 몬스터의 스폰 기준

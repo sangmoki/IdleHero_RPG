@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,12 +10,13 @@ public class Base_Mng : MonoBehaviour
     // 싱글톤 패턴을 위한 변수
     public static Base_Mng instance = null;
 
+    #region Parmeter
     public static Pool_Manager s_Pool = new Pool_Manager();
     public static Player_Manager s_Player = new Player_Manager();
 
     public static Pool_Manager Pool { get { return s_Pool; } }
     public static Player_Manager Player { get { return s_Player; } }
-
+    #endregion
 
     private void Awake()
     {
@@ -29,6 +31,7 @@ public class Base_Mng : MonoBehaviour
             instance = this;
             // 해당 베이스 매니저를 가지고 있는 오브젝트가 된다.
             Pool.Initalize(transform);
+            Stage_Manager.State_Change(Stage_State.Ready);
             DontDestroyOnLoad(this.gameObject);
         }
         else if (instance != this)
@@ -50,10 +53,21 @@ public class Base_Mng : MonoBehaviour
         StartCoroutine(Return_Pool_Coroutine(timer, obj, path));
     }
 
+    public void Coroutine_Action(float timer, Action action)
+    {
+        StartCoroutine(Action_Coroutine(action, timer));
+    }
+
     // 사용 후 오브젝트 풀에 반환하는 함수
     IEnumerator Return_Pool_Coroutine(float timer, GameObject obj, string path)
     {
         yield return new WaitForSeconds(timer);
         Pool.m_pool_Dictionary[path].Return(obj);
+    }
+
+    IEnumerator Action_Coroutine(Action action, float timer)
+    {
+        yield return new WaitForSeconds(timer);
+        action?.Invoke();
     }
 }

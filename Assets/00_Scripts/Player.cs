@@ -44,27 +44,30 @@ public class Player : Character
 
     private void Update()
     {
+        // 현재 위치와 시작 위치를 계산한 값
+        float targetPos = Vector3.Distance(transform.position, startPos);
+        if (targetPos > 0.1f)
+        {
+            // 제자리로 이동
+            transform.position = Vector3.MoveTowards(transform.position, startPos, Time.deltaTime);
+            transform.LookAt(startPos);
+            AnimatorChange("isMOVE");
+        }
+        else
+        {
+            // 다시 돌아왔다면 대기상태로 전환
+            transform.rotation = rot;
+            AnimatorChange("isIDLE");
+        }
+
+        if (Stage_Manager.m_State != Stage_State.Play) return;
+
         // 가장 가까운 몬스터를 찾아서 타겟으로 지정
         FindClosetTarget(Spawner.m_Monsters.ToArray());
 
         if (m_Target == null)
         {
-            // 현재 위치와 시작 위치를 계산한 값
-            float targetPos = Vector3.Distance(transform.position, startPos);
-            if (targetPos > 0.1f)
-            {
-                // 제자리로 이동
-                transform.position = Vector3.MoveTowards(transform.position, startPos, Time.deltaTime);
-                transform.LookAt(startPos);
-                AnimatorChange("isMOVE");
-            } 
-            else
-            {
-                // 다시 돌아왔다면 대기상태로 전환
-                transform.rotation = rot;
-                AnimatorChange("isIDLE");
-            }
-            return;
+
         }
 
         // 만약 타겟의 상태가 사망 상태라면 다시 타겟을 찾는다.
