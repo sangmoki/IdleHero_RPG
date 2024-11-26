@@ -37,6 +37,18 @@ public class Spawner : MonoBehaviour
             Base_Mng.Pool.m_pool_Dictionary["Monster"].Return(m_Monsters[i].gameObject);
         }
         m_Monsters.Clear();
+
+        StartCoroutine(BossSpawnCoroutine());
+    }
+
+    // 보스 소환
+    IEnumerator BossSpawnCoroutine()
+    {
+        yield return new WaitForSeconds(2.0f);
+
+        // 보스 생성
+        var boss = Instantiate(Resources.Load<Monster>("Pool_OBJ/Boss"), Vector3.zero, Quaternion.Euler(0, 180, 0));
+        boss.Init();
     }
 
     // 몬스터 스폰 코루틴 함수

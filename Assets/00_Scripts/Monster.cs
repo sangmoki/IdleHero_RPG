@@ -32,6 +32,8 @@ public class Monster : Character
     {
         // isSpawn이 false이면 return
         if (isSpawn == false) return;
+        // 기존 Play State일 때 공격 연출 멈춤
+        if (Stage_Manager.m_State == Stage_State.Play) return;
 
         // 가장 가까운 플레이어를 찾아서 타겟으로 지정
         if (m_Target == null)

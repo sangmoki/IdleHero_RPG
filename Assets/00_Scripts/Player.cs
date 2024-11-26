@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : Character
 {
     private Character_Scriptable CH_Data; // 캐릭터 데이터
+    public ParticleSystem Provocation_Effect; // 보스 소환 이펙트
     public GameObject TrailObject;        // 플레이어의 공격을 표시할 Trail 오브젝트    
     public string CH_Name;                // 캐릭터 이름
     Vector3 startPos;                     // 플레이어의 시작 위치
@@ -55,6 +56,7 @@ public class Player : Character
     private void OnBoss()
     {
         AnimatorChange("isIDLE");
+        Provocation_Effect.Play();
     }
 
     private void Update()

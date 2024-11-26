@@ -21,6 +21,7 @@ public class Main_UI : MonoBehaviour
     {
         TextCheck();
         Monster_Count_Slider();
+
         Stage_Manager.m_ReadyEvent += () => FadeInOut(true);
     }
 
