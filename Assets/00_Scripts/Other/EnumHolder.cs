@@ -16,6 +16,7 @@ public enum Stage_State
     Ready,      // FadeIn상태 (준비상태)
     Play,       // 전투 스테이지  
     Boss,       // 보스 스테이지
+    BossPlay,   // 보스 전투
     Clear,      // 보스 처치
     Dead        // 플레이어 사망
 }

@@ -16,26 +16,39 @@ public class Main_UI : MonoBehaviour
             instance = this;
         }
     }
-
     private void Start()
     {
         TextCheck();
         Monster_Count_Slider();
 
         Stage_Manager.m_ReadyEvent += () => FadeInOut(true);
+        Stage_Manager.m_BossEvent += OnBoss;
     }
 
+    [Header("##Default")]
     // 메인 UI 텍스트 변수
     [SerializeField] private TextMeshProUGUI m_Level_Text;
     [SerializeField] private TextMeshProUGUI m_AvgDPS_Text;
 
+    [Space(20f)]
+    [Header("##Fade")]
     // 페이드 인아웃 작업 위한 변수
     [SerializeField] private Image m_Fade;
     [SerializeField] private float m_FadeDuration;
 
+    [Space(20f)]
+    [Header("##Monster_Slider")]
     // 몬스터 처치 수 계산 위한 변수
+    [SerializeField] private GameObject m_Monster_Count_Slider_OBJ;
     [SerializeField] private Image m_Monster_Count_Image;
     [SerializeField] private TextMeshProUGUI m_Monster_Count_Text;
+
+    [Space(20f)]
+    [Header("##Boss_Slider")]
+    // 보스 슬라이더
+    [SerializeField] private GameObject m_Boss_Slider_OBJ;
+    [SerializeField] private Image m_Boss_HP_Slider;
+    [SerializeField] private TextMeshProUGUI m_Boss_HP_Text, m_Boss_Stage_Text;
 
     // 몬스터 처치 슬라이더
     public void Monster_Count_Slider()
@@ -53,6 +66,14 @@ public class Main_UI : MonoBehaviour
 
         m_Monster_Count_Image.fillAmount = value;
         m_Monster_Count_Text.text = string.Format("{0:0.0}", value * 100.0f) + "%";
+    }
+
+    // 보스 생성 시 이벤트
+    private void OnBoss()
+    {
+        // 몬스터 슬라이더 비활성화, 보스 슬라이더 활성화
+        m_Monster_Count_Slider_OBJ.SetActive(false);
+        m_Boss_Slider_OBJ.SetActive(true);
     }
 
     // FadeInOut 기능 -> Fade 기능이 어느 위치에서 동작하는지

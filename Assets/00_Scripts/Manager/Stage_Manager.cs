@@ -9,6 +9,7 @@ using UnityEngine;
 public delegate void OnReadyEvent();
 public delegate void OnPlayEvent();
 public delegate void OnBossEvent();
+public delegate void OnBossPlayEvent();
 public delegate void OnClearEvent();
 public delegate void OnDeadEvent();
 
@@ -25,6 +26,7 @@ public class Stage_Manager
     public static OnReadyEvent m_ReadyEvent;
     public static OnPlayEvent m_PlayEvent;
     public static OnBossEvent m_BossEvent;
+    public static OnBossPlayEvent m_BossPlayEvent;
     public static OnClearEvent m_ClearEvent;
     public static OnDeadEvent m_DeadEvent;
 
@@ -45,6 +47,10 @@ public class Stage_Manager
                 break;
             case Stage_State.Boss:
                 Debug.Log("isBoss!");
+                m_BossEvent?.Invoke();
+                break;
+            case Stage_State.BossPlay:
+                Debug.Log("isBossPlay!");
                 m_BossEvent?.Invoke();
                 break;
             case Stage_State.Clear:

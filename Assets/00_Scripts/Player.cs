@@ -114,6 +114,30 @@ public class Player : Character
         }
     }
 
+    // 캐릭터 넉백 연출 구현
+    public void Knockback(Vector3 targetPos)
+    {
+        transform.LookAt(targetPos);
+        StartCoroutine(Knockback_Coroutine(4.0f, 0.3f));
+    }
+
+    // 보스 소환 시 캐릭터 넉백 연출 구현을 위한 코루틴
+    // power는 넉백의 세기, duration은 넉백 지속 시간
+    IEnumerator Knockback_Coroutine(float power, float duration)
+    {
+        float t = duration;
+        Vector3 force = this.transform.forward * -power;
+        force.y = 0f;
+
+        while (t > 0f)
+        {
+            t -= Time.deltaTime;
+            transform.position += force * Time.deltaTime;
+            yield return null;
+        }
+
+    }
+
     // 공격 받은 후 이벤트 함수
     public override void GetDamage(double dmg)
     {
