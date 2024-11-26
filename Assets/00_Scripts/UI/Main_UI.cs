@@ -15,15 +15,13 @@ public class Main_UI : MonoBehaviour
         {
             instance = this;
         }
-        else if (instance != this)
-        {
-            Destroy(gameObject);
-        }
     }
 
     private void Start()
     {
         TextCheck();
+
+        Stage_Manager.m_ReadyEvent += () => FadeInOut(true);
     }
 
     // 메인 UI 텍스트 변수

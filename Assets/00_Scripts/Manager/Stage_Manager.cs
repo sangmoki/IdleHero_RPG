@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,12 +12,16 @@ public delegate void OnBossEvent();
 public delegate void OnClearEvent();
 public delegate void OnDeadEvent();
 
+
 public class Stage_Manager
 {
     // 상태 패턴(State Pattern)
     // 객체 상태에 따라 어떤 행동을 할 것 인가에 대한 디자인 패턴
     public static Stage_State m_State;
-    
+
+    public static int MaxCount = 10;     // 보스에 도달할 최대 몬스터 수
+    public static int Count;        // 현재 몬스터 수
+
     public static OnReadyEvent m_ReadyEvent;
     public static OnPlayEvent m_PlayEvent;
     public static OnBossEvent m_BossEvent;

@@ -136,35 +136,44 @@ public class Monster : Character
         if (HP <= 0)
         {
             isDead = true;
-            // 몬스터를 찾지 못하게 하기 위해 몬스터 리스트에서 제거
-            Spawner.m_Monsters.Remove(this);
-
-            // 스모크 이펙트 부여
-            Base_Mng.Pool.Pooling_Obj("Smoke").Get((value) =>
-            {
-                value.transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
-                // 스모크 이펙트가 끝나고 반환
-                Base_Mng.instance.Return_Pool(value.GetComponent<ParticleSystem>().duration, value, "Smoke");
-            });
-
-            // 코인 이펙트 부여하여 현재 몬스터의 위치 값 반환
-            Base_Mng.Pool.Pooling_Obj("COIN_PARENT").Get((value) =>
-            {
-                value.GetComponent<COIN_PARENT>().Init(transform.position);
-            });
-
-            // 아이템 드롭 이펙트
-            for (int i = 0; i < 3; i++)
-            {
-                Base_Mng.Pool.Pooling_Obj("Item_OBJ").Get((value) =>
-                {
-                    value.GetComponent<Item_OBJ>().Init(transform.position);
-                });
-            }
-
-            // 몬스터를 풀링으로 반환
-            Base_Mng.Pool.m_pool_Dictionary["Monster"].Return(this.gameObject);
+            Dead_Event();
         }
+    }
+
+    // 몬스터 처치 이벤트
+    private void Dead_Event()
+    {
+        // 처치한 몬스터의 수
+        Stage_Manager.Count++;
+
+        // 몬스터를 찾지 못하게 하기 위해 몬스터 리스트에서 제거
+        Spawner.m_Monsters.Remove(this);
+
+        // 스모크 이펙트 부여
+        Base_Mng.Pool.Pooling_Obj("Smoke").Get((value) =>
+        {
+            value.transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
+            // 스모크 이펙트가 끝나고 반환
+            Base_Mng.instance.Return_Pool(value.GetComponent<ParticleSystem>().duration, value, "Smoke");
+        });
+
+        // 코인 이펙트 부여하여 현재 몬스터의 위치 값 반환
+        Base_Mng.Pool.Pooling_Obj("COIN_PARENT").Get((value) =>
+        {
+            value.GetComponent<COIN_PARENT>().Init(transform.position);
+        });
+
+        // 아이템 드롭 이펙트
+        for (int i = 0; i < 3; i++)
+        {
+            Base_Mng.Pool.Pooling_Obj("Item_OBJ").Get((value) =>
+            {
+                value.GetComponent<Item_OBJ>().Init(transform.position);
+            });
+        }
+
+        // 몬스터를 풀링으로 반환
+        Base_Mng.Pool.m_pool_Dictionary["Monster"].Return(this.gameObject);
     }
 
     // 크리티컬 확률 함수
