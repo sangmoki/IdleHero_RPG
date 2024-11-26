@@ -20,7 +20,7 @@ public class Main_UI : MonoBehaviour
     private void Start()
     {
         TextCheck();
-
+        Monster_Count_Slider();
         Stage_Manager.m_ReadyEvent += () => FadeInOut(true);
     }
 
@@ -32,6 +32,29 @@ public class Main_UI : MonoBehaviour
     [SerializeField] private Image m_Fade;
     [SerializeField] private float m_FadeDuration;
 
+    // 몬스터 처치 수 계산 위한 변수
+    [SerializeField] private Image m_Monster_Count_Image;
+    [SerializeField] private TextMeshProUGUI m_Monster_Count_Text;
+
+    // 몬스터 처치 슬라이더
+    public void Monster_Count_Slider()
+    {
+        float value = (float)Stage_Manager.Count / (float)Stage_Manager.MaxCount;
+
+        // 몬스터 처치가 100% 이상일 경우 보스 스테이지로 전환
+        if (value >= 1.0f)
+        {
+            value = 1.0f;
+
+            if (Stage_Manager.m_State != Stage_State.Boss)
+                Stage_Manager.State_Change(Stage_State.Boss);
+        }
+
+        m_Monster_Count_Image.fillAmount = value;
+        m_Monster_Count_Text.text = string.Format("{0:0.0}", value * 100.0f) + "%";
+    }
+
+    // FadeInOut 기능 -> Fade 기능이 어느 위치에서 동작하는지
     public void FadeInOut(bool FadeInOut, bool Sibling = false, Action action = null)
     {
         // Sibling 작업을 통하여 Fade Object의 인덱스 위치를 이동시킨다.
@@ -49,6 +72,7 @@ public class Main_UI : MonoBehaviour
         StartCoroutine(FadeInOut_Coroutine(FadeInOut, action));
     }
 
+    // Color 알파값을 조절하여 FadeInOut 기능을 구현
     IEnumerator FadeInOut_Coroutine(bool FadeInOut, Action action = null)
     {
         // FadeIn일 때 Button 클릭 방지

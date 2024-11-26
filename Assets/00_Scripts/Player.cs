@@ -22,6 +22,7 @@ public class Player : Character
         Spawner.m_Players.Add(this);
 
         Stage_Manager.m_ReadyEvent += OnReady;
+        Stage_Manager.m_BossEvent += OnBoss;
         startPos = transform.position;
 
         // 플레이어의 초기 시작 위치와 회전값을 저장
@@ -48,6 +49,12 @@ public class Player : Character
     private void OnReady()
     {
         transform.position = startPos;
+    }
+
+    // 보스 스테이지 진입 시 모든 행동 IDLE화
+    private void OnBoss()
+    {
+        AnimatorChange("isIDLE");
     }
 
     private void Update()

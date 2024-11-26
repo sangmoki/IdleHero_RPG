@@ -146,6 +146,9 @@ public class Monster : Character
         // 처치한 몬스터의 수
         Stage_Manager.Count++;
 
+        // 처치한 몬스터 수에 따른 Slider UI 갱신
+        Main_UI.instance.Monster_Count_Slider();
+
         // 몬스터를 찾지 못하게 하기 위해 몬스터 리스트에서 제거
         Spawner.m_Monsters.Remove(this);
 

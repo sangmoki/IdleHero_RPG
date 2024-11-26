@@ -14,12 +14,29 @@ public class Spawner : MonoBehaviour
 
     private void Start()
     {
-        Stage_Manager.m_PlayEvent += Initalize;
+        Stage_Manager.m_PlayEvent += OnPlay;
+        Stage_Manager.m_BossEvent += OnBoss;
     }
 
-    public void Initalize()
+    // 게임 시작 시 몬스터 스폰
+    public void OnPlay()
     {
         coroutine = StartCoroutine(SpawnCoroutine());
+    }
+
+    // 몬스터 처치 수가 일정량에 도달하면 보스 스테이지 진입
+    public void OnBoss()
+    {
+        // 현재 코루틴이 실행중이라면 코루틴 중지
+        if (coroutine != null)
+            StopCoroutine(coroutine);
+
+        // 화면상의 몬스터들을 전부 풀로 되돌린다 (제거)
+        for (int i = 0; i < m_Monsters.Count; i++)
+        {
+            Base_Mng.Pool.m_pool_Dictionary["Monster"].Return(m_Monsters[i].gameObject);
+        }
+        m_Monsters.Clear();
     }
 
     // 몬스터 스폰 코루틴 함수
@@ -70,7 +87,7 @@ public class Spawner : MonoBehaviour
 
         // 스폰 시간만큼 대기 후 스폰 실행
         yield return new WaitForSeconds(m_SpawnTime);
-        StartCoroutine(SpawnCoroutine());
+        coroutine = StartCoroutine(SpawnCoroutine());
     }
 
     // 몬스터를 풀링하기 위한 코루틴 함수
