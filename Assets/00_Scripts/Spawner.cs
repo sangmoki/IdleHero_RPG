@@ -55,11 +55,23 @@ public class Spawner : MonoBehaviour
         // 플레이어 넉백
         for (int i = 0; i < m_Players.Count;i++)
         {
-            if (Vector3.Distance(bossPos, m_Players[i].transform.position) <= 2.0f)
+            if (Vector3.Distance(bossPos, m_Players[i].transform.position) <= 3.0f)
             {
                 m_Players[i].Knockback(bossPos);
             }
         }
+
+        yield return new WaitForSeconds(1.5f);
+
+        // 플레이어의 보스 타겟팅
+        for (int i = 0; i < m_Players.Count; i++)
+        {
+            m_Players[i].m_Target = boss.transform;
+        }
+        //m_Monsters.Add(boss);
+
+        // 보스 전투 스테이지로 전환
+        Stage_Manager.State_Change(Stage_State.Boss_Play);
     }
 
     // 몬스터 스폰 코루틴 함수

@@ -14,7 +14,7 @@ public class Character : MonoBehaviour
     protected float target_Range = 5.0f; // 타겟을 공격할 수 있는 인지 범위 
     protected bool isATTACK = false;     // 공격 상태
 
-    protected Transform m_Target;        // 타겟
+    public Transform m_Target;        // 타겟
 
     [SerializeField]
     public Transform m_BulletTransform; // 총알 생성 위치

@@ -46,10 +46,11 @@ public class Stage_Manager
                 m_PlayEvent?.Invoke();
                 break;
             case Stage_State.Boss:
+                Count = 0;
                 Debug.Log("isBoss!");
                 m_BossEvent?.Invoke();
                 break;
-            case Stage_State.BossPlay:
+            case Stage_State.Boss_Play:
                 Debug.Log("isBossPlay!");
                 m_BossEvent?.Invoke();
                 break;

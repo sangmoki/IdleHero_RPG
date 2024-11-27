@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class Monster : Character
 {
-    public float m_Speed;   // 몬스터의 이동속도
-
     bool isSpawn = false;   // 스폰 확인 플래그
+
+    // Unity Engine 내부에서 몬스터 스탯 설정 변수
+    public float m_Speed;   // 몬스터의 이동속도
+    public double R_ATK, R_HP;
+    public float R_Attack_Range;
+
+    public bool isBoss;     // 보스 몬스터인지 확인하는 플래그
 
     // 초기값 설정
     protected override void Start()
@@ -19,9 +24,9 @@ public class Monster : Character
     {
         // 풀링에서 몬스터가 초기화 될 때 몬스터의 상태 초기화
         isDead = false;
-        ATK = 10;
-        HP = 5;
-        Attack_Range = 0.5f;
+        ATK = R_ATK;
+        HP = R_HP;
+        Attack_Range = R_Attack_Range;
         target_Range = Mathf.Infinity; 
 
         // 몬스터가 스폰될 때 크기가 점점 커지는 효과를 주기 위한 코루틴 함수 실행
@@ -32,40 +37,41 @@ public class Monster : Character
     {
         // isSpawn이 false이면 return
         if (isSpawn == false) return;
-        // 기존 Play State일 때 공격 연출 멈춤
-        if (Stage_Manager.m_State == Stage_State.Play) return;
-
-        // 가장 가까운 플레이어를 찾아서 타겟으로 지정
-        if (m_Target == null)
-            FindClosetTarget(Spawner.m_Players.ToArray());
-
-        if (m_Target != null)
+        // 기존 Play State이거나 Boss_Play일 시 공격 연출 멈춤
+        if (Stage_Manager.m_State == Stage_State.Play || Stage_Manager.m_State == Stage_State.Boss_Play)
         {
-            // 만약 타겟의 상태가 사망 상태라면 다시 타겟을 찾는다.
-            if (m_Target.GetComponent<Character>().isDead)
-            {
+            // 가장 가까운 플레이어를 찾아서 타겟으로 지정
+            if (m_Target == null)
                 FindClosetTarget(Spawner.m_Players.ToArray());
-            }
 
-            // 현재 타겟의 위치와 플레이어의 위치를 계산한 값
-            float targetDistance = Vector3.Distance(transform.position, m_Target.position);
-            // 현재 타겟이 추적 범위 안에 있지만 공격 범위 안에 존재하지 않을 경우
-            if (targetDistance > Attack_Range && isATTACK == false)
+            if (m_Target != null)
             {
-                // 타겟을 향해 이동
-                AnimatorChange("isMOVE");
-                transform.LookAt(m_Target.position);
-                transform.position = Vector3.MoveTowards(transform.position, m_Target.position, Time.deltaTime);
-            }
-            else if (targetDistance <= Attack_Range && isATTACK == false)
-            {
-                // 타겟이 공격 범위 안에 존재할 경우
-                // 공격
-                isATTACK = true;
-                AnimatorChange("isATTACK");
+                // 만약 타겟의 상태가 사망 상태라면 다시 타겟을 찾는다.
+                if (m_Target.GetComponent<Character>().isDead)
+                {
+                    FindClosetTarget(Spawner.m_Players.ToArray());
+                }
 
-                // 공격 후 공격 상태 초기화 함수 호출
-                Invoke("InitAttack", 1.0f);
+                // 현재 타겟의 위치와 플레이어의 위치를 계산한 값
+                float targetDistance = Vector3.Distance(transform.position, m_Target.position);
+                // 현재 타겟이 추적 범위 안에 있지만 공격 범위 안에 존재하지 않을 경우
+                if (targetDistance > Attack_Range && isATTACK == false)
+                {
+                    // 타겟을 향해 이동
+                    AnimatorChange("isMOVE");
+                    transform.LookAt(m_Target.position);
+                    transform.position = Vector3.MoveTowards(transform.position, m_Target.position, Time.deltaTime);
+                }
+                else if (targetDistance <= Attack_Range && isATTACK == false)
+                {
+                    // 타겟이 공격 범위 안에 존재할 경우
+                    // 공격
+                    isATTACK = true;
+                    AnimatorChange("isATTACK");
+
+                    // 공격 후 공격 상태 초기화 함수 호출
+                    Invoke("InitAttack", 1.0f);
+                }
             }
         }
 
@@ -145,11 +151,21 @@ public class Monster : Character
     // 몬스터 처치 이벤트
     private void Dead_Event()
     {
-        // 처치한 몬스터의 수
-        Stage_Manager.Count++;
+        // 보스가 아니라면 카운트 실행
+        if (!isBoss)
+        {
+            // 처치한 몬스터의 수
+            Stage_Manager.Count++;
 
-        // 처치한 몬스터 수에 따른 Slider UI 갱신
-        Main_UI.instance.Monster_Count_Slider();
+            // 처치한 몬스터 수에 따른 Slider UI 갱신
+            Main_UI.instance.Monster_Count_Slider();
+        }
+        else
+        {
+            // 보스를 다 잡은 후 스테이지 클리어
+            Stage_Manager.State_Change(Stage_State.Clear);
+        }
+
 
         // 몬스터를 찾지 못하게 하기 위해 몬스터 리스트에서 제거
         Spawner.m_Monsters.Remove(this);
