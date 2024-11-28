@@ -29,7 +29,9 @@ public class Spawner : MonoBehaviour
     {
         // 현재 코루틴이 실행중이라면 코루틴 중지
         if (coroutine != null)
+        {
             StopCoroutine(coroutine);
+        }
 
         // 화면상의 몬스터들을 전부 풀로 되돌린다 (제거)
         for (int i = 0; i < m_Monsters.Count; i++)
@@ -44,7 +46,7 @@ public class Spawner : MonoBehaviour
     // 보스 소환
     IEnumerator BossSpawnCoroutine()
     {
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(2.0f);
 
         // 보스 생성
         var boss = Instantiate(Resources.Load<Monster>("Pool_OBJ/Boss"), Vector3.zero, Quaternion.Euler(0, 180, 0));
@@ -53,22 +55,18 @@ public class Spawner : MonoBehaviour
         Vector3 bossPos = boss.transform.position;
 
         // 플레이어 넉백
-        for (int i = 0; i < m_Players.Count;i++)
+        for (int i = 0; i < m_Players.Count; i++)
         {
             if (Vector3.Distance(bossPos, m_Players[i].transform.position) <= 3.0f)
             {
-                m_Players[i].Knockback(bossPos);
+                m_Players[i].transform.LookAt(boss.transform.position);
+                m_Players[i].KnockBack();
             }
         }
 
         yield return new WaitForSeconds(1.5f);
 
-        // 플레이어의 보스 타겟팅
-        for (int i = 0; i < m_Players.Count; i++)
-        {
-            m_Players[i].m_Target = boss.transform;
-        }
-        //m_Monsters.Add(boss);
+        m_Monsters.Add(boss);
 
         // 보스 전투 스테이지로 전환
         Stage_Manager.State_Change(Stage_State.Boss_Play);

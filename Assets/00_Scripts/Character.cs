@@ -19,6 +19,8 @@ public class Character : MonoBehaviour
     [SerializeField]
     public Transform m_BulletTransform; // 총알 생성 위치
 
+    public string Bullet_Name;         // 총알 이름
+
     // virtual키워드는 - 상속받은 내부에서 override 사용이 가능하다.
     // 즉, 상속받은 함수 내부에서 추가 수정이 가능하다.
     protected virtual void Start()
@@ -33,14 +35,14 @@ public class Character : MonoBehaviour
     // 동작 변경 함수
     protected void AnimatorChange(string temp)
     {
-        if (temp == "isATTACK")
-        {
-            animator.SetTrigger("isATTACK");
-            return;
-        }
-
         animator.SetBool("isIDLE", false);
         animator.SetBool("isMOVE", false);
+
+        if (temp == "isATTACK" || temp == "isCLEAR")
+        {
+            animator.SetTrigger(temp);
+            return;
+        }
 
         animator.SetBool(temp, true);
     }
@@ -55,7 +57,7 @@ public class Character : MonoBehaviour
         Base_Mng.Pool.Pooling_Obj("Attack_Helper").Get((value) =>
         {
             value.transform.position = m_BulletTransform.position;
-            value.GetComponent<Bullet>().Init(m_Target, ATK, "CH_01");
+            value.GetComponent<Bullet>().Init(m_Target, ATK, Bullet_Name);
         });
     }
 

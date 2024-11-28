@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Monster : Character
@@ -139,7 +140,12 @@ public class Monster : Character
         });
 
         HP -= dmg;
-        
+
+        if (isBoss)
+        {
+            Main_UI.instance.Boss_Slider_Count((float)HP, 500);
+        }
+
         // 몬스터의 체력이 0이하가 되면 몬스터의 죽음
         if (HP <= 0)
         {
@@ -165,7 +171,6 @@ public class Monster : Character
             // 보스를 다 잡은 후 스테이지 클리어
             Stage_Manager.State_Change(Stage_State.Clear);
         }
-
 
         // 몬스터를 찾지 못하게 하기 위해 몬스터 리스트에서 제거
         Spawner.m_Monsters.Remove(this);
@@ -193,8 +198,11 @@ public class Monster : Character
             });
         }
 
-        // 몬스터를 풀링으로 반환
-        Base_Mng.Pool.m_pool_Dictionary["Monster"].Return(this.gameObject);
+        // 일반 몬스터(보스 x)를 풀링으로 반환
+        if (!isBoss)
+            Base_Mng.Pool.m_pool_Dictionary["Monster"].Return(this.gameObject);
+        else 
+            Destroy(this.gameObject);
     }
 
     // 크리티컬 확률 함수

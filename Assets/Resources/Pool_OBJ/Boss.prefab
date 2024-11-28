@@ -880,6 +880,7 @@ MonoBehaviour:
   isDead: 0
   m_Target: {fileID: 0}
   m_BulletTransform: {fileID: 1359279342671600649}
+  Bullet_Name: MO_Boss
   m_Speed: 0.5
   R_ATK: 50
   R_HP: 500

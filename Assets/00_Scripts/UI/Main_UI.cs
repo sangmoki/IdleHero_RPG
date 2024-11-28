@@ -23,6 +23,7 @@ public class Main_UI : MonoBehaviour
 
         Stage_Manager.m_ReadyEvent += () => FadeInOut(true);
         Stage_Manager.m_BossEvent += OnBoss;
+        Stage_Manager.m_ClearEvent += OnClear;
     }
 
     [Header("##Default")]
@@ -50,6 +51,44 @@ public class Main_UI : MonoBehaviour
     [SerializeField] private Image m_Boss_HP_Slider;
     [SerializeField] private TextMeshProUGUI m_Boss_HP_Text, m_Boss_Stage_Text;
 
+    // 보스 클리어 체크
+    private void SliderOBJCheck(bool Boss)
+    {
+        m_Monster_Count_Slider_OBJ.SetActive(!Boss);
+        m_Boss_Slider_OBJ.SetActive(Boss);
+
+        Monster_Count_Slider();
+
+        float value = Boss ? 1.0f : 0.0f;
+        Boss_Slider_Count(value, 1.0f);
+    }
+
+    // 보스 생성 시 이벤트
+    private void OnBoss()
+    {
+        SliderOBJCheck(true);
+    }
+
+    // 보스 클리어
+    private void OnClear()
+    {
+        SliderOBJCheck(false);
+
+        StartCoroutine(Clear_Delay());
+    }
+
+    // 보스 클리어 후 이벤트
+    IEnumerator Clear_Delay()
+    {
+        // 2초뒤 FadeIn
+        yield return new WaitForSeconds(2.0f);
+        FadeInOut(false);
+
+        // 1초 뒤 Ready State로 전환
+        yield return new WaitForSeconds(1.0f);
+        Stage_Manager.State_Change(Stage_State.Ready);
+    }
+
     // 몬스터 처치 슬라이더
     public void Monster_Count_Slider()
     {
@@ -68,12 +107,17 @@ public class Main_UI : MonoBehaviour
         m_Monster_Count_Text.text = string.Format("{0:0.0}", value * 100.0f) + "%";
     }
 
-    // 보스 생성 시 이벤트
-    private void OnBoss()
+    // 보스 슬라이더 체력 표시
+    public void Boss_Slider_Count(float hp, double maxHp)
     {
-        // 몬스터 슬라이더 비활성화, 보스 슬라이더 활성화
-        m_Monster_Count_Slider_OBJ.SetActive(false);
-        m_Boss_Slider_OBJ.SetActive(true);
+        float value = hp / (float)maxHp;
+
+        if (value <= 0.0f)
+        {
+            value = 0.0f;
+        }
+        m_Boss_HP_Slider.fillAmount = value;
+        m_Boss_HP_Text.text = string.Format("{0:0.0}", value * 100.0f) + "%";
     }
 
     // FadeInOut 기능 -> Fade 기능이 어느 위치에서 동작하는지

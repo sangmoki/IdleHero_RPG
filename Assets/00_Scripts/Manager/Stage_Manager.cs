@@ -20,8 +20,9 @@ public class Stage_Manager
     // 객체 상태에 따라 어떤 행동을 할 것 인가에 대한 디자인 패턴
     public static Stage_State m_State;
 
-    public static int MaxCount = 5;     // 보스에 도달할 최대 몬스터 수
+    public static int MaxCount = 5; // 보스에 도달할 최대 몬스터 수
     public static int Count;        // 현재 몬스터 수
+    public static int Stage;        // 현재 스테이지
 
     public static OnReadyEvent m_ReadyEvent;
     public static OnPlayEvent m_PlayEvent;
@@ -52,9 +53,10 @@ public class Stage_Manager
                 break;
             case Stage_State.Boss_Play:
                 Debug.Log("isBossPlay!");
-                m_BossEvent?.Invoke();
+                m_BossPlayEvent?.Invoke();
                 break;
             case Stage_State.Clear:
+                Stage++;
                 Debug.Log("isClear!");
                 m_ClearEvent?.Invoke();
                 break;

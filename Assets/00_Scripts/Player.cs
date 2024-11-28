@@ -24,7 +24,7 @@ public class Player : Character
 
         Stage_Manager.m_ReadyEvent += OnReady;
         Stage_Manager.m_BossEvent += OnBoss;
-        startPos = transform.position;
+        Stage_Manager.m_ClearEvent += OnClear;
 
         // 플레이어의 초기 시작 위치와 회전값을 저장
         // 몬스터를 추적하다가 몬스터가 범위 내에서 사라지면
@@ -49,7 +49,9 @@ public class Player : Character
 
     private void OnReady()
     {
+        AnimatorChange("isIDLE");
         transform.position = startPos;
+        transform.rotation = rot;
     }
 
     // 보스 스테이지 진입 시 모든 행동 IDLE화
@@ -57,6 +59,12 @@ public class Player : Character
     {
         AnimatorChange("isIDLE");
         Provocation_Effect.Play();
+    }
+
+    // 보스 클리어
+    private void OnClear()
+    {
+        AnimatorChange("isCLEAR");
     }
 
     private void Update()
@@ -116,10 +124,9 @@ public class Player : Character
     }
 
     // 캐릭터 넉백 연출 구현
-    public void Knockback(Vector3 targetPos)
+    public void KnockBack()
     {
-        transform.LookAt(targetPos);
-        StartCoroutine(Knockback_Coroutine(4.0f, 0.3f));
+        StartCoroutine(Knockback_Coroutine(3.0f, 0.3f));
     }
 
     // 보스 소환 시 캐릭터 넉백 연출 구현을 위한 코루틴
@@ -133,10 +140,12 @@ public class Player : Character
         while (t > 0f)
         {
             t -= Time.deltaTime;
-            transform.position += force * Time.deltaTime;
+            if (Vector3.Distance(Vector3.zero, transform.position) < 3.0f)
+            {
+                transform.position += force * Time.deltaTime;
+            }
             yield return null;
         }
-
     }
 
     // 공격 받은 후 이벤트 함수
