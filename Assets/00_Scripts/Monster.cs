@@ -18,6 +18,8 @@ public class Monster : Character
     protected override void Start()
     {
         base.Start();
+
+        Stage_Manager.m_DeadEvent += OnDead;
     }
 
     // 재활용 - Start에서 실행하면 한번 오브젝트가 나갔다 들어오면 실행이 안됨.
@@ -47,6 +49,13 @@ public class Monster : Character
         GetComponent<Skill_Base>().SetSkill();
 
         StartCoroutine(SkillCoroutine());
+    }
+
+    // 캐릭터가 다 사망했다면 IDLE 상태로 전환
+    void OnDead()
+    {
+        StopAllCoroutines();
+        AnimatorChange("isIDLE");
     }
 
 
@@ -150,7 +159,7 @@ public class Monster : Character
         bool critical = Critical(ref dmg);
 
         // 몬스터가 피격당했을 경우 HitText를 풀링으로 가져와서 피격당한 텍스트를 생성
-        Base_Mng.Pool.Pooling_Obj("HIT_TEXT").Get((value) =>
+        Base_Manager.Pool.Pooling_Obj("HIT_TEXT").Get((value) =>
         {
             value.GetComponent<HIT_TEXT>().Init(transform.position, dmg, false, critical);
         });
@@ -176,11 +185,14 @@ public class Monster : Character
         // 보스가 아니라면 카운트 실행
         if (!isBoss)
         {
-            // 처치한 몬스터의 수
-            Stage_Manager.Count++;
+            if (!Stage_Manager.isDead)
+            {
+                // 처치한 몬스터의 수
+                Stage_Manager.Count++;
 
-            // 처치한 몬스터 수에 따른 Slider UI 갱신
-            Main_UI.instance.Monster_Count_Slider();
+                // 처치한 몬스터 수에 따른 Slider UI 갱신
+                Main_UI.instance.Monster_Count_Slider();
+            }
         }
         else
         {
@@ -192,15 +204,15 @@ public class Monster : Character
         Spawner.m_Monsters.Remove(this);
 
         // 스모크 이펙트 부여
-        Base_Mng.Pool.Pooling_Obj("Smoke").Get((value) =>
+        Base_Manager.Pool.Pooling_Obj("Smoke").Get((value) =>
         {
             value.transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
             // 스모크 이펙트가 끝나고 반환
-            Base_Mng.instance.Return_Pool(value.GetComponent<ParticleSystem>().duration, value, "Smoke");
+            Base_Manager.instance.Return_Pool(value.GetComponent<ParticleSystem>().duration, value, "Smoke");
         });
 
         // 코인 이펙트 부여하여 현재 몬스터의 위치 값 반환
-        Base_Mng.Pool.Pooling_Obj("COIN_PARENT").Get((value) =>
+        Base_Manager.Pool.Pooling_Obj("COIN_PARENT").Get((value) =>
         {
             value.GetComponent<COIN_PARENT>().Init(transform.position);
         });
@@ -208,7 +220,7 @@ public class Monster : Character
         // 아이템 드롭 이펙트
         for (int i = 0; i < 3; i++)
         {
-            Base_Mng.Pool.Pooling_Obj("Item_OBJ").Get((value) =>
+            Base_Manager.Pool.Pooling_Obj("Item_OBJ").Get((value) =>
             {
                 value.GetComponent<Item_OBJ>().Init(transform.position);
             });
@@ -216,7 +228,7 @@ public class Monster : Character
 
         // 일반 몬스터(보스 x)를 풀링으로 반환
         if (!isBoss)
-            Base_Mng.Pool.m_pool_Dictionary["Monster"].Return(this.gameObject);
+            Base_Manager.Pool.m_pool_Dictionary["Monster"].Return(this.gameObject);
         else 
             Destroy(this.gameObject);
     }
@@ -228,10 +240,10 @@ public class Monster : Character
         float RandomValue = Random.Range(0.0f, 100.0f);
 
         // 랜덤값이 플레이어의 크리티컬 확률보다 낮다면
-        if (RandomValue <= Base_Mng.Player.Critical_Percent)
+        if (RandomValue <= Base_Manager.Player.Critical_Percent)
         {
             // 데미지에 크리티컬 데미지를 곱하여 크리티컬 데미지 적용
-            dmg *= Base_Mng.Player.Critical_Damage / 100; 
+            dmg *= Base_Manager.Player.Critical_Damage / 100; 
             return true;
         }
 

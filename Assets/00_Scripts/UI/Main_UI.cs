@@ -24,6 +24,7 @@ public class Main_UI : MonoBehaviour
         Stage_Manager.m_ReadyEvent += () => FadeInOut(true);
         Stage_Manager.m_BossEvent += OnBoss;
         Stage_Manager.m_ClearEvent += OnClear;
+        Stage_Manager.m_DeadEvent += OnDead;
     }
 
     [Header("##Default")]
@@ -51,9 +52,29 @@ public class Main_UI : MonoBehaviour
     [SerializeField] private Image m_Boss_HP_Slider;
     [SerializeField] private TextMeshProUGUI m_Boss_HP_Text, m_Boss_Stage_Text;
 
+    [Space(20f)]
+    [Header("##Dead_Frame")]
+    [SerializeField] private GameObject m_Dead_Frame_OBJ;
+
+    public void Set_Boss_State()
+    {
+        Stage_Manager.isDead = false;
+        Stage_Manager.State_Change(Stage_State.Boss);
+    }
+
     // 보스 클리어 체크
     private void SliderOBJCheck(bool Boss)
     {
+        if (Stage_Manager.isDead)
+        {
+            m_Monster_Count_Slider_OBJ.SetActive(false);
+            m_Boss_Slider_OBJ.SetActive(false);
+
+            m_Dead_Frame_OBJ.SetActive(true);
+            return;
+        }
+        m_Dead_Frame_OBJ.SetActive(false);
+
         m_Monster_Count_Slider_OBJ.SetActive(!Boss);
         m_Boss_Slider_OBJ.SetActive(Boss);
 
@@ -73,8 +94,35 @@ public class Main_UI : MonoBehaviour
     private void OnClear()
     {
         SliderOBJCheck(false);
-
         StartCoroutine(Clear_Delay());
+    }
+    
+    private void OnDead()
+    {
+        SliderOBJCheck(false);
+
+        StartCoroutine(Dead_Delay());
+    }
+
+    IEnumerator Dead_Delay()
+    {
+        yield return StartCoroutine(Clear_Delay());
+        SliderOBJCheck(false);
+
+        for (int i = 0; i < Spawner.m_Monsters.Count; i++)
+        {
+            // 보스라면 보스 삭제
+            if (Spawner.m_Monsters[i].isBoss == true)
+            {
+                Destroy(Spawner.m_Monsters[i].gameObject);
+            }
+            // 아니라면 풀링으로 반환
+            else
+            {
+                Base_Manager.Pool.m_pool_Dictionary["Monster"].Return(Spawner.m_Monsters[i].gameObject);
+            }
+        }
+        Spawner.m_Monsters.Clear();
     }
 
     // 보스 클리어 후 이벤트
@@ -173,8 +221,8 @@ public class Main_UI : MonoBehaviour
     // 레벨업이 될 때마다 UI 상단 텍스트를 변경
     public void TextCheck()
     {
-        m_Level_Text.text = "LV." + (Base_Mng.Player.Level + 1).ToString();
-        m_AvgDPS_Text.text = StringMethod.ToCurrencyString(Base_Mng.Player.Average_DPS());
+        m_Level_Text.text = "LV." + (Base_Manager.Player.Level + 1).ToString();
+        m_AvgDPS_Text.text = StringMethod.ToCurrencyString(Base_Manager.Player.Average_DPS());
     }
 
 }

@@ -25,6 +25,7 @@ public class Player : Character
         Stage_Manager.m_ReadyEvent += OnReady;
         Stage_Manager.m_BossEvent += OnBoss;
         Stage_Manager.m_ClearEvent += OnClear;
+        Stage_Manager.m_DeadEvent += OnDead;
 
         // 플레이어의 초기 시작 위치와 회전값을 저장
         // 몬스터를 추적하다가 몬스터가 범위 내에서 사라지면
@@ -43,13 +44,17 @@ public class Player : Character
 
     public void Set_ATKHP()
     {
-        ATK = Base_Mng.Player.Get_ATK(CH_Data.m_Rarity);
-        HP = Base_Mng.Player.Get_HP(CH_Data.m_Rarity);
+        ATK = Base_Manager.Player.Get_ATK(CH_Data.m_Rarity);
+        HP = Base_Manager.Player.Get_HP(CH_Data.m_Rarity);
     }
 
     private void OnReady()
     {
         AnimatorChange("isIDLE");
+        isDead = false;
+        Spawner.m_Players.Add(this);
+        Set_ATKHP();
+
         transform.position = startPos;
         transform.rotation = rot;
     }
@@ -67,8 +72,16 @@ public class Player : Character
         AnimatorChange("isCLEAR");
     }
 
+    private void OnDead()
+    {
+        Spawner.m_Players.Add(this);
+    }
+
     private void Update()
     {
+        // 죽을경우
+        if (isDead) return;
+
         if (Stage_Manager.m_State == Stage_State.Play || Stage_Manager.m_State == Stage_State.Boss_Play)
         {
             // 가장 가까운 몬스터를 찾아서 타겟으로 지정
@@ -153,13 +166,35 @@ public class Player : Character
     {
         base.GetDamage(dmg);
 
-        var goObj = Base_Mng.Pool.Pooling_Obj("HIT_TEXT").Get((value) =>
+        if (Stage_Manager.isDead) return;
+
+        var goObj = Base_Manager.Pool.Pooling_Obj("HIT_TEXT").Get((value) =>
         {
             value.transform.position = transform.position;
             value.GetComponent<HIT_TEXT>().Init(transform.position, dmg, true);
         });
 
         HP -= dmg;
+        
+        if (HP <= 0)
+        {
+            isDead = true;
+            DeadEvent();
+        }
+    }
+
+    private void DeadEvent()
+    {
+        Spawner.m_Players.Remove(this);
+
+        // 플레이어가 다 사망했다면 사망 상태로 전환
+        if (Spawner.m_Players.Count <= 0 && Stage_Manager.isDead == false)
+        {
+            Stage_Manager.State_Change(Stage_State.Dead);
+        }
+
+        AnimatorChange("isDEAD");
+        m_Target = null;
     }
 
     protected override void Attack()

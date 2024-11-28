@@ -36,7 +36,7 @@ public class Spawner : MonoBehaviour
         // 화면상의 몬스터들을 전부 풀로 되돌린다 (제거)
         for (int i = 0; i < m_Monsters.Count; i++)
         {
-            Base_Mng.Pool.m_pool_Dictionary["Monster"].Return(m_Monsters[i].gameObject);
+            Base_Manager.Pool.m_pool_Dictionary["Monster"].Return(m_Monsters[i].gameObject);
         }
         m_Monsters.Clear();
 
@@ -102,7 +102,7 @@ public class Spawner : MonoBehaviour
             // 위 두개는 GC(Garbage Collection)이 발생한다.
             // 계속 누적되다보면 메모리가 과부화 된다.
             // 이것을 방지하기 위해 풀링 기법(Pool_Mng)을 사용한다.
-            var goObj = Base_Mng.Pool.Pooling_Obj("Monster").Get((value) =>
+            var goObj = Base_Manager.Pool.Pooling_Obj("Monster").Get((value) =>
             {
                 // 가져온 Object 몬스터 생성
                 value.GetComponent<Monster>().Init();
@@ -127,6 +127,6 @@ public class Spawner : MonoBehaviour
     //IEnumerator ReturnCoroutine(GameObject obj)
     //{
     //    yield return new WaitForSeconds(1.0f);
-    //    Base_Mng.Pool.m_pool_Dictionary["Monster"].Return(obj);
+    //    Base_Manager.Pool.m_pool_Dictionary["Monster"].Return(obj);
     //}
 }
