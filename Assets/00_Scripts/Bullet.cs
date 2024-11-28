@@ -97,6 +97,6 @@ public class Bullet : MonoBehaviour
     IEnumerator ReturnObject(float timer)
     {
         yield return new WaitForSeconds(timer);
-        Base_Mng.Pool.m_pool_Dictionary["Attack_Helper"].Return(this.gameObject);
+        Base_Manager.Pool.m_pool_Dictionary["Attack_Helper"].Return(this.gameObject);
     }
 }

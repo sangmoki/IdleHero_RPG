@@ -54,7 +54,7 @@ public class HIT_TEXT : MonoBehaviour
             m_Text.colorGradient = new VertexGradient(color_white, color_white, color_white, color_white);
 
         // 사용이 끝나면 2초 후에 반환
-        Base_Mng.instance.Return_Pool(2.0f, this.gameObject, "HIT_TEXT"); 
+        Base_Manager.instance.Return_Pool(2.0f, this.gameObject, "HIT_TEXT"); 
     }
 
     private void Update()
@@ -73,6 +73,6 @@ public class HIT_TEXT : MonoBehaviour
     // 오브젝트 풀에 반환
     private void ReturnText()
     {
-        Base_Mng.Pool.m_pool_Dictionary["HIT_TEXT"].Return(this.gameObject);
+        Base_Manager.Pool.m_pool_Dictionary["HIT_TEXT"].Return(this.gameObject);
     }
 }

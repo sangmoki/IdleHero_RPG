@@ -5,10 +5,10 @@ using UnityEngine;
 
 // 모든 매니저 script를 관리하는 부모
 // 어느 곳에서나 접근이 사능하다.
-public class Base_Mng : MonoBehaviour
+public class Base_Manager : MonoBehaviour
 {
     // 싱글톤 패턴을 위한 변수
-    public static Base_Mng instance = null;
+    public static Base_Manager instance = null;
 
     #region Parmeter
     public static Pool_Manager s_Pool = new Pool_Manager();

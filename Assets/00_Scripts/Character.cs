@@ -38,7 +38,7 @@ public class Character : MonoBehaviour
         animator.SetBool("isIDLE", false);
         animator.SetBool("isMOVE", false);
 
-        if (temp == "isATTACK" || temp == "isCLEAR")
+        if (temp == "isATTACK" || temp == "isCLEAR" || temp == "isDEAD")
         {
             animator.SetTrigger(temp);
             return;
@@ -54,7 +54,7 @@ public class Character : MonoBehaviour
         if (m_Target == null) return;
 
         // 생성된 Bullet의 위치는 m_BulletTransform의 위치로 설정
-        Base_Mng.Pool.Pooling_Obj("Attack_Helper").Get((value) =>
+        Base_Manager.Pool.Pooling_Obj("Attack_Helper").Get((value) =>
         {
             value.transform.position = m_BulletTransform.position;
             value.GetComponent<Bullet>().Init(m_Target, ATK, Bullet_Name);
@@ -66,7 +66,7 @@ public class Character : MonoBehaviour
     {
         if (target_Range == null) return;
 
-        Base_Mng.Pool.Pooling_Obj("Attack_Helper").Get((value) =>
+        Base_Manager.Pool.Pooling_Obj("Attack_Helper").Get((value) =>
         {
             value.transform.position = m_Target.position;
             value.GetComponent<Bullet>().Attack_Init(m_Target, ATK);
@@ -76,12 +76,12 @@ public class Character : MonoBehaviour
     // 공격 받은 후 이벤트 함수
     public virtual void GetDamage(double dmg)
     {
-        HP -= dmg;
-        if (HP <= 0)
-        {
-            isDead = true;
-            animator.SetTrigger("isDEAD");
-        }
+        //HP -= dmg;
+        //if (HP <= 0)
+        //{
+        //    isDead = true;
+        //    animator.SetTrigger("isDEAD");
+        //}
     }
 
     // 타겟을 공격할 수 있는 인지 범위(추적)

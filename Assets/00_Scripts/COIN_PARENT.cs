@@ -83,7 +83,7 @@ public class COIN_PARENT : MonoBehaviour
 
             if (Distance_Boolean_World(0.5f))
             {
-                Base_Mng.Pool.m_pool_Dictionary["COIN_PARENT"].Return(this.gameObject);
+                Base_Manager.Pool.m_pool_Dictionary["COIN_PARENT"].Return(this.gameObject);
                 break;
             }
             yield return null;

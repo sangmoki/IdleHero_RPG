@@ -24,6 +24,8 @@ public class Stage_Manager
     public static int Count;        // 현재 몬스터 수
     public static int Stage;        // 현재 스테이지
 
+    public static bool isDead;      // 플레이어 사망 여부
+
     public static OnReadyEvent m_ReadyEvent;
     public static OnPlayEvent m_PlayEvent;
     public static OnBossEvent m_BossEvent;
@@ -40,7 +42,7 @@ public class Stage_Manager
             case Stage_State.Ready:
                 Debug.Log("isReady!");
                 m_ReadyEvent?.Invoke();
-                Base_Mng.instance.Coroutine_Action(2.0f, () => State_Change(Stage_State.Play));
+                Base_Manager.instance.Coroutine_Action(2.0f, () => State_Change(Stage_State.Play));
                 break;
             case Stage_State.Play:
                 Debug.Log("isPlay!");
@@ -62,6 +64,7 @@ public class Stage_Manager
                 break;
             case Stage_State.Dead:
                 Debug.Log("isDead!");
+                isDead = true;
                 m_DeadEvent?.Invoke();
                 break;
         }

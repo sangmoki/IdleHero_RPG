@@ -5,121 +5,121 @@ using UnityEngine;
 
 public class Item_OBJ : MonoBehaviour
 {
-    [SerializeField] private Transform ItemTextRect;      // ¾ÆÀÌÅÛ º¯¼ö
-    [SerializeField] private TextMeshProUGUI m_Text;      // ¾ÆÀÌÅÛÀÇ ÀÌ¸§
-    [SerializeField] private GameObject[] Raritys;        // ¾ÆÀÌÅÛÀÇ ·¹¾îµµ
-    [SerializeField] private ParticleSystem m_Loot;       // ¾ÆÀÌÅÛÀ» È¹µæÇÒ ¶§ ³ª¿À´Â ÀÌÆåÆ®
-    [SerializeField] private float firingAngle = 45.0f;   // °î¼±
-    [SerializeField] private float gravity = 9.8f;        // ridigd(default 9.8)Áß·Â 
+    [SerializeField] private Transform ItemTextRect;      // ì•„ì´í…œ ë³€ìˆ˜
+    [SerializeField] private TextMeshProUGUI m_Text;      // ì•„ì´í…œì˜ ì´ë¦„
+    [SerializeField] private GameObject[] Raritys;        // ì•„ì´í…œì˜ ë ˆì–´ë„
+    [SerializeField] private ParticleSystem m_Loot;       // ì•„ì´í…œì„ íšë“í•  ë•Œ ë‚˜ì˜¤ëŠ” ì´í™íŠ¸
+    [SerializeField] private float firingAngle = 45.0f;   // ê³¡ì„ 
+    [SerializeField] private float gravity = 9.8f;        // ridigd(default 9.8)ì¤‘ë ¥ 
     
-    Rarity rarity;                                        // ¾ÆÀÌÅÛÀÇ ·¹¾îµµ
-    bool isCheck = false;                                 // ¾ÆÀÌÅÛÀÌ ÀÌµ¿µÇ¾ú´ÂÁö Ã¼Å©ÇÏ´Â ÇÃ·¡±×
+    Rarity rarity;                                        // ì•„ì´í…œì˜ ë ˆì–´ë„
+    bool isCheck = false;                                 // ì•„ì´í…œì´ ì´ë™ë˜ì—ˆëŠ”ì§€ ì²´í¬í•˜ëŠ” í”Œë˜ê·¸
 
 
-    // ·¹¾îµµ È®ÀÎ
+    // ë ˆì–´ë„ í™•ì¸
     void RarityCheck()
     {
-        // ¾ÆÀÌÅÛ ÀÌµ¿ È®ÀÎ
+        // ì•„ì´í…œ ì´ë™ í™•ì¸
         isCheck = true;
 
-        // ¾ÆÀÌÅÛ È¿°ú ¿¬ÃâÀ» À§ÇØ È¸ÀüÀ» ½ÃÄÑ³õ¾Ò±â ¶§¹®¿¡
-        // ¾ÆÀÌÅÛÀÇ ¹æÇâ ÃÊ±âÈ­(0, 0, 0)
+        // ì•„ì´í…œ íš¨ê³¼ ì—°ì¶œì„ ìœ„í•´ íšŒì „ì„ ì‹œì¼œë†“ì•˜ê¸° ë•Œë¬¸ì—
+        // ì•„ì´í…œì˜ ë°©í–¥ ì´ˆê¸°í™”(0, 0, 0)
         transform.rotation = Quaternion.identity;
 
-        // ·£´ıÀ¸·Î ¼³Á¤µÈ ·¹¾îµµ¿¡ µû¶ó ÀÌ¹ÌÁö È°¼ºÈ­
+        // ëœë¤ìœ¼ë¡œ ì„¤ì •ëœ ë ˆì–´ë„ì— ë”°ë¼ ì´ë¯¸ì§€ í™œì„±í™”
         Raritys[(int)rarity].SetActive(true);
 
         ItemTextRect.gameObject.SetActive(true);
         ItemTextRect.parent = Base_Canvas.instance.HOLDER_LAYER(2);
 
-        // ÅØ½ºÆ®¿¡ color¿Í ÅØ½ºÆ® ¹®±¸ º¯°æ
-        // <color=#00FF00>TEST ITEM</color> °ú °°´Ù
+        // í…ìŠ¤íŠ¸ì— colorì™€ í…ìŠ¤íŠ¸ ë¬¸êµ¬ ë³€ê²½
+        // <color=#00FF00>TEST ITEM</color> ê³¼ ê°™ë‹¤
         m_Text.text = Utils.String_Color_Rarity(rarity) + "TEST ITEM" + "</color>";
 
         StartCoroutine(LootItem());
     }
 
-    // ¾ÆÀÌÅÛ Áİ±â ÀÌÆåÆ® È°¼ºÈ­
+    // ì•„ì´í…œ ì¤ê¸° ì´í™íŠ¸ í™œì„±í™”
     IEnumerator LootItem()
     {
         yield return new WaitForSeconds(Random.Range(1.0f, 1.5f));
 
-        // ·çÆÃÀÌ ÁøÇàµÇ¸é ·¹¾î¸®Æ¼ °ü·Ã ÀÌÆåÆ® ºñÈ°¼ºÈ­
+        // ë£¨íŒ…ì´ ì§„í–‰ë˜ë©´ ë ˆì–´ë¦¬í‹° ê´€ë ¨ ì´í™íŠ¸ ë¹„í™œì„±í™”
         for (int i = 0; i < Raritys.Length; i++)
             Raritys[i].SetActive(false);
 
-        // ÀÌ ¿ÀºêÁ§Æ®¿¡ Äµ¹ö½º¸¦ °¡Á®¿Â´Ù.
+        // ì´ ì˜¤ë¸Œì íŠ¸ì— ìº”ë²„ìŠ¤ë¥¼ ê°€ì ¸ì˜¨ë‹¤.
         ItemTextRect.transform.parent = this.transform;
-        // ¾ÆÀÌÅÛÀ» ºñÈ°¼ºÈ­
+        // ì•„ì´í…œì„ ë¹„í™œì„±í™”
         ItemTextRect.gameObject.SetActive(false);
 
-        // ¾ÆÀÌÅÛÀÌ ºñÈ°¼ºÈ­µÇ¸é ·çÆÃ ÀÌÆåÆ®¸¦ ½ÇÇà
+        // ì•„ì´í…œì´ ë¹„í™œì„±í™”ë˜ë©´ ë£¨íŒ… ì´í™íŠ¸ë¥¼ ì‹¤í–‰
         m_Loot.Play();
-        // 0.5ÃÊ µÚ¿¡ ·çÆÃ ÀÌÆåÆ®¸¦ Ç®¿¡ ¹İÈ¯ÇÑ´Ù.
+        // 0.5ì´ˆ ë’¤ì— ë£¨íŒ… ì´í™íŠ¸ë¥¼ í’€ì— ë°˜í™˜í•œë‹¤.
         yield return new WaitForSeconds(0.5f);
-        Base_Mng.Pool.m_pool_Dictionary["Item_OBJ"].Return(this.gameObject);
+        Base_Manager.Pool.m_pool_Dictionary["Item_OBJ"].Return(this.gameObject);
     }
 
     private void Update()
     {
         if (isCheck == false) return;
 
-        // ¾ÆÀÌÅÛÀº ÀÌ¹ÌÁö ÀÌ±â ¶§¹®¿¡ Äµ¹ö½º¿¡ ·»´õ¸µ µÇ¾î¾ß ÇÑ´Ù.
+        // ì•„ì´í…œì€ ì´ë¯¸ì§€ ì´ê¸° ë•Œë¬¸ì— ìº”ë²„ìŠ¤ì— ë Œë”ë§ ë˜ì–´ì•¼ í•œë‹¤.
         ItemTextRect.position = Camera.main.WorldToScreenPoint(transform.position);
     }
 
     public void Init(Vector3 pos)
     {
-        // ·£´ıÀ¸·Î ·¹¾îµµ ¼³Á¤
+        // ëœë¤ìœ¼ë¡œ ë ˆì–´ë„ ì„¤ì •
         rarity = (Rarity)Random.Range(0, 5);
 
-        // ÀÌµ¿ È®ÀÎ ÃÊ±âÈ­
+        // ì´ë™ í™•ì¸ ì´ˆê¸°í™”
         isCheck = false;
-        // ¸ó½ºÅÍ°¡ »ç¸ÁÇÑ À§Ä¡·Î ´ëÀÔ
+        // ëª¬ìŠ¤í„°ê°€ ì‚¬ë§í•œ ìœ„ì¹˜ë¡œ ëŒ€ì…
         transform.position = pos;
-        // ¸ó½ºÅÍÀÇ À§Ä¡°¡ ¾Æ´Ñ ¸ó½ºÅÍ À§Ä¡ ÁÖº¯¿¡ ·£´ıÇÑ ÁÂÇ¥·Î ¾ÆÀÌÅÛÀÌ ¶³¾îÁö±â À§ÇÑ À§Ä¡ °ª
+        // ëª¬ìŠ¤í„°ì˜ ìœ„ì¹˜ê°€ ì•„ë‹Œ ëª¬ìŠ¤í„° ìœ„ì¹˜ ì£¼ë³€ì— ëœë¤í•œ ì¢Œí‘œë¡œ ì•„ì´í…œì´ ë–¨ì–´ì§€ê¸° ìœ„í•œ ìœ„ì¹˜ ê°’
         Vector3 Target_Pos = new Vector3(pos.x + (Random.insideUnitSphere.x * 1.0f), 0.5f, pos.z + (Random.insideUnitSphere.z * 1.0f));
-        // ¾î´À À§Ä¡·Î ÀÌµ¿À»ÇÏ¸é¼­ °î¼±À» ±×¸± °ÍÀÌ³Ä
+        // ì–´ëŠ ìœ„ì¹˜ë¡œ ì´ë™ì„í•˜ë©´ì„œ ê³¡ì„ ì„ ê·¸ë¦´ ê²ƒì´ëƒ
         StartCoroutine(SimulateProjectile(Target_Pos));
     }
 
-    // °î¼±À» ±×¸®´Â ÇÔ¼ö
+    // ê³¡ì„ ì„ ê·¸ë¦¬ëŠ” í•¨ìˆ˜
     IEnumerator SimulateProjectile(Vector3 pos)
     {
-        // Mathf.Abs(Àı´ë°ª), Mathf.Min,Max(ÃÖ¼Ú°ª, ÃÖ´ñ°ª), Mathf.Sign(À½¼ö -1, ¾ç¼ö +1)
+        // Mathf.Abs(ì ˆëŒ€ê°’), Mathf.Min,Max(ìµœì†Ÿê°’, ìµœëŒ“ê°’), Mathf.Sign(ìŒìˆ˜ -1, ì–‘ìˆ˜ +1)
 
-        // Mathf.Sin(»çÀÎ)
-        // Mathf.Cos(ÄÚ½º)
-        // Mathf.Deg2Rad (°¢µµ(degree) -> È£µµ(radian)) : Degree to Radian ÀÇ ¾à¾î
-        // Mathf.Rad2Deg(È£µµ(radian)->°¢µµ(degree)) : Radian to Degree ÀÇ ¾à¾î
-        // Mathf.Sqrt(Á¦°ö±Ù)
+        // Mathf.Sin(ì‚¬ì¸)
+        // Mathf.Cos(ì½”ìŠ¤)
+        // Mathf.Deg2Rad (ê°ë„(degree) -> í˜¸ë„(radian)) : Degree to Radian ì˜ ì•½ì–´
+        // Mathf.Rad2Deg(í˜¸ë„(radian)->ê°ë„(degree)) : Radian to Degree ì˜ ì•½ì–´
+        // Mathf.Sqrt(ì œê³±ê·¼)
 
-        // ¾ÆÀÌÅÛÀÌ ¶³¾îÁú À§Ä¡ °ª
+        // ì•„ì´í…œì´ ë–¨ì–´ì§ˆ ìœ„ì¹˜ ê°’
         float target_Distance = Vector3.Distance(transform.position, pos);
 
-        // ¶³¾îÁö´Â ¼Óµµ 
+        // ë–¨ì–´ì§€ëŠ” ì†ë„ 
         float projectile_Velocity = target_Distance / (Mathf.Sin(2 * firingAngle * Mathf.Deg2Rad) / gravity);
 
-        // Á¦°ö±à¸£ Cos¿Í SinÀ¸·Î °¢°¢ °öÇÑ °ª
+        // ì œê³±ê¸ë¥´ Così™€ Sinìœ¼ë¡œ ê°ê° ê³±í•œ ê°’
         float Vx = Mathf.Sqrt(projectile_Velocity) * Mathf.Cos(firingAngle * Mathf.Deg2Rad);
         float Vy = Mathf.Sqrt(projectile_Velocity) * Mathf.Sin(firingAngle * Mathf.Deg2Rad);
 
-        // Å¸°ÙÀÇ À§Ä¡(±æÀÌ) °ª
+        // íƒ€ê²Ÿì˜ ìœ„ì¹˜(ê¸¸ì´) ê°’
         float flightDuration = target_Distance / Vx;
 
-        // ±âÁ¸¿¡´Â ÇÑ°÷¸¸À» ¹Ù¶óº¸°í ¿òÁ÷¿©¼­
-        // ÀÌµ¿ÇÏ´Â ¹æÇâÀ¸·Î È¸Àü
+        // ê¸°ì¡´ì—ëŠ” í•œê³³ë§Œì„ ë°”ë¼ë³´ê³  ì›€ì§ì—¬ì„œ
+        // ì´ë™í•˜ëŠ” ë°©í–¥ìœ¼ë¡œ íšŒì „
         transform.rotation = Quaternion.LookRotation(pos - transform.position);
 
-        // ±æÀÌ¸¦ ÀÌµ¿ÇÏ±â À§ÇÑ ½Ã°£
+        // ê¸¸ì´ë¥¼ ì´ë™í•˜ê¸° ìœ„í•œ ì‹œê°„
         float time = 0.0f;
 
-        // timeÀÌ flightDurationº¸´Ù ³ô¾ÆÁú ¶§±îÁö ¹İº¹
+        // timeì´ flightDurationë³´ë‹¤ ë†’ì•„ì§ˆ ë•Œê¹Œì§€ ë°˜ë³µ
         while (time < flightDuration)
         {
-            // 1ÃÊ¸¶´Ù ´õÇØÁØ´Ù.
-            // ¸¸¾à flightDurationÀÇ °ªÀÌ 2.5¶ó¸é 2.5ÃÊ¿¡ µµ´ŞÇÒ ¶§±îÁö ¹İº¹ÇÏ¿© xÃà°ú yÃàÀ» ÀÌµ¿ÇÒ°Å´Ù.
-            // y´Â ¾Æ·¡·Î ¶³¾îÁö°í x´Â ÀÌµ¿ÇÑ´Ù.
+            // 1ì´ˆë§ˆë‹¤ ë”í•´ì¤€ë‹¤.
+            // ë§Œì•½ flightDurationì˜ ê°’ì´ 2.5ë¼ë©´ 2.5ì´ˆì— ë„ë‹¬í•  ë•Œê¹Œì§€ ë°˜ë³µí•˜ì—¬ xì¶•ê³¼ yì¶•ì„ ì´ë™í• ê±°ë‹¤.
+            // yëŠ” ì•„ë˜ë¡œ ë–¨ì–´ì§€ê³  xëŠ” ì´ë™í•œë‹¤.
             transform.Translate(0, (Vy - (gravity * time)) * Time.deltaTime, Vx * Time.deltaTime);
             time += Time.deltaTime;
             yield return null;
