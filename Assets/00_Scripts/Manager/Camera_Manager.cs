@@ -4,12 +4,29 @@ using UnityEngine;
 
 public class Camera_Manager : MonoBehaviour
 {
+    public static Camera_Manager instance = null;
+
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+    }
+
     float m_Distance = 4.0f;   // 카메라와의 거리
 
     // 카메라와의 거리를 조절하기 위한 기준치 변수
     [Range(0.0f, 10.0f)]
-    [SerializeField] private float Distance_Value;  
+    [SerializeField] private float Distance_Value;
 
+    // 카메라 흔들림
+    [Space(20f)]
+    [Header("##Camera Shake")]
+    [Range(0.0f, 10.0f)]
+    [SerializeField] private float Duration;    // 흔들림 지속 시간
+    [Range(0.0f, 10.0f)]
+    [SerializeField] private float Power;       // 흔들림 세기
+    Vector3 OriginalPos;
+    bool isCameraShake = false;
     Camera cam;
 
     private void Start()
@@ -21,7 +38,7 @@ public class Camera_Manager : MonoBehaviour
     {
         // 카메라를 가장 멀리 있는 캐릭터의 위치로 deltaTime * 2.0 만큼의 속도로 이동
         cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, Distance(), Time.deltaTime * 2.0f);
-    
+        OriginalPos = transform.localPosition;
     }
 
     // 가장 멀리 있는 플레이어의 위치 계산
@@ -41,5 +58,32 @@ public class Camera_Manager : MonoBehaviour
         }
 
         return maxDistance;
+    }
+
+    // 카메라 흔들림
+    public void CameraShake()
+    {
+        if (isCameraShake) return;
+        isCameraShake = true;
+
+        StartCoroutine(CameraShake_Coroutine());
+    }
+
+    // 카메라 흔들림 코루틴
+    IEnumerator CameraShake_Coroutine()
+    {
+        float timer = 0.0f;
+
+        while (timer <= Duration)
+        {
+            // 랜덤한 구체 내부를 Power만큼 움직임(첫 위치 중심으로 움직임)
+            transform.localPosition = Random.insideUnitSphere * Power + OriginalPos;
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.localPosition = OriginalPos;
+        isCameraShake = false;
     }
 }

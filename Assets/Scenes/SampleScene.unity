@@ -6788,6 +6788,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Distance_Value: 3
+  Duration: 0.3
+  Power: 0.05
 --- !u!1 &988337406
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,7 +17,9 @@ public class M_LightningThunder : Skill_Base
         {
             Player player = players[Random.Range(0, players.Length)];
             Instantiate(Resources.Load("Pool_OBJ/Boss_Electric"), player.transform.position, Quaternion.identity);
-            
+
+            Camera_Manager.instance.CameraShake();
+
             player.GetDamage(10);
             yield return new WaitForSeconds(0.2f);
         }
