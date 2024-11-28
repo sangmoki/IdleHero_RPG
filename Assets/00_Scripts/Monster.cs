@@ -30,9 +30,25 @@ public class Monster : Character
         Attack_Range = R_Attack_Range;
         target_Range = Mathf.Infinity; 
 
+        // 보스인 경우
+        if (isBoss)
+        {
+            StartCoroutine(SkillCoroutine());
+        }
+
         // 몬스터가 스폰될 때 크기가 점점 커지는 효과를 주기 위한 코루틴 함수 실행
         StartCoroutine(Spawn_Start());
     }
+
+    // 3초마다 스킬 사용
+    IEnumerator SkillCoroutine()
+    {
+        yield return new WaitForSeconds(3.0f);
+        GetComponent<Skill_Base>().SetSkill();
+
+        StartCoroutine(SkillCoroutine());
+    }
+
 
     private void Update()
     {
