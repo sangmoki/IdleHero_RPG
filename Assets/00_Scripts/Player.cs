@@ -16,7 +16,7 @@ public class Player : Character
         base.Start();
 
         // 캐릭터의 이름을 통해 Scriptable에 세팅한 캐릭터의 데이터 세팅 
-        Data_Set(Resources.Load<Character_Scriptable>("Scriptable/" + CH_Name));
+        Data_Set(Resources.Load<Character_Scriptable>("Scriptable/Character/" + CH_Name));
 
         // 플레이어가 생성되었으니 Spawner에도 전달해주어야 한다.
         // 그래야 몬스터가 추적할 수 있는 대상이 될 수 있다.
