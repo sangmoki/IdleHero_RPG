@@ -54,11 +54,11 @@ public class LevelDesignEditor : Editor
         Handles.DrawAAPolyLine(3, curvePoint_MONEY);
 
         EditorGUILayout.Space(20);
-        GetColorGUI("ATK", StringMethod.ToCurrencyString(design.CalculatedValue(10, data.currentLevel, data.C_ATK)), Color.green);
-        GetColorGUI("HP", StringMethod.ToCurrencyString(design.CalculatedValue(50, data.currentLevel, data.C_HP)), Color.red);
-        GetColorGUI("EXP", StringMethod.ToCurrencyString(design.CalculatedValue(5, data.currentLevel, data.C_EXP)), Color.blue);
-        GetColorGUI("MAXEXP", StringMethod.ToCurrencyString(design.CalculatedValue(15, data.currentLevel, data.C_MAXEXP)), Color.white);
-        GetColorGUI("MONEY", StringMethod.ToCurrencyString(design.CalculatedValue(10, data.currentLevel, data.C_MONEY)), Color.yellow);
+        GetColorGUI("ATK", StringMethod.ToCurrencyString(Utils.CalculatedValue(10, data.currentLevel, data.C_ATK)), Color.green);
+        GetColorGUI("HP", StringMethod.ToCurrencyString(Utils.CalculatedValue(50, data.currentLevel, data.C_HP)), Color.red);
+        GetColorGUI("EXP", StringMethod.ToCurrencyString(Utils.CalculatedValue(5, data.currentLevel, data.C_EXP)), Color.blue);
+        GetColorGUI("MAXEXP", StringMethod.ToCurrencyString(Utils.CalculatedValue(15, data.currentLevel, data.C_MAXEXP)), Color.white);
+        GetColorGUI("MONEY", StringMethod.ToCurrencyString(Utils.CalculatedValue(10, data.currentLevel, data.C_MONEY)), Color.yellow);
         EditorGUILayout.Space(20);
     }
 

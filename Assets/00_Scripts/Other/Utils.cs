@@ -53,4 +53,17 @@ public class Utils
         }
         return "<color=#B3C0C4>";
     }
+
+    // 지수 증가 공식
+    // 값이 일정한 비율로 지속적으로 증가한다.
+    // 레벨이 높아질 수록 추후에 증가할 값도 높아진다.
+    // baseValue : 기본값
+    // Level : 레벨
+    // value : 지수
+    public static float CalculatedValue(float baseValue, int Level, float value)
+    {
+        // Mathf.Pow(Single, Single) 거듭제곱
+        // 즉, baseValue * Level^value
+        return baseValue * Mathf.Pow(Level, value);
+    }
 }
