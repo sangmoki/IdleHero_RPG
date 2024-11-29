@@ -24,3 +24,11 @@ MonoBehaviour:
     B_EXP: 5
     B_MAXEXP: 15
     B_MONEY: 10
+  stageData:
+    currentStage: 10
+    M_ATK: 1.6
+    M_HP: 2
+    M_MONEY: 1.5
+    B_ATK: 5
+    B_HP: 30
+    B_MONEY: 5

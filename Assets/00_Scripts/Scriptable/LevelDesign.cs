@@ -7,6 +7,8 @@ public class LevelDesign : ScriptableObject
 {
     public LevelData levelData;
 
+    [Space(20)]
+    public StageData stageData;
 }
 
 [System.Serializable]
@@ -25,3 +27,17 @@ public class LevelData
     public float B_MAXEXP;
     public float B_MONEY;
 }
+
+[System.Serializable]
+public class StageData
+{
+    public int currentStage;        // 현재 레벨
+    [Range(0.0f, 10.0f)]
+    public float M_ATK, M_HP, M_MONEY;
+    [Space(20f)]
+    [Header("## Base Value")]
+    public float B_ATK;
+    public float B_HP;
+    public float B_MONEY;
+}
+
