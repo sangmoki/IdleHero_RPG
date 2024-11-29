@@ -14,12 +14,12 @@ public class Player_Manager
     public void EXP_UP()
     {
         // 경험치, 공격력, 체력 증가
-        Base_Manager.Data.EXP += Get_EXP();
-        ATK += Next_ATK();
-        HP += Next_HP();
+        Base_Manager.Data.EXP += Utils.Data.levelData.EXP();
+        ATK += Utils.Data.levelData.ATK();
+        HP += Utils.Data.levelData.HP();
 
         // 현재 레벨에서 얻는 경험치가 레벨업에 필요한 경험치보다 높으면
-        if (Base_Manager.Data.EXP >= Max_EXP())
+        if (Base_Manager.Data.EXP >= Utils.Data.levelData.MAXEXP())
         {
             Base_Manager.Data.Level++;
             Base_Manager.Data.EXP = 0;
@@ -34,7 +34,7 @@ public class Player_Manager
     // 경험치 퍼센트
     public float EXP_Percentage()
     {
-        float exp = (float)Max_EXP();
+        float exp = (float)Utils.Data.levelData.MAXEXP();
         double myEXP = Base_Manager.Data.EXP;
 
         Debug.Log(myEXP + " : " + exp);
@@ -45,32 +45,10 @@ public class Player_Manager
     public float Next_EXP()
     {
         // 다음 레벨에 필요한 경험치
-        float exp = (float)Max_EXP();
-        float myExp = (float)Get_EXP();
+        float exp = (float)Utils.Data.levelData.MAXEXP();
+        float myExp = (float)Utils.Data.levelData.EXP();
 
         return (myExp / exp) * 100.0f;
-    }
-
-    public double Get_EXP()
-    {
-        return Utils.CalculatedValue(Utils.Data.levelData.B_EXP, Base_Manager.Data.Level, Utils.Data.levelData.C_EXP);
-    }
-
-    public double Max_EXP()
-    {
-        return Utils.CalculatedValue(Utils.Data.levelData.B_MAXEXP, Base_Manager.Data.Level, Utils.Data.levelData.C_MAXEXP);
-    }
-
-    // 레벨업 할때마다 증가하는 ATK
-    public double Next_ATK()
-    {
-        return Utils.CalculatedValue(Utils.Data.levelData.B_ATK, Base_Manager.Data.Level, Utils.Data.levelData.C_ATK);
-    }
-
-    // 레벨업 할때마다 증가하는 HP
-    public double Next_HP()
-    {
-        return Utils.CalculatedValue(Utils.Data.levelData.B_HP, Base_Manager.Data.Level, Utils.Data.levelData.C_HP);
     }
 
     // 공격력 = 공격력 * 아이템 등급

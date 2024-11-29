@@ -38,7 +38,7 @@ public class COIN_PARENT : MonoBehaviour
         // 캔버스의 자식으로 설정
         transform.parent = Base_Canvas.instance.HOLDER_LAYER(0);
 
-        Base_Manager.Data.Money += Utils.CalculatedValue(Utils.Data.stageData.B_MONEY, Base_Manager.Data.Stage, Utils.Data.stageData.M_MONEY);
+        Base_Manager.Data.Money += Utils.Data.stageData.MONEY();
 
         StartCoroutine(Coin_Effect());
     }

@@ -26,8 +26,8 @@ public class Monster : Character
     {
         // 풀링에서 몬스터가 초기화 될 때 몬스터의 상태 초기화
         isDead = false;
-        ATK = Utils.CalculatedValue(Utils.Data.stageData.B_ATK, Base_Manager.Data.Stage, Utils.Data.stageData.M_ATK);
-        HP = Utils.CalculatedValue(Utils.Data.stageData.B_HP, Base_Manager.Data.Stage, Utils.Data.stageData.M_HP);
+        ATK = Utils.Data.stageData.ATK();
+        HP = Utils.Data.stageData.HP();
         
         Debug.Log(ATK + " : " + HP);
         Attack_Range = R_Attack_Range;

@@ -227,7 +227,7 @@ public class Main_UI : MonoBehaviour
         m_AvgDPS_Text.text = StringMethod.ToCurrencyString(Base_Manager.Player.Average_DPS());
 
         // 현재 가지고 있는 코인에 따라 색상 변경
-        double levelupMoneyValue = Utils.CalculatedValue(Utils.Data.levelData.B_MONEY, Base_Manager.Data.Level, Utils.Data.levelData.C_MONEY);
+        double levelupMoneyValue = Utils.Data.levelData.MONEY();
         m_LevelUp_Money_Text.text = StringMethod.ToCurrencyString(levelupMoneyValue);
         m_LevelUp_Money_Text.color = Utils.CoinUpgradeCheck(levelupMoneyValue) ? Color.white : Color.red;
         

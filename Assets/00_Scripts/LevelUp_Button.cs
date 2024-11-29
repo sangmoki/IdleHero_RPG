@@ -74,8 +74,8 @@ public class LevelUp_Button : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     {
         m_EXP_Slider.fillAmount = Base_Manager.Player.EXP_Percentage();
         EXP_Text.text = string.Format("{0:0.00}%", Base_Manager.Player.EXP_Percentage() * 100.0f);
-        ATK_Text.text = "+" + StringMethod.ToCurrencyString(Base_Manager.Player.Next_ATK());
-        HP_Text.text = "+" + StringMethod.ToCurrencyString(Base_Manager.Player.Next_HP());
+        ATK_Text.text = "+" + StringMethod.ToCurrencyString(Utils.Data.levelData.ATK());
+        HP_Text.text = "+" + StringMethod.ToCurrencyString(Utils.Data.levelData.HP());
         Get_EXP_Text.text = "<color=#00FF00>EXP</color> +" + string.Format("{0:0.00}", Base_Manager.Player.Next_EXP()) + "%";
     }
 

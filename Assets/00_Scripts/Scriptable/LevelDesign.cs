@@ -26,6 +26,12 @@ public class LevelData
     public int B_EXP;
     public int B_MAXEXP;
     public int B_MONEY;
+
+    public double ATK() => Utils.CalculatedValue(B_ATK, Base_Manager.Data.Level, C_ATK);
+    public double HP() => Utils.CalculatedValue(B_HP, Base_Manager.Data.Level, C_HP);
+    public double EXP() => Utils.CalculatedValue(B_EXP, Base_Manager.Data.Level, C_EXP);
+    public double MAXEXP() => Utils.CalculatedValue(B_MAXEXP, Base_Manager.Data.Level, C_MAXEXP);
+    public double MONEY() => Utils.CalculatedValue(B_MONEY, Base_Manager.Data.Level, C_MONEY);
 }
 
 [System.Serializable]
@@ -38,5 +44,10 @@ public class StageData
     public int B_ATK;
     public int B_HP;
     public int B_MONEY;
+
+    public double ATK() => Utils.CalculatedValue(B_ATK, Base_Manager.Data.Level, M_ATK);
+    public double HP() => Utils.CalculatedValue(B_HP, Base_Manager.Data.Level, M_HP);
+    public double MONEY() => Utils.CalculatedValue(B_MONEY, Base_Manager.Data.Level, M_MONEY);
+
 }
 
