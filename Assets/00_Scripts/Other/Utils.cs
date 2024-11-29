@@ -11,6 +11,9 @@ public class Utils
     // UI를 담아둘 Stack - LIFO : 가장 늦게 들어온 요소가 가장 먼저 나간다.
     public static Stack<UI_Base> UI_Holder = new Stack<UI_Base>();
 
+    // 레벨, 스테이지 데이터 
+    public static LevelDesign Data = Resources.Load<LevelDesign>("Scriptable/LevelDesignData");
+
     public static void CloseAllPopupUI()
     {
         while(UI_Holder.Count > 0)
@@ -60,7 +63,7 @@ public class Utils
     // baseValue : 기본값
     // Level : 레벨
     // value : 지수
-    public static float CalculatedValue(float baseValue, int Level, float value)
+    public static double CalculatedValue(float baseValue, int Level, float value)
     {
         // Mathf.Pow(Single, Single) 거듭제곱
         // 즉, baseValue * Level^value

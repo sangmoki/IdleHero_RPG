@@ -5,8 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "LevelDesignData", menuName = "Level Design/Level Design Data")]
 public class LevelDesign : ScriptableObject
 {
-    public LevelData levelData;
+    public int currentLevel;
+    public int currentStage;
 
+    public LevelData levelData;
     [Space(20)]
     public StageData stageData;
 }
@@ -14,30 +16,27 @@ public class LevelDesign : ScriptableObject
 [System.Serializable]
 public class LevelData
 {
-    public int currentLevel;        // 현재 레벨
-
     [Range(0.0f, 10.0f)]
-    public float C_ATK, C_HP, C_EXP, C_MAXEXP, C_MONEY; // 현재 레벨의 공격력, 체력, 경험치, 최대 경험치, 돈
+    public int C_ATK, C_HP, C_EXP, C_MAXEXP, C_MONEY; // 현재 레벨의 공격력, 체력, 경험치, 최대 경험치, 돈
 
     [Space(20)]
     [Header("## Base Value")]
-    public float B_ATK;
-    public float B_HP;
-    public float B_EXP;
-    public float B_MAXEXP;
-    public float B_MONEY;
+    public int B_ATK;
+    public int B_HP;
+    public int B_EXP;
+    public int B_MAXEXP;
+    public int B_MONEY;
 }
 
 [System.Serializable]
 public class StageData
 {
-    public int currentStage;        // 현재 레벨
     [Range(0.0f, 10.0f)]
-    public float M_ATK, M_HP, M_MONEY;
+    public int M_ATK, M_HP, M_MONEY;
     [Space(20f)]
     [Header("## Base Value")]
-    public float B_ATK;
-    public float B_HP;
-    public float B_MONEY;
+    public int B_ATK;
+    public int B_HP;
+    public int B_MONEY;
 }
 
