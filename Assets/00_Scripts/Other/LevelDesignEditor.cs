@@ -8,12 +8,10 @@ using UnityEngine;
 [CustomEditor(typeof(LevelDesign))]
 public class LevelDesignEditor : Editor
 {
-    LevelDesign design = null;
-
     public override void OnInspectorGUI()
     {
         // 만들어놓은 LevelDesign 스크립트를 가져온다.
-        design = (LevelDesign)target;
+        LevelDesign design = (LevelDesign)target;
 
         // 레벨 디자인을 위한 레이블을 만든다.
         EditorGUILayout.LabelField("Level Design", EditorStyles.boldLabel);
@@ -30,35 +28,12 @@ public class LevelDesignEditor : Editor
 
     private void DrawGraph(LevelData data)
     {
-        Rect rect = GUILayoutUtility.GetRect(200, 100);
-        Handles.DrawSolidRectangleWithOutline(rect, Color.black, Color.white);
-        
-        Vector3[] curvePoint_ATK = GraphDesign(rect, data.C_ATK);
-        Handles.color = Color.green;
-        Handles.DrawAAPolyLine(3, curvePoint_ATK);
-
-        Vector3[] curvePoint_HP = GraphDesign(rect, data.C_HP);
-        Handles.color = Color.red;
-        Handles.DrawAAPolyLine(3, curvePoint_HP);
-
-        Vector3[] curvePoint_EXP = GraphDesign(rect, data.C_EXP);
-        Handles.color = Color.blue;
-        Handles.DrawAAPolyLine(3, curvePoint_EXP);
-
-        Vector3[] curvePoint_MAXEXP = GraphDesign(rect, data.C_MAXEXP);
-        Handles.color = Color.white;
-        Handles.DrawAAPolyLine(3, curvePoint_MAXEXP);
-
-        Vector3[] curvePoint_MONEY = GraphDesign(rect, data.C_MONEY);
-        Handles.color = Color.yellow;
-        Handles.DrawAAPolyLine(3, curvePoint_MONEY);
-
         EditorGUILayout.Space(20);
-        GetColorGUI("ATK", StringMethod.ToCurrencyString(Utils.CalculatedValue(10, data.currentLevel, data.C_ATK)), Color.green);
-        GetColorGUI("HP", StringMethod.ToCurrencyString(Utils.CalculatedValue(50, data.currentLevel, data.C_HP)), Color.red);
-        GetColorGUI("EXP", StringMethod.ToCurrencyString(Utils.CalculatedValue(5, data.currentLevel, data.C_EXP)), Color.blue);
-        GetColorGUI("MAXEXP", StringMethod.ToCurrencyString(Utils.CalculatedValue(15, data.currentLevel, data.C_MAXEXP)), Color.white);
-        GetColorGUI("MONEY", StringMethod.ToCurrencyString(Utils.CalculatedValue(10, data.currentLevel, data.C_MONEY)), Color.yellow);
+        GetColorGUI("ATK", StringMethod.ToCurrencyString(Utils.CalculatedValue(data.B_ATK, data.currentLevel, data.C_ATK)), Color.green);
+        GetColorGUI("HP", StringMethod.ToCurrencyString(Utils.CalculatedValue(data.B_HP, data.currentLevel, data.C_HP)), Color.red);
+        GetColorGUI("EXP", StringMethod.ToCurrencyString(Utils.CalculatedValue(data.B_EXP, data.currentLevel, data.C_EXP)), Color.blue);
+        GetColorGUI("MAXEXP", StringMethod.ToCurrencyString(Utils.CalculatedValue(data.B_MAXEXP, data.currentLevel, data.C_MAXEXP)), Color.white);
+        GetColorGUI("MONEY", StringMethod.ToCurrencyString(Utils.CalculatedValue(data.B_MONEY, data.currentLevel, data.C_MONEY)), Color.yellow);
         EditorGUILayout.Space(20);
     }
 
@@ -68,21 +43,5 @@ public class LevelDesignEditor : Editor
         colorLabel.normal.textColor = color;
 
         EditorGUILayout.LabelField(baseTemp + " : " + dataTemp, colorLabel);
-    }
-
-    private Vector3[] GraphDesign(Rect rect, float data)
-    {
-        Vector3[] curvePoint = new Vector3[100];
-        for (int i = 0; i < 100; i++)
-        {
-            float t = i / 99.0f;
-            float curveValue = Mathf.Pow(t, data);
-            curvePoint[i] = new Vector3(
-                rect.x + t * rect.width,
-                rect.y + rect.height - curveValue + rect.height, 
-                0);
-        }
-        return curvePoint;
-
     }
 }
