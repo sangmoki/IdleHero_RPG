@@ -31,6 +31,8 @@ public class Main_UI : MonoBehaviour
     // 메인 UI 텍스트 변수
     [SerializeField] private TextMeshProUGUI m_Level_Text;
     [SerializeField] private TextMeshProUGUI m_AvgDPS_Text;
+    [SerializeField] private TextMeshProUGUI m_LevelUp_Money_Text;
+    [SerializeField] private TextMeshProUGUI m_Gold_Text;
 
     [Space(20f)]
     [Header("##Fade")]
@@ -221,8 +223,16 @@ public class Main_UI : MonoBehaviour
     // 레벨업이 될 때마다 UI 상단 텍스트를 변경
     public void TextCheck()
     {
-        m_Level_Text.text = "LV." + (Base_Manager.Player.Level + 1).ToString();
+        m_Level_Text.text = "LV." + (Base_Manager.Data.Level + 1).ToString();
         m_AvgDPS_Text.text = StringMethod.ToCurrencyString(Base_Manager.Player.Average_DPS());
+
+        // 현재 가지고 있는 코인에 따라 색상 변경
+        double levelupMoneyValue = Utils.CalculatedValue(Utils.Data.levelData.B_MONEY, Base_Manager.Data.Level, Utils.Data.levelData.C_MONEY);
+        m_LevelUp_Money_Text.text = StringMethod.ToCurrencyString(levelupMoneyValue);
+        m_LevelUp_Money_Text.color = Utils.CoinUpgradeCheck(levelupMoneyValue) ? Color.white : Color.red;
+        
+        m_Gold_Text.text = StringMethod.ToCurrencyString(Base_Manager.Data.Money);
+
     }
 
 }

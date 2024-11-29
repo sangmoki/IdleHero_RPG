@@ -22,7 +22,6 @@ public class Stage_Manager
 
     public static int MaxCount = 5; // 보스에 도달할 최대 몬스터 수
     public static int Count;        // 현재 몬스터 수
-    public static int Stage;        // 현재 스테이지
 
     public static bool isDead;      // 플레이어 사망 여부
 
@@ -58,7 +57,7 @@ public class Stage_Manager
                 m_BossPlayEvent?.Invoke();
                 break;
             case Stage_State.Clear:
-                Stage++;
+                Base_Manager.Data.Stage++;
                 Debug.Log("isClear!");
                 m_ClearEvent?.Invoke();
                 break;

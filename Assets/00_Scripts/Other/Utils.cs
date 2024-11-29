@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -67,6 +68,12 @@ public class Utils
     {
         // Mathf.Pow(Single, Single) 거듭제곱
         // 즉, baseValue * Level^value
-        return baseValue * Mathf.Pow(Level, value);
+        return baseValue * Mathf.Pow(Level + 1, value);
+    }
+
+    public static bool CoinUpgradeCheck(double value)
+    {
+        if (Base_Manager.Data.Money >= value) return true;
+        else return false;
     }
 }

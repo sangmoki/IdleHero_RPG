@@ -9,7 +9,6 @@ public class Monster : Character
 
     // Unity Engine 내부에서 몬스터 스탯 설정 변수
     public float m_Speed;   // 몬스터의 이동속도
-    public double R_ATK, R_HP;
     public float R_Attack_Range;
 
     public bool isBoss;     // 보스 몬스터인지 확인하는 플래그
@@ -27,8 +26,10 @@ public class Monster : Character
     {
         // 풀링에서 몬스터가 초기화 될 때 몬스터의 상태 초기화
         isDead = false;
-        ATK = R_ATK;
-        HP = R_HP;
+        ATK = Utils.CalculatedValue(Utils.Data.stageData.B_ATK, Base_Manager.Data.Stage, Utils.Data.stageData.M_ATK);
+        HP = Utils.CalculatedValue(Utils.Data.stageData.B_HP, Base_Manager.Data.Stage, Utils.Data.stageData.M_HP);
+        
+        Debug.Log(ATK + " : " + HP);
         Attack_Range = R_Attack_Range;
         target_Range = Mathf.Infinity; 
 
