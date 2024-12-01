@@ -64,8 +64,10 @@ public class Spawner : MonoBehaviour
             }
         }
 
+        // 1.5 초 대기
         yield return new WaitForSeconds(1.5f);
 
+        // 몬스터 목록에 보스 추가
         m_Monsters.Add(boss);
 
         // 보스 전투 스테이지로 전환
