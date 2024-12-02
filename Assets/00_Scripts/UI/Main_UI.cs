@@ -63,6 +63,7 @@ public class Main_UI : MonoBehaviour
     [Header("##Legendary_PopUp")]
     // 레전더리 등급 아이템 획득 시 애니메이션
     [SerializeField] private Animator m_Legendary_PopUp;
+    [SerializeField] private Image m_Item_Frame;
     [SerializeField] private Image m_PopUp_Image;
     [SerializeField] private TextMeshProUGUI m_PopUp_Text;
     Coroutine Legendary_Coroutine;
@@ -258,10 +259,16 @@ public class Main_UI : MonoBehaviour
 
         // 팝업 활성화
         m_Legendary_PopUp.gameObject.SetActive(true);
+
+        // 아틀라스에 저장한 이미지 불러오기
+        m_Item_Frame.sprite = Utils.Get_Atlas(item.rarity.ToString());
         m_PopUp_Image.sprite = Utils.Get_Atlas(item.name);
+
+        // 이미지 사이즈 조절
         m_PopUp_Image.SetNativeSize();
 
-        m_PopUp_Text.text = item.Item_Name;
+        // 아이템 이름과 레어도 색상 변경
+        m_PopUp_Text.text = Utils.String_Color_Rarity(item.rarity) + item.Item_Name + "</color> 을(를) 획득하였습니다.";
 
         // 중복된 코루틴이 종료되지 않도록 중지
         if (Legendary_Coroutine != null) 

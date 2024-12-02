@@ -2358,6 +2358,7 @@ MonoBehaviour:
   m_Boss_Stage_Text: {fileID: 1539648870}
   m_Dead_Frame_OBJ: {fileID: 271742132}
   m_Legendary_PopUp: {fileID: 638653781}
+  m_Item_Frame: {fileID: 1435315506}
   m_PopUp_Image: {fileID: 971199697}
   m_PopUp_Text: {fileID: 776192909}
 --- !u!1001 &355942393
@@ -4706,7 +4707,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 8.199219, y: -650}
+  m_AnchoredPosition: {x: 8.199219, y: -700}
   m_SizeDelta: {x: 1239, y: 230}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &638653779
