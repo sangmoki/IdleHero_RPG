@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class Main_UI : MonoBehaviour
 {
@@ -18,9 +20,16 @@ public class Main_UI : MonoBehaviour
     }
     private void Start()
     {
+        // UI 텍스트 초기화
         TextCheck();
+        // 몬스터 처치 슬라이더 초기화
         Monster_Count_Slider();
 
+        // 아이템 콘텐트의 자식들을 가져와서 리스트에 저장
+        for (int i = 0; i < m_Item_Content.childCount; i++)
+            m_Item_Texts.Add(m_Item_Content.GetChild(i).GetComponent<TextMeshProUGUI>());
+
+        // 이벤트 연결
         Stage_Manager.m_ReadyEvent += () => FadeInOut(true);
         Stage_Manager.m_BossEvent += OnBoss;
         Stage_Manager.m_ClearEvent += OnClear;
@@ -70,7 +79,10 @@ public class Main_UI : MonoBehaviour
 
     bool isPopUp = false;
 
-
+    [Space(20f)]
+    [Header("##Item_PopUp")]
+    [SerializeField] private Transform m_Item_Content;
+    private List<TextMeshProUGUI> m_Item_Texts = new List<TextMeshProUGUI>();
 
     public void Set_Boss_State()
     {
@@ -278,12 +290,50 @@ public class Main_UI : MonoBehaviour
         Legendary_Coroutine = StartCoroutine(Legendary_PopUp_Coroutine());
     }
 
+    public void GetItem(Item_Scriptable item)
+    {
+        for (int i = 0; i < m_Item_Texts.Count; i++)
+        {
+            if (m_Item_Texts[i].gameObject.activeSelf == false)
+            {
+                m_Item_Texts[i].gameObject.SetActive(true);
+                m_Item_Texts[i].text =  
+                    "아이템을 획득하였습니다. " 
+                    + Utils.String_Color_Rarity(item.rarity) 
+                    + "[" + item.Item_Name + "]</color>";
+
+                // 아이템 획득 시 텍스트 위치 변경 -> 5개의 텍스트를 위로 50만큼씩 이동
+                for (int j = 0; j < i; j++)
+                {
+                    RectTransform rect = m_Item_Texts[j].GetComponent<RectTransform>();
+                    rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, rect.anchoredPosition.y + 50.0f);
+                }
+                StartCoroutine(Item_Text_FadeOut(m_Item_Texts[i].GetComponent<RectTransform>()));
+                
+                break;
+            }
+        }
+
+        // 아이템의 레어도가 레어 이상일 경우 팝업 이벤트
+        if ((int)item.rarity >= (int)Rarity.Rare)
+            GetLegendaryPopUp(item);
+    }
+
     // 레전더리 아이템 획득 후 종료
     IEnumerator Legendary_PopUp_Coroutine()
     {
         yield return new WaitForSeconds(2.0f);
         isPopUp = false;
         m_Legendary_PopUp.SetTrigger("Close");
+    }
+
+    // 아이템 획득 텍스트 이후 사라짐 이벤트
+    IEnumerator Item_Text_FadeOut(RectTransform rect)
+    {
+        // 2초 뒤 텍스트가 사라지면서 원래 위치로 이동
+        yield return new WaitForSeconds(2.0f);
+        rect.gameObject.SetActive(false);
+        rect.anchoredPosition = new Vector2(0.0f, 0.0f);
     }
 
 }
