@@ -292,6 +292,9 @@ public class Main_UI : MonoBehaviour
 
     public void GetItem(Item_Scriptable item)
     {
+        // 모든 텍스트가 활성화 되어있는지 확인
+        bool AllActive = true;
+
         for (int i = 0; i < m_Item_Texts.Count; i++)
         {
             if (m_Item_Texts[i].gameObject.activeSelf == false)
@@ -309,8 +312,28 @@ public class Main_UI : MonoBehaviour
                     rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, rect.anchoredPosition.y + 50.0f);
                 }
                 StartCoroutine(Item_Text_FadeOut(m_Item_Texts[i].GetComponent<RectTransform>()));
-                
+                AllActive = false;
                 break;
+            }
+        }
+
+        // 모든 텍스트가 활성화되어있다면 다시 위치를 초기화 하여 시작
+        if (AllActive)
+        {
+            m_Item_Texts[0].gameObject.SetActive(false);
+            m_Item_Texts[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(0.0f, 0.0f);
+            m_Item_Texts[0].gameObject.SetActive(false);
+            m_Item_Texts[0].text =
+                "아이템을 획득하였습니다. "
+                + Utils.String_Color_Rarity(item.rarity)
+                + "[" + item.Item_Name + "]</color>";
+
+            StartCoroutine(Item_Text_FadeOut(m_Item_Texts[0].GetComponent<RectTransform>()));
+
+            for (int i = 1; i < m_Item_Texts.Count; i++)
+            {
+                RectTransform rect = m_Item_Texts[i].GetComponent<RectTransform>();
+                rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, rect.anchoredPosition.y + 50.0f);
             }
         }
 
