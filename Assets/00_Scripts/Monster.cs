@@ -29,7 +29,6 @@ public class Monster : Character
         ATK = Utils.Data.stageData.ATK();
         HP = Utils.Data.stageData.HP();
         
-        Debug.Log(ATK + " : " + HP);
         Attack_Range = R_Attack_Range;
         target_Range = Mathf.Infinity; 
 

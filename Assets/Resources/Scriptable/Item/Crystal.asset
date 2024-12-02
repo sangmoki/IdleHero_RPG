@@ -16,4 +16,4 @@ MonoBehaviour:
   Item_Des: "\uC601\uB871\uD55C \uD478\uB978 \uBE5B\uC744 \uBFDC\uC5B4\uB0B4\uACE0
     \uC788\uB294 \uBCF4\uC11D"
   rarity: 4
-  Item_Chance: 10
+  Item_Chance: 100

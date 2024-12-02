@@ -56,7 +56,20 @@ public class Main_UI : MonoBehaviour
 
     [Space(20f)]
     [Header("##Dead_Frame")]
+    // 죽었을 때 나오는 프레임
     [SerializeField] private GameObject m_Dead_Frame_OBJ;
+
+    [Space(20f)]
+    [Header("##Legendary_PopUp")]
+    // 레전더리 등급 아이템 획득 시 애니메이션
+    [SerializeField] private Animator m_Legendary_PopUp;
+    [SerializeField] private Image m_PopUp_Image;
+    [SerializeField] private TextMeshProUGUI m_PopUp_Text;
+    Coroutine Legendary_Coroutine;
+
+    bool isPopUp = false;
+
+
 
     public void Set_Boss_State()
     {
@@ -232,7 +245,38 @@ public class Main_UI : MonoBehaviour
         m_LevelUp_Money_Text.color = Utils.CoinUpgradeCheck(levelupMoneyValue) ? Color.white : Color.red;
         
         m_Gold_Text.text = StringMethod.ToCurrencyString(Base_Manager.Data.Money);
+    }
 
+    // 레전더리 아이템 획득 시 팝업 이벤트
+    public void GetLegendaryPopUp(Item_Scriptable item)
+    {
+        if (isPopUp)
+        {
+            m_Legendary_PopUp.gameObject.SetActive(false);
+        }
+        isPopUp = true;
+
+        // 팝업 활성화
+        m_Legendary_PopUp.gameObject.SetActive(true);
+        m_PopUp_Image.sprite = Utils.Get_Atlas(item.name);
+        m_PopUp_Image.SetNativeSize();
+
+        m_PopUp_Text.text = item.Item_Name;
+
+        // 중복된 코루틴이 종료되지 않도록 중지
+        if (Legendary_Coroutine != null) 
+        { 
+            StopCoroutine(Legendary_Coroutine);
+        }
+        Legendary_Coroutine = StartCoroutine(Legendary_PopUp_Coroutine());
+    }
+
+    // 레전더리 아이템 획득 후 종료
+    IEnumerator Legendary_PopUp_Coroutine()
+    {
+        yield return new WaitForSeconds(2.0f);
+        isPopUp = false;
+        m_Legendary_PopUp.SetTrigger("Close");
     }
 
 }

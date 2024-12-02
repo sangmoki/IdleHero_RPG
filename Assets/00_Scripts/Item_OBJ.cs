@@ -56,6 +56,11 @@ public class Item_OBJ : MonoBehaviour
 
         // 아이템이 비활성화되면 루팅 이펙트를 실행
         m_Loot.Play();
+
+        // 아이템의 레어도가 레전더리 일 때 이벤트
+        if (rarity == Rarity.Legendary)
+            Main_UI.instance.GetLegendaryPopUp(m_Item);
+
         // 0.5초 뒤에 루팅 이펙트를 풀에 반환한다.
         yield return new WaitForSeconds(0.5f);
         Base_Manager.Pool.m_pool_Dictionary["Item_OBJ"].Return(this.gameObject);
