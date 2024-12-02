@@ -27,7 +27,10 @@ public class Main_UI : MonoBehaviour
 
         // 아이템 콘텐트의 자식들을 가져와서 리스트에 저장
         for (int i = 0; i < m_Item_Content.childCount; i++)
+        {
             m_Item_Texts.Add(m_Item_Content.GetChild(i).GetComponent<TextMeshProUGUI>());
+            m_Item_Coroutines.Add(null);
+        }
 
         // 이벤트 연결
         Stage_Manager.m_ReadyEvent += () => FadeInOut(true);
@@ -83,6 +86,7 @@ public class Main_UI : MonoBehaviour
     [Header("##Item_PopUp")]
     [SerializeField] private Transform m_Item_Content;
     private List<TextMeshProUGUI> m_Item_Texts = new List<TextMeshProUGUI>();
+    private List<Coroutine> m_Item_Coroutines = new List<Coroutine>();
 
     public void Set_Boss_State()
     {
@@ -311,7 +315,12 @@ public class Main_UI : MonoBehaviour
                     RectTransform rect = m_Item_Texts[j].GetComponent<RectTransform>();
                     rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, rect.anchoredPosition.y + 50.0f);
                 }
-                StartCoroutine(Item_Text_FadeOut(m_Item_Texts[i].GetComponent<RectTransform>()));
+
+                // 한번 실행된 코루틴이 반복되지 않도록 중지
+                if (m_Item_Coroutines[i] != null)
+                    StopCoroutine(m_Item_Coroutines[i]);
+
+                m_Item_Coroutines[i] = StartCoroutine(Item_Text_FadeOut(m_Item_Texts[i].GetComponent<RectTransform>()));
                 AllActive = false;
                 break;
             }
@@ -320,20 +329,41 @@ public class Main_UI : MonoBehaviour
         // 모든 텍스트가 활성화되어있다면 다시 위치를 초기화 하여 시작
         if (AllActive)
         {
-            m_Item_Texts[0].gameObject.SetActive(false);
-            m_Item_Texts[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(0.0f, 0.0f);
-            m_Item_Texts[0].gameObject.SetActive(false);
-            m_Item_Texts[0].text =
-                "아이템을 획득하였습니다. "
-                + Utils.String_Color_Rarity(item.rarity)
-                + "[" + item.Item_Name + "]</color>";
+            // 텍스트 위치 초기화 위한 변수
+            GameObject baseRect = null;
+            float yCount = 0.0f;
 
-            StartCoroutine(Item_Text_FadeOut(m_Item_Texts[0].GetComponent<RectTransform>()));
-
-            for (int i = 1; i < m_Item_Texts.Count; i++)
+            // 가장 높은 위치에 있는 Text를 찾아서 baseRect에 저장
+            for (int i = 0; i < m_Item_Texts.Count; i++)
             {
                 RectTransform rect = m_Item_Texts[i].GetComponent<RectTransform>();
-                rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, rect.anchoredPosition.y + 50.0f);
+                if (rect.anchoredPosition.y > yCount)
+                {
+                    baseRect = rect.gameObject;
+                    yCount = rect.anchoredPosition.y;
+                }
+            }
+
+            for (int i = 0; i < m_Item_Texts.Count; i++)
+            {
+                if (baseRect == m_Item_Texts[i].gameObject)
+                {
+                    m_Item_Texts[i].gameObject.SetActive(false);
+                    m_Item_Texts[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(0.0f, 0.0f);
+
+                    m_Item_Texts[i].gameObject.SetActive(true);
+                    m_Item_Texts[i].text =
+                        "아이템을 획득하였습니다. "
+                        + Utils.String_Color_Rarity(item.rarity)
+                        + "[" + item.Item_Name + "]</color>";
+                    
+                    // StartCoroutine(Item_Text_FadeOut(m_Item_Texts[0].GetComponent<RectTransform>()));
+                }
+                else
+                {
+                    RectTransform rect = m_Item_Texts[i].GetComponent<RectTransform>();
+                    rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, rect.anchoredPosition.y + 50.0f);
+                }
             }
         }
 

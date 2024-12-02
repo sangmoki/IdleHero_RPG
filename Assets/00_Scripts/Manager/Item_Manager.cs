@@ -15,7 +15,6 @@ public class Item_Manager
             // 데이터의 이름을 키로 사용하여 datas 배열에 저장
             // CSV파일을 읽어오기 위한 키값 ITEM_001과 같은
             Item_Datas.Add(datas[i].name, datas[i]);
-            Debug.Log(datas[i].name + " : " + datas[i].Item_Name);
         }
     }
 

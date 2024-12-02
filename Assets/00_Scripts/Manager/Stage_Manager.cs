@@ -39,30 +39,24 @@ public class Stage_Manager
         switch (state)
         {
             case Stage_State.Ready:
-                Debug.Log("isReady!");
                 m_ReadyEvent?.Invoke();
                 Base_Manager.instance.Coroutine_Action(2.0f, () => State_Change(Stage_State.Play));
                 break;
             case Stage_State.Play:
-                Debug.Log("isPlay!");
                 m_PlayEvent?.Invoke();
                 break;
             case Stage_State.Boss:
                 Count = 0;
-                Debug.Log("isBoss!");
                 m_BossEvent?.Invoke();
                 break;
             case Stage_State.Boss_Play:
-                Debug.Log("isBossPlay!");
                 m_BossPlayEvent?.Invoke();
                 break;
             case Stage_State.Clear:
                 Base_Manager.Data.Stage++;
-                Debug.Log("isClear!");
                 m_ClearEvent?.Invoke();
                 break;
             case Stage_State.Dead:
-                Debug.Log("isDead!");
                 isDead = true;
                 m_DeadEvent?.Invoke();
                 break;

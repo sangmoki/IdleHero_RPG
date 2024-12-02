@@ -60,9 +60,6 @@ public class Item_OBJ : MonoBehaviour
         // 아이템을 획득하였다는 텍스트를 띄운다.
         Main_UI.instance.GetItem(m_Item);
 
-        // 아이템의 레어도가 레어 이상일 경우
-        if ((int) rarity >= (int)Rarity.Rare)
-            Main_UI.instance.GetLegendaryPopUp(m_Item);
 
         // 0.5초 뒤에 루팅 이펙트를 풀에 반환한다.
         yield return new WaitForSeconds(0.5f);
