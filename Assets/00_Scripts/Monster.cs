@@ -218,12 +218,15 @@ public class Monster : Character
             value.GetComponent<COIN_PARENT>().Init(transform.position);
         });
 
-        // 아이템 드롭 이펙트
-        for (int i = 0; i < 3; i++)
+        // 아이템 획득 확률에 따른 아이템 할당
+        var Items = Base_Manager.Item.GetDropSet();
+
+        // 아이템 드롭 이벤트
+        for (int i = 0; i < Items.Count; i++)
         {
             Base_Manager.Pool.Pooling_Obj("Item_OBJ").Get((value) =>
             {
-                value.GetComponent<Item_OBJ>().Init(transform.position);
+                value.GetComponent<Item_OBJ>().Init(transform.position, Items[i]);
             });
         }
 

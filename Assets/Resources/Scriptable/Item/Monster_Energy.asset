@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 611843bccd11fb040b0ff3458dfc5ba9, type: 3}
   m_Name: Monster_Energy
   m_EditorClassIdentifier: 
-  Item_Name: Monster_Energy
-  Item_Des: 
-  rarity: 0
-  Item_Chance: 0
+  Item_Name: "\uBAAC\uC2A4\uD130 \uC815\uC218"
+  Item_Des: "\uBAAC\uC2A4\uD130\uC758 \uD798\uC758 \uC6D0\uCC9C"
+  rarity: 3
+  Item_Chance: 15

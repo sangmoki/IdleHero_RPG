@@ -37,7 +37,6 @@ public class Player_Manager
         float exp = (float)Utils.Data.levelData.MAXEXP();
         double myEXP = Base_Manager.Data.EXP;
 
-        Debug.Log(myEXP + " : " + exp);
         return (float) myEXP / exp;
     }
 

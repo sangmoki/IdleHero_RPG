@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 611843bccd11fb040b0ff3458dfc5ba9, type: 3}
   m_Name: Crystal
   m_EditorClassIdentifier: 
-  Item_Name: Crystal
-  Item_Des: 
-  rarity: 0
-  Item_Chance: 0
+  Item_Name: "\uD06C\uB9AC\uC2A4\uD0C8"
+  Item_Des: "\uC601\uB871\uD55C \uD478\uB978 \uBE5B\uC744 \uBFDC\uC5B4\uB0B4\uACE0
+    \uC788\uB294 \uBCF4\uC11D"
+  rarity: 4
+  Item_Chance: 10

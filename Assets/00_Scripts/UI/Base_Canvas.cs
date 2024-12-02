@@ -39,7 +39,6 @@ public class Base_Canvas : MonoBehaviour
             Utils.ClosePopupUI();
         else
         {
-            Debug.Log("게임 종료 팝업 노출");
         }
     }
 

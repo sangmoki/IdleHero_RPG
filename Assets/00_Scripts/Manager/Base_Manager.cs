@@ -14,10 +14,12 @@ public class Base_Manager : MonoBehaviour
     public static Pool_Manager s_Pool = new Pool_Manager();
     public static Player_Manager s_Player = new Player_Manager();
     public static Data_Manager s_Data = new Data_Manager();
+    public static Item_Manager s_Item = new Item_Manager();
 
     public static Pool_Manager Pool { get { return s_Pool; } }
     public static Player_Manager Player { get { return s_Player; } }
     public static Data_Manager Data { get { return s_Data; } }
+    public static Item_Manager Item { get { return s_Item; } }
     #endregion
 
     private void Awake()
@@ -33,6 +35,9 @@ public class Base_Manager : MonoBehaviour
             instance = this;
             // 해당 베이스 매니저를 가지고 있는 오브젝트가 된다.
             Pool.Initalize(transform);
+
+            Item.Init();
+
             StartCoroutine(Action_Coroutine(() => Stage_Manager.State_Change(Stage_State.Ready), 0.3f));
             DontDestroyOnLoad(this.gameObject);
         }

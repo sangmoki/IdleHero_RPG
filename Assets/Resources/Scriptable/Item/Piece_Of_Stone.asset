@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 611843bccd11fb040b0ff3458dfc5ba9, type: 3}
   m_Name: Piece_Of_Stone
   m_EditorClassIdentifier: 
-  Item_Name: Piece_Of_Stone
-  Item_Des: 
+  Item_Name: "\uB3CC\uBA69\uC774"
+  Item_Des: "\uBCF4\uC798 \uAC83 \uC5C6\uB294 \uB3CC\uBA69"
   rarity: 0
-  Item_Chance: 0
+  Item_Chance: 30

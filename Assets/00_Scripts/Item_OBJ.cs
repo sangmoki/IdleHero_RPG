@@ -11,7 +11,8 @@ public class Item_OBJ : MonoBehaviour
     [SerializeField] private ParticleSystem m_Loot;       // 아이템을 획득할 때 나오는 이펙트
     [SerializeField] private float firingAngle = 45.0f;   // 곡선
     [SerializeField] private float gravity = 9.8f;        // ridigd(default 9.8)중력 
-    
+
+    Item_Scriptable m_Item;                               // 아이템 데이터    
     Rarity rarity;                                        // 아이템의 레어도
     bool isCheck = false;                                 // 아이템이 이동되었는지 체크하는 플래그
 
@@ -34,7 +35,7 @@ public class Item_OBJ : MonoBehaviour
 
         // 텍스트에 color와 텍스트 문구 변경
         // <color=#00FF00>TEST ITEM</color> 과 같다
-        m_Text.text = Utils.String_Color_Rarity(rarity) + "TEST ITEM" + "</color>";
+        m_Text.text = Utils.String_Color_Rarity(rarity) + m_Item.Item_Name + "</color>";
 
         StartCoroutine(LootItem());
     }
@@ -68,10 +69,13 @@ public class Item_OBJ : MonoBehaviour
         ItemTextRect.position = Camera.main.WorldToScreenPoint(transform.position);
     }
 
-    public void Init(Vector3 pos)
+    public void Init(Vector3 pos, Item_Scriptable data)
     {
-        // 랜덤으로 레어도 설정
-        rarity = (Rarity)Random.Range(0, 5);
+        // 아이템 데이터 대입
+        m_Item = data;
+
+        // 아이템 레어도 설정
+        rarity = m_Item.rarity;
 
         // 이동 확인 초기화
         isCheck = false;
