@@ -45,9 +45,9 @@ public class StageData
     public int B_HP;
     public int B_MONEY;
 
-    public double ATK() => Utils.CalculatedValue(B_ATK, Base_Manager.Data.Level, M_ATK);
-    public double HP() => Utils.CalculatedValue(B_HP, Base_Manager.Data.Level, M_HP);
-    public double MONEY() => Utils.CalculatedValue(B_MONEY, Base_Manager.Data.Level, M_MONEY);
+    public double ATK() => Utils.CalculatedValue(B_ATK, Base_Manager.Data.Stage, M_ATK);
+    public double HP() => Utils.CalculatedValue(B_HP, Base_Manager.Data.Stage, M_HP);
+    public double MONEY() => Utils.CalculatedValue(B_MONEY, Base_Manager.Data.Stage, M_MONEY);
 
 }
 

@@ -45,6 +45,12 @@ public class Main_UI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI m_AvgDPS_Text;
     [SerializeField] private TextMeshProUGUI m_LevelUp_Money_Text;
     [SerializeField] private TextMeshProUGUI m_Gold_Text;
+    [SerializeField] private TextMeshProUGUI m_Stage_Count_Text;
+    [SerializeField] private TextMeshProUGUI m_Stage_Text;
+    // Color = (float, float, float, float)
+    //            R      G      B      A
+    // Color(0.0f, 0.0f, 0.0f, 1.0f) -> 검정색
+    Color m_Stage_Color = new Color(0, 0.7295136f, 1.0f, 1.0f);
 
     [Space(20f)]
     [Header("##Fade")]
@@ -119,6 +125,7 @@ public class Main_UI : MonoBehaviour
     // 보스 생성 시 이벤트
     private void OnBoss()
     {
+        TextCheck();
         SliderOBJCheck(true);
     }
 
@@ -131,8 +138,7 @@ public class Main_UI : MonoBehaviour
     
     private void OnDead()
     {
-        SliderOBJCheck(false);
-
+        TextCheck();
         StartCoroutine(Dead_Delay());
     }
 
@@ -262,6 +268,22 @@ public class Main_UI : MonoBehaviour
         m_LevelUp_Money_Text.color = Utils.CoinUpgradeCheck(levelupMoneyValue) ? Color.white : Color.red;
         
         m_Gold_Text.text = StringMethod.ToCurrencyString(Base_Manager.Data.Money);
+
+        m_Stage_Text.text = Stage_Manager.isDead ? "반복중..." : "진행중...";
+        m_Stage_Text.color = Stage_Manager.isDead ? Color.yellow : m_Stage_Color;
+
+        // 100 스테이지마다 앞에 1이 변경됨
+        // ex ) 200
+        // 1-100
+        // ex) 201
+        // 2-1 스테이지로 되어야 함
+        // 그럼 Stage % 100 + 1
+        int stageValue = Base_Manager.Data.Stage + 1;
+        int stageForward = (stageValue / 1000) + 1;
+        int stageBack = stageValue % 1000;
+
+        m_Stage_Count_Text.text = "매우어려움 " + stageForward.ToString() + "-" + stageBack.ToString();
+        m_Boss_Stage_Text.text = stageForward.ToString() + "-" + stageBack.ToString() + " Stage";
     }
 
     // 레전더리 아이템 획득 시 팝업 이벤트
