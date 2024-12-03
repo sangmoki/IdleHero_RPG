@@ -35,6 +35,7 @@ public class Base_Manager : MonoBehaviour
             instance = this;
             // 해당 베이스 매니저를 가지고 있는 오브젝트가 된다.
             Pool.Initalize(transform);
+            Data.Init();
 
             Item.Init();
 

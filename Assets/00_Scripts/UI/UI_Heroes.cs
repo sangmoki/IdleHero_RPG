@@ -15,12 +15,13 @@ public class UI_Heroes : UI_Base
     {
         Main_UI.instance.FadeInOut(true, true, null);
 
-        var Data = Resources.LoadAll<Character_Scriptable>("Scriptable");
+        var datas = Base_Manager.Data.m_Data_Character;
 
-        for (int i = 0; i < Data.Length; i++)
-        {
-            // 딕셔너리에 데이터 저장
-            m_Dictionarys.Add(Data[i].m_Character_Name, Data[i]);
+        // 가져온 용병 정보를 반복을 하며 딕셔너리에 저장
+        foreach(var data in datas)
+        { 
+            // 딕셔너리에 데이터 저장 (키값을 이름으로 Value는 데이터)
+            m_Dictionarys.Add(data.Value.data.m_Character_Name, data.Value.data);
         }
 
         // 딕셔너리 정렬
