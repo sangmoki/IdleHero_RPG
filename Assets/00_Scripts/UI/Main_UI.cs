@@ -180,6 +180,9 @@ public class Main_UI : MonoBehaviour
     {
         float value = (float)Stage_Manager.Count / (float)Stage_Manager.MaxCount;
 
+        if (value == null)
+            value = 0.0f;
+
         // 몬스터 처치가 100% 이상일 경우 보스 스테이지로 전환
         if (value >= 1.0f)
         {

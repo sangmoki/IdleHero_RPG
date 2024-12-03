@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class CSV_Importer
 {
-    // CSV ÆÄÀÏÀ» ÀĞ¾î¿Í¼­ ÀúÀåÇÒ ¸®½ºÆ®
-    public static List<Dictionary<string, object>> EXP = new List<Dictionary<string, object>>(CSVReader.Read("EXP"));
+    // ë ˆë²¨ì—… ì‹œ ìŠ¤í° ì •ë³´
+    public static List<Dictionary<string, object>> Spawn_Design = new List<Dictionary<string, object>>(CSVReader.Read("Spawner"));
+    
 }

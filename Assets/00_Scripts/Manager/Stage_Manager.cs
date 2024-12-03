@@ -20,7 +20,7 @@ public class Stage_Manager
     // 객체 상태에 따라 어떤 행동을 할 것 인가에 대한 디자인 패턴
     public static Stage_State m_State;
 
-    public static int MaxCount = 5; // 보스에 도달할 최대 몬스터 수
+    public static int MaxCount = 3; // 보스에 도달할 최대 몬스터 수
     public static int Count;        // 현재 몬스터 수
 
     public static bool isDead;      // 플레이어 사망 여부
@@ -39,6 +39,7 @@ public class Stage_Manager
         switch (state)
         {
             case Stage_State.Ready:
+                MaxCount = int.Parse(CSV_Importer.Spawn_Design[Base_Manager.Data.Stage]["MaxCount"].ToString());
                 m_ReadyEvent?.Invoke();
                 Base_Manager.instance.Coroutine_Action(2.0f, () => State_Change(Stage_State.Play));
                 break;

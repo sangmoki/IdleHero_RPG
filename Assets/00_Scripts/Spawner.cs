@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    public int m_Count;         // 몬스터의 수
-    public float m_SpawnTime;   // 몇 초 마다 생성할 것인지
+    private int m_Count;         // 몬스터의 수
+    private float m_SpawnTime;   // 몇 초 마다 생성할 것인지
 
     public static List<Monster> m_Monsters = new List<Monster>();
     public static List<Player> m_Players = new List<Player>();
@@ -14,8 +14,15 @@ public class Spawner : MonoBehaviour
 
     private void Start()
     {
+        Stage_Manager.m_ReadyEvent += OnReady;
         Stage_Manager.m_PlayEvent += OnPlay;
         Stage_Manager.m_BossEvent += OnBoss;
+    }
+
+    public void OnReady()
+    {
+        m_Count = int.Parse(CSV_Importer.Spawn_Design[Base_Manager.Data.Stage]["Spawn_Count"].ToString());
+        m_SpawnTime = float.Parse(CSV_Importer.Spawn_Design[Base_Manager.Data.Stage]["Spawn_Timer"].ToString());
     }
 
     // 게임 시작 시 몬스터 스폰
@@ -81,9 +88,12 @@ public class Spawner : MonoBehaviour
     {
         Vector3 pos;
 
+        // 생성할 몬스터의 수 = 몬스터의 수 - 몬스터 리스트의 수
+        int value = m_Count - m_Monsters.Count;
+
         // Random.insideUnitSphere == Vector3(x, y, z) <- Vector3 기준 랜덤좌표
         // Random.insideUnitCircle == Vector2(x, y) <- Vector2 기준 랜덤좌표
-        for (int i = 0; i < m_Count; i++)
+        for (int i = 0; i < value; i++)
         {
             // 몬스터는 가운데를 기점으로 원형으로 생성되어야 한다.
             // 5~10의 값 = 생성되는 반원의 위치 값
