@@ -12,6 +12,7 @@ public class Monster : Character
     public float R_Attack_Range;
 
     public bool isBoss;     // 보스 몬스터인지 확인하는 플래그
+    double maxHP;         // 최대 체력
 
     // 초기값 설정
     protected override void Start()
@@ -26,9 +27,11 @@ public class Monster : Character
     {
         // 풀링에서 몬스터가 초기화 될 때 몬스터의 상태 초기화
         isDead = false;
-        ATK = Utils.Data.stageData.ATK();
-        HP = Utils.Data.stageData.HP();
-        
+        ATK = isBoss ? Utils.Data.stageData.ATK() * 10 : Utils.Data.stageData.ATK();
+        HP = isBoss ? Utils.Data.stageData.HP() * 10 : Utils.Data.stageData.HP();
+
+        maxHP = HP;
+
         Attack_Range = R_Attack_Range;
         target_Range = Mathf.Infinity; 
 
@@ -168,7 +171,7 @@ public class Monster : Character
 
         if (isBoss)
         {
-            Main_UI.instance.Boss_Slider_Count((float)HP, 500);
+            Main_UI.instance.Boss_Slider_Count((float)HP, maxHP);
         }
 
         // 몬스터의 체력이 0이하가 되면 몬스터의 죽음
