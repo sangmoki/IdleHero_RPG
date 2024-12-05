@@ -2,14 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UI_Heroes : UI_Base
 {
     public Transform Content;   // Hero_Panel의 부모 오브젝트
     public GameObject Part;     // Hero_Panel Prefabs
+    public List<UI_Heroes_Part> parts = new List<UI_Heroes_Part>();
 
     // 정렬 위한 Dictionary
     Dictionary<string, Character_Scriptable> m_Dictionarys = new Dictionary<string, Character_Scriptable>();
+
+    // 영웅 클릭 이벤트
+    public void OnClick(UI_Heroes_Part s_Part)
+    {
+        // 모든 영웅에 Lock이라는 오브젝트를 활성화 하고 Outline을 비활성화.
+        for (int i = 0; i < parts.Count; i++)
+        {
+            parts[i].LockOBJ.SetActive(true);
+            parts[i].GetComponent<Outline>().enabled = false;
+        }
+        // 선택한 영웅만 Lock을 비활성화하고 OutLine을 활성화한다.
+        s_Part.LockOBJ.SetActive(false);
+        s_Part.GetComponent<Outline>().enabled = true;
+    }
 
     public override bool Init()
     {
@@ -32,7 +48,8 @@ public class UI_Heroes : UI_Base
         {
             // Content를 부모 오브젝트로 Part(Prefabs화 한 Hero_Panel)를 생성한다.
             var go = Instantiate(Part, Content).GetComponent<UI_Heroes_Part>();
-            go.Initalize(data.Value);
+            parts.Add(go);
+            go.Initalize(data.Value, this);
         }
 
         return base.Init();
