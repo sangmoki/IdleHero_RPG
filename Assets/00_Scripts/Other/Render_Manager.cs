@@ -14,5 +14,14 @@ public class Render_Manager : MonoBehaviour
         }
     }
 
+    // RenderOBJ의 카메라
+    public Camera cam;
+
     public Render_Hero HERO;
+    
+    public Vector2 ReturnScreenPoint(Transform pos)
+    {
+        // 월드좌표를 스크린좌표로 변경
+        return cam.WorldToScreenPoint(pos.position);
+    }
 }

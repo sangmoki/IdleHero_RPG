@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,10 +13,51 @@ public class UI_Heroes : UI_Base
 
     // 정렬 위한 Dictionary
     Dictionary<string, Character_Scriptable> m_Dictionarys = new Dictionary<string, Character_Scriptable>();
+    Character_Scriptable m_Character;
+
+    // 영웅 탭 + 클릭 버튼 생성
+    public void InitButtons()
+    {
+        for (int i = 0; i < Render_Manager.instance.HERO.Circles.Length; i++)
+        {
+            int index = i;
+            // Button이라는 새 오브젝트를 생성하여 Button 컴포넌트 추가.
+            var go = new GameObject("Button").AddComponent<Button>();
+            // 클릭이벤트 구현
+            go.onClick.AddListener(() => SetCharacterButton(index));
+            // 부모 오브젝트를 Hero_Panel로 설정
+            go.transform.SetParent(this.transform);
+            // 버튼에 이미지와 RectTrasnform 컴포넌트 추가
+            go.gameObject.AddComponent<Image>();
+            go.gameObject.AddComponent<RectTransform>();
+
+            // rect를 가져와 offset(Anchors presets) 설정
+            RectTransform rect = go.GetComponent<RectTransform>();
+
+            // 0.0에 위치하게 설정
+            rect.offsetMin = Vector2.zero;
+            rect.offsetMax = Vector2.zero;
+
+            rect.sizeDelta = new Vector2(150.0f, 150.0f);
+            go.GetComponent<Image>().color = new Color(0, 0, 0, 0.01f);
+
+            go.transform.position = Render_Manager.instance.ReturnScreenPoint(Render_Manager.instance.HERO.Circles[i]);
+        }
+    }
+
+    // 어느 위치로 영웅을 배치할 것 인지 이벤트 구현
+    private void SetCharacterButton(int value)
+    {
+        Base_Manager.Character.GetCharacter(value, m_Character.m_Character_Name);
+
+        Render_Manager.instance.HERO.InitHero();
+    }
 
     // 영웅 클릭 이벤트
     public void OnClick(UI_Heroes_Part s_Part)
     {
+        m_Character = s_Part.m_Character;
+
         // 모든 영웅에 Lock이라는 오브젝트를 활성화 하고 Outline을 비활성화.
         for (int i = 0; i < parts.Count; i++)
         {
@@ -29,6 +71,10 @@ public class UI_Heroes : UI_Base
 
     public override bool Init()
     {
+        InitButtons();
+        
+        Render_Manager.instance.HERO.InitHero();
+
         Main_UI.instance.FadeInOut(true, true, null);
 
         var datas = Base_Manager.Data.m_Data_Character;

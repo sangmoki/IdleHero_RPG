@@ -13,12 +13,13 @@ public class UI_Heroes_Part : MonoBehaviour
     [SerializeField] private TextMeshProUGUI m_Level, m_Count;
     public GameObject LockOBJ;
 
-    Character_Scriptable m_Character;
+    public Character_Scriptable m_Character;
     UI_Heroes parent;
 
     public void Initalize(Character_Scriptable data, UI_Heroes parentBase)
     {
         parent = parentBase;
+        m_Character = data;
 
         // 레어도와 Sprite 이름에 따른 이미지 변경
         m_RarityImage.sprite = Utils.Get_Atlas(data.m_Rarity.ToString());
@@ -32,9 +33,9 @@ public class UI_Heroes_Part : MonoBehaviour
     // 영웅 클릭 이벤트
     public void Click_Hero()
     {
-        parent.OnClick(this);
-
         // 영웅을 클릭한다면 PLUS 파티클 실행
         Render_Manager.instance.HERO.GetParticle(true);
+        
+        parent.OnClick(this);
     }
 }

@@ -342,6 +342,13 @@ MonoBehaviour:
   - {fileID: 256766059}
   - {fileID: 1731901366}
   - {fileID: 1847881160}
+  Circles:
+  - {fileID: 572231156}
+  - {fileID: 1431659383}
+  - {fileID: 1235040455}
+  - {fileID: 815673829}
+  - {fileID: 2025915800}
+  - {fileID: 429964950}
 --- !u!1 &62910740
 GameObject:
   m_ObjectHideFlags: 0
@@ -2915,6 +2922,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61a1150c87dd7d54bb74ee31bd58016f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 1804548174}
   HERO: {fileID: 34594273}
 --- !u!1 &411245199
 GameObject:
@@ -13095,7 +13103,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1440, y: 2560}
-  m_ScreenMatchMode: 0
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96

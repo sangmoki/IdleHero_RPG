@@ -15,11 +15,13 @@ public class Base_Manager : MonoBehaviour
     public static Player_Manager s_Player = new Player_Manager();
     public static Data_Manager s_Data = new Data_Manager();
     public static Item_Manager s_Item = new Item_Manager();
+    public static Character_Manager s_Character = new Character_Manager();
 
     public static Pool_Manager Pool { get { return s_Pool; } }
     public static Player_Manager Player { get { return s_Player; } }
     public static Data_Manager Data { get { return s_Data; } }
     public static Item_Manager Item { get { return s_Item; } }
+    public static Character_Manager Character { get { return s_Character; } }
     #endregion
 
     private void Awake()
