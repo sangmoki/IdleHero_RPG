@@ -961,7 +961,7 @@ GameObject:
   - component: {fileID: 4029235117771714058}
   - component: {fileID: 2790993191438650225}
   - component: {fileID: 5803740878244453425}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Elementalist_B
   m_TagString: Untagged
   m_Icon: {fileID: 0}

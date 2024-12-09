@@ -335,13 +335,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f828a4b1aac3c224987873fb02d41cf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particles:
-  - {fileID: 871634828}
-  - {fileID: 766755849}
-  - {fileID: 1539289982}
-  - {fileID: 256766059}
-  - {fileID: 1731901366}
-  - {fileID: 1847881160}
   Circles:
   - {fileID: 572231156}
   - {fileID: 1431659383}
@@ -349,6 +342,15 @@ MonoBehaviour:
   - {fileID: 815673829}
   - {fileID: 2025915800}
   - {fileID: 429964950}
+  Pivot: {fileID: 982406237}
+  particles:
+  - {fileID: 871634828}
+  - {fileID: 766755849}
+  - {fileID: 1539289982}
+  - {fileID: 256766059}
+  - {fileID: 1731901366}
+  - {fileID: 1847881160}
+  GetCharacter: 000000000000
 --- !u!1 &62910740
 GameObject:
   m_ObjectHideFlags: 0
@@ -8077,6 +8079,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 971199695}
   m_CullTransparentMesh: 1
+--- !u!1 &982406236
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 982406237}
+  m_Layer: 0
+  m_Name: Pivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &982406237
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 982406236}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -2.67, z: 5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1820746177}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &995148660
 GameObject:
   m_ObjectHideFlags: 0
@@ -14414,6 +14447,7 @@ Transform:
   - {fileID: 815673829}
   - {fileID: 2025915800}
   - {fileID: 429964950}
+  - {fileID: 982406237}
   m_Father: {fileID: 34594272}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1831103853

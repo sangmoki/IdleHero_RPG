@@ -798,7 +798,7 @@ GameObject:
   - component: {fileID: 3109943839513041083}
   - component: {fileID: 5478873608879976045}
   - component: {fileID: 3756076275712919111}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Spearman
   m_TagString: Untagged
   m_Icon: {fileID: 0}

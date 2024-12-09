@@ -516,7 +516,7 @@ GameObject:
   - component: {fileID: 8212250037925097053}
   - component: {fileID: 1422813633712760658}
   - component: {fileID: 7790961412934930872}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Hunter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
