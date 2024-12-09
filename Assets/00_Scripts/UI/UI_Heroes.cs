@@ -49,24 +49,45 @@ public class UI_Heroes : UI_Base
     private void SetCharacterButton(int value)
     {
         Base_Manager.Character.GetCharacter(value, m_Character.m_Character_Name);
-
+        
+        Render_Manager.instance.HERO.GetParticle(false);
+        OnClickHero(null);
         Render_Manager.instance.HERO.InitHero();
+
+        // 영웅을 착용중인지 확인
+        for (int i = 0; i < parts.Count; i++)
+        {
+            parts[i].GetCharacterCheck();
+        }
     }
 
     // 영웅 클릭 이벤트
-    public void OnClick(UI_Heroes_Part s_Part)
+    public void OnClickHero(UI_Heroes_Part s_Part)
     {
-        m_Character = s_Part.m_Character;
-
-        // 모든 영웅에 Lock이라는 오브젝트를 활성화 하고 Outline을 비활성화.
-        for (int i = 0; i < parts.Count; i++)
+        if (s_Part == null)
         {
-            parts[i].LockOBJ.SetActive(true);
-            parts[i].GetComponent<Outline>().enabled = false;
+            // 모든 영웅에 Lock이라는 오브젝트를 활성화 하고 Outline을 비활성화.
+            for (int i = 0; i < parts.Count; i++)
+            {
+                parts[i].LockOBJ.SetActive(false);
+                parts[i].GetComponent<Outline>().enabled = false;
+            }
         }
-        // 선택한 영웅만 Lock을 비활성화하고 OutLine을 활성화한다.
-        s_Part.LockOBJ.SetActive(false);
-        s_Part.GetComponent<Outline>().enabled = true;
+        else
+        {
+            m_Character = s_Part.m_Character;
+
+            // 모든 영웅에 Lock이라는 오브젝트를 활성화 하고 Outline을 비활성화.
+            for (int i = 0; i < parts.Count; i++)
+            {
+                parts[i].LockOBJ.SetActive(true);
+                parts[i].GetComponent<Outline>().enabled = false;
+            }
+        
+            // 선택한 영웅만 Lock을 비활성화하고 OutLine을 활성화한다.
+            s_Part.LockOBJ.SetActive(false);
+            s_Part.GetComponent<Outline>().enabled = true;
+        }
     }
 
     public override bool Init()

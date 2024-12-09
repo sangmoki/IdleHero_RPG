@@ -11,6 +11,8 @@ public class UI_Heroes_Part : MonoBehaviour
     // Hero_Panel의 하위 오브젝트들
     [SerializeField] private Image m_Slider, m_CharacterImage, m_RarityImage;
     [SerializeField] private TextMeshProUGUI m_Level, m_Count;
+    [SerializeField] private GameObject GetLock;
+
     public GameObject LockOBJ;
 
     public Character_Scriptable m_Character;
@@ -28,6 +30,26 @@ public class UI_Heroes_Part : MonoBehaviour
         // 이미지 크기 조정
         RectTransform rect = m_CharacterImage.GetComponent<RectTransform>();
         rect.sizeDelta = new Vector3(rect.sizeDelta.x / 2.3f, rect.sizeDelta.y / 2.3f);
+
+        GetCharacterCheck();
+    }
+
+    // 착용중인 영웅인지 확인
+    public void GetCharacterCheck()
+    {
+        bool get = false;
+
+        for (int i = 0; i < Base_Manager.Character.m_Set_Character.Length; i++)
+        {
+            if (Base_Manager.Character.m_Set_Character[i] != null)
+            {
+                if (Base_Manager.Character.m_Set_Character[i].data == m_Character)
+                {
+                    get = true;
+                }
+            }
+        }
+        GetLock.SetActive(get);
     }
 
     // 영웅 클릭 이벤트
@@ -36,6 +58,6 @@ public class UI_Heroes_Part : MonoBehaviour
         // 영웅을 클릭한다면 PLUS 파티클 실행
         Render_Manager.instance.HERO.GetParticle(true);
         
-        parent.OnClick(this);
+        parent.OnClickHero(this);
     }
 }
