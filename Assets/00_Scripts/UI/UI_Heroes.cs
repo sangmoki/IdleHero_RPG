@@ -59,6 +59,8 @@ public class UI_Heroes : UI_Base
         {
             parts[i].GetCharacterCheck();
         }
+
+        Main_UI.instance.SetCharacterData();
     }
 
     // 영웅 클릭 이벤트

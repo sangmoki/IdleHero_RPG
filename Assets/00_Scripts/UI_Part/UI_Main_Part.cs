@@ -12,6 +12,8 @@ public class UI_Main_Part : MonoBehaviour
     private Image Icon, FillImage;
     [SerializeField]
     private  TextMeshProUGUI HP, MP;
+    [SerializeField]
+    private GameObject GetReadyCharacter;
 
     //[Space(20f)]
     //[SerializeField]
@@ -35,7 +37,8 @@ public class UI_Main_Part : MonoBehaviour
         }
         else
         {
-            InitData(m_Data);
+            // 대기중일 경우
+            InitData(m_Data, true);
         }
     }
 
@@ -44,17 +47,23 @@ public class UI_Main_Part : MonoBehaviour
         Base_Canvas.instance.Get_UI("#Heroes");
     }
 
-    public void InitData(Character_Scriptable data)
+    public void InitData(Character_Scriptable data, bool Ready)
     {
         m_Data = data;
 
         Lock.SetActive(false);
         Plus.SetActive(false);
         Icon.gameObject.SetActive(true);
-        HP.gameObject.SetActive(true);
-        FillImage.transform.parent.gameObject.SetActive(true);
+        
+        HP.gameObject.SetActive(!Ready);
+        FillImage.transform.parent.gameObject.SetActive(!Ready);
 
+        GetReadyCharacter.SetActive(Ready);
         Icon.sprite = Utils.Get_Atlas(data.m_Character_Name);
+
+        Icon.SetNativeSize();
+        RectTransform rect = Icon.GetComponent<RectTransform>();
+        rect.sizeDelta = new Vector2(rect.sizeDelta.x / 2, rect.sizeDelta.y / 2);
     }
 
     public void StateCheck(Player player)
