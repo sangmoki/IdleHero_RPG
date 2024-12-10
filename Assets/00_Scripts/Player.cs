@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class Player : Character
 {
-    private Character_Scriptable CH_Data; // 캐릭터 데이터
+    public Character_Scriptable CH_Data; // 캐릭터 데이터
     public ParticleSystem Provocation_Effect; // 보스 소환 이펙트
     public GameObject TrailObject;        // 플레이어의 공격을 표시할 Trail 오브젝트    
     public string CH_Name;                // 캐릭터 이름
+    public int MP;                        // 캐릭터의 마나
     Vector3 startPos;                     // 플레이어의 시작 위치
     Quaternion rot;                       // 플레이어의 회전값
+    public bool MainCharacter = false;
 
     protected override void Start()
     {
@@ -77,6 +79,14 @@ public class Player : Character
         Spawner.m_Players.Add(this);
     }
 
+    // MP 획득
+    public void Get_MP(int mp)
+    {
+        if (MainCharacter) return;
+        Main_UI.instance.CharaterStateCheck(this);
+        MP += mp;
+    }
+
     private void Update()
     {
         // 죽을경우
@@ -129,6 +139,9 @@ public class Player : Character
                     isATTACK = true;
                     AnimatorChange("isATTACK");
 
+                    // 공격했을 시 MP 5 추가
+                    Get_MP(5);
+
                     // 공격 후 공격 상태 초기화 함수 호출
                     Invoke("InitAttack", 1.0f);
                 }
@@ -167,6 +180,9 @@ public class Player : Character
         base.GetDamage(dmg);
 
         if (Stage_Manager.isDead) return;
+
+        // 공격 받았을 시 MP 3 추가
+        Get_MP(3);
 
         var goObj = Base_Manager.Pool.Pooling_Obj("HIT_TEXT").Get((value) =>
         {

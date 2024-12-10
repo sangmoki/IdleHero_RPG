@@ -15,3 +15,4 @@ MonoBehaviour:
   m_Character_Name: Berserker
   m_Attack_Range: 2
   m_Rarity: 4
+  MaxMP: 80

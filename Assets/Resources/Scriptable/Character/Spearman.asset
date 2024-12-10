@@ -15,3 +15,4 @@ MonoBehaviour:
   m_Character_Name: Spearman
   m_Attack_Range: 1
   m_Rarity: 1
+  MaxMP: 80

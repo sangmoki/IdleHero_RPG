@@ -15,3 +15,4 @@ MonoBehaviour:
   m_Character_Name: Cleric
   m_Attack_Range: 3
   m_Rarity: 0
+  MaxMP: 80
