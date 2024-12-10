@@ -33,7 +33,7 @@ public class Main_UI : MonoBehaviour
         }
 
         // 이벤트 연결
-        Stage_Manager.m_ReadyEvent += () => FadeInOut(true);
+        Stage_Manager.m_ReadyEvent += OnReady;
         Stage_Manager.m_BossEvent += OnBoss;
         Stage_Manager.m_ClearEvent += OnClear;
         Stage_Manager.m_DeadEvent += OnDead;
@@ -94,6 +94,11 @@ public class Main_UI : MonoBehaviour
     private List<TextMeshProUGUI> m_Item_Texts = new List<TextMeshProUGUI>();
     private List<Coroutine> m_Item_Coroutines = new List<Coroutine>();
 
+    [Space(20f)]
+    [Header("##Hero_Frame")]
+    [SerializeField] private UI_Main_Part[] m_Main_Parts;
+    Dictionary<Player, UI_Main_Part> m_Part = new Dictionary<Player, UI_Main_Part>();
+
     public void Set_Boss_State()
     {
         Stage_Manager.isDead = false;
@@ -122,6 +127,31 @@ public class Main_UI : MonoBehaviour
         Boss_Slider_Count(value, 1.0f);
     }
 
+    // 보스 클리어 후 준비상태
+    private void OnReady()
+    {
+        FadeInOut(true);
+
+        m_Part.Clear();
+
+        for (int i = 0; i < 6; i++) m_Main_Parts[i].Initalize();
+        
+        for (int i = 0; i < Base_Manager.Character.m_Set_Character.Length; i++)
+        {
+            var data = Base_Manager.Character.m_Set_Character[i];
+            if (data != null)
+            {
+                m_Main_Parts[i].InitData(data.data);
+                m_Part.Add(Character_Spawner.players[i], m_Main_Parts[i]);
+            }
+        }
+    }
+
+    public void CharaterStateCheck(Player player)
+    {
+        m_Part[player].StateCheck(player);
+    }
+
     // 보스 생성 시 이벤트
     private void OnBoss()
     {
@@ -136,6 +166,7 @@ public class Main_UI : MonoBehaviour
         StartCoroutine(Clear_Delay());
     }
     
+    // 캐릭터 사망
     private void OnDead()
     {
         TextCheck();
