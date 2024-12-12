@@ -39,6 +39,7 @@ public class Player : Character
     private void Data_Set(Character_Scriptable data)
     {
         CH_Data = data;
+        Bullet_Name = data.m_Character_Name;
         Attack_Range = data.m_Attack_Range;
 
         Set_ATKHP();
