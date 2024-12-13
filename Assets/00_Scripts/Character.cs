@@ -13,13 +13,14 @@ public class Character : MonoBehaviour
     protected float Attack_Range = 3.0f; // 공격 범위
     protected float target_Range = 5.0f; // 타겟을 공격할 수 있는 인지 범위 
     protected bool isATTACK = false;     // 공격 상태
+    public bool isGetSkill = false;      // 스킬 획득 여부
 
-    public Transform m_Target;        // 타겟
+    public Transform m_Target;           // 타겟
 
     [SerializeField]
-    public Transform m_BulletTransform; // 총알 생성 위치
+    public Transform m_BulletTransform;  // 총알 생성 위치
 
-    public string Bullet_Name;         // 총알 이름
+    public string Bullet_Name;           // 총알 이름
 
     // virtual키워드는 - 상속받은 내부에서 override 사용이 가능하다.
     // 즉, 상속받은 함수 내부에서 추가 수정이 가능하다.
@@ -33,12 +34,12 @@ public class Character : MonoBehaviour
     protected void InitAttack() => isATTACK = false;
 
     // 동작 변경 함수
-    protected void AnimatorChange(string temp)
+    public void AnimatorChange(string temp)
     {
         animator.SetBool("isIDLE", false);
         animator.SetBool("isMOVE", false);
 
-        if (temp == "isATTACK" || temp == "isCLEAR" || temp == "isDEAD")
+        if (temp == "isATTACK" || temp == "isCLEAR" || temp == "isDEAD" || temp == "isSKILL")
         {
             animator.SetTrigger(temp);
             return;

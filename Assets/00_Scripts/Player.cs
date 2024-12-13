@@ -11,7 +11,7 @@ public class Player : Character
     public int MP;                        // 캐릭터의 마나
     Vector3 startPos;                     // 플레이어의 시작 위치
     Quaternion rot;                       // 플레이어의 회전값
-    public bool MainCharacter = false;
+    public bool MainCharacter = false;    // 메인 캐릭터 여부
 
     protected override void Start()
     {
@@ -83,9 +83,25 @@ public class Player : Character
     // MP 획득
     public void Get_MP(int mp)
     {
+        // 스킬 사용중이라면 MP 획득 불가
+        if (isGetSkill) return;
+        // 메인 캐릭터는 MP 획득 불가
         if (MainCharacter) return;
+
         Main_UI.instance.CharaterStateCheck(this);
         MP += mp;
+
+        // 현재 MP가 최대 MP보다 높다면
+        if (MP >= CH_Data.MaxMP)
+        {
+            MP = 0;
+            isGetSkill = true;
+            // 현재 영웅의 SKillSet이 존재하면 스킬 발동
+            if (GetComponent<Skill_Base>() != null)
+            {
+                GetComponent<Skill_Base>().SetSkill();
+            }
+        }
     }
 
     private void Update()
