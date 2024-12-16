@@ -38,8 +38,8 @@ public class Base_Manager : MonoBehaviour
             // 해당 베이스 매니저를 가지고 있는 오브젝트가 된다.
             Pool.Initalize(transform);
             Data.Init();
-
             Item.Init();
+            Character.GetCharacter(0, "Barbarian");
 
             StartCoroutine(Action_Coroutine(() => Stage_Manager.State_Change(Stage_State.Ready), 0.3f));
             DontDestroyOnLoad(this.gameObject);

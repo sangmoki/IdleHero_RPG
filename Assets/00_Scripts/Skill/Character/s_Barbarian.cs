@@ -5,11 +5,20 @@ using UnityEngine;
 
 public class s_Barbarian : Skill_Base
 {
+    public GameObject SkillEffect;
+
     public override void SetSkill()
     {
         m_Player.AnimatorChange("isSKILL");
+        SkillEffect.SetActive(true);
         StartCoroutine(Set_Skill_Coroutine());
         base.SetSkill();
+    }
+
+    public override void ReturnSkill()
+    {
+        SkillEffect.SetActive(false);
+        base.ReturnSkill();
     }
 
     // 휠윈드 스킬
@@ -27,7 +36,7 @@ public class s_Barbarian : Skill_Base
                     monsters[i].GetDamage(SkillDamage(130));
                }
             }
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.5f);
         }
         ReturnSkill();
     }
