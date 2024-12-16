@@ -36,6 +36,9 @@ public class Character : MonoBehaviour
     // 동작 변경 함수
     public void AnimatorChange(string temp)
     {
+        // 스킬이 발동 중 일때는 Animator를 변경하지 않는다.
+        if (isGetSkill) return;
+
         animator.SetBool("isIDLE", false);
         animator.SetBool("isMOVE", false);
 

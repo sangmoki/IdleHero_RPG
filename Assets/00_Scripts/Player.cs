@@ -95,12 +95,12 @@ public class Player : Character
         if (MP >= CH_Data.MaxMP)
         {
             MP = 0;
-            isGetSkill = true;
             // 현재 영웅의 SKillSet이 존재하면 스킬 발동
             if (GetComponent<Skill_Base>() != null)
             {
                 GetComponent<Skill_Base>().SetSkill();
             }
+            isGetSkill = true;
         }
     }
 
