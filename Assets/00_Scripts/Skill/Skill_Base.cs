@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Skill_Base : MonoBehaviour
 {
+
+    public GameObject SkillParticle;
     protected Monster[] monsters {  get { return Spawner.m_Monsters.ToArray(); } }
     protected Player[] players { get { return Spawner.m_Players.ToArray(); } }
     protected Character m_Player { get { return GetComponent<Character>(); } }

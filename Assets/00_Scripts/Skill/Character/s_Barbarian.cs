@@ -5,19 +5,17 @@ using UnityEngine;
 
 public class s_Barbarian : Skill_Base
 {
-    public GameObject SkillEffect;
-
     public override void SetSkill()
     {
         m_Player.AnimatorChange("isSKILL");
-        SkillEffect.SetActive(true);
+        SkillParticle.SetActive(true);
         StartCoroutine(Set_Skill_Coroutine());
         base.SetSkill();
     }
 
     public override void ReturnSkill()
     {
-        SkillEffect.SetActive(false);
+        SkillParticle.SetActive(false);
         base.ReturnSkill();
     }
 
