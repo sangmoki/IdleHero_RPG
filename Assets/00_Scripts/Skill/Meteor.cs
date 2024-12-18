@@ -43,7 +43,7 @@ public class Meteor : MonoBehaviour
             {
                 Meteor_OBJ.localPosition = Vector3.MoveTowards(Meteor_OBJ.localPosition, Vector3.zero, speed * Time.deltaTime);
                 // 땅에 가까워질수록 연하게 
-                float scaleValue = distance / speed + 0.3f;
+                float scaleValue = distance / speed - 0.1f;
                 renderer.color = new Color(0, 0, 0, Mathf.Min((distance / speed), 0.5f));
                 Circle.localScale = new Vector3(scaleValue, scaleValue, scaleValue);
                 yield return null;
@@ -65,7 +65,7 @@ public class Meteor : MonoBehaviour
                 break;
             }
         }
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
         transform.parent = parentTransform;
         Meteor_OBJ.gameObject.SetActive(false);
         gameObject.SetActive(false);
