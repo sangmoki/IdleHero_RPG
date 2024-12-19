@@ -41,6 +41,7 @@ public class Player : Character
         CH_Data = data;
         Bullet_Name = data.m_Character_Name;
         Attack_Range = data.m_Attack_Range;
+        ATK_Speed = data.m_Attack_Speed;
 
         Set_ATKHP();
     }

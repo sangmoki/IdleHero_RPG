@@ -44,10 +44,14 @@ public class Character : MonoBehaviour
 
         if (temp == "isATTACK" || temp == "isCLEAR" || temp == "isDEAD" || temp == "isSKILL")
         {
+            if (temp == "isATTACK")
+            {
+                animator.speed = ATK_Speed;
+            }
             animator.SetTrigger(temp);
             return;
         }
-
+        animator.speed = 1.0f;
         animator.SetBool(temp, true);
     }
 

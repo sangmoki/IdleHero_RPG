@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Character_Name: Elementalist_B
   m_Attack_Range: 5
+  m_Attack_Speed: 1
   m_Rarity: 3
   MaxMP: 120
