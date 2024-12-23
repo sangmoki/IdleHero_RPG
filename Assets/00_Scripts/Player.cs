@@ -89,7 +89,7 @@ public class Player : Character
         // 메인 캐릭터는 MP 획득 불가
         if (MainCharacter) return;
 
-        Main_UI.instance.CharaterStateCheck(this);
+        // 획득 MP 계산
         MP += mp;
 
         // 현재 MP가 최대 MP보다 높다면
@@ -103,6 +103,8 @@ public class Player : Character
             }
             isGetSkill = true;
         }
+        // MP 초기화
+        Main_UI.instance.CharaterStateCheck(this);
     }
 
     private void Update()
