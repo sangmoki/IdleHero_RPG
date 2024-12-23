@@ -39,7 +39,7 @@ public class Base_Manager : MonoBehaviour
             Pool.Initalize(transform);
             Data.Init();
             Item.Init();
-            Character.GetCharacter(0, "Elementalist_W");
+            Character.GetCharacter(0, "Hunter");
 
             StartCoroutine(Action_Coroutine(() => Stage_Manager.State_Change(Stage_State.Ready), 0.3f));
             DontDestroyOnLoad(this.gameObject);

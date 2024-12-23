@@ -106,7 +106,7 @@ public class UI_Heroes : UI_Base
         foreach(var data in datas)
         { 
             // 딕셔너리에 데이터 저장 (키값을 이름으로 Value는 데이터)
-            m_Dictionarys.Add(data.Value.data.m_Character_Name, data.Value.data);
+            m_Dictionarys.Add(data.Value.Data.m_Character_Name, data.Value.Data);
         }
 
         // 딕셔너리 정렬

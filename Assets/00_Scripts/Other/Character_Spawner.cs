@@ -7,7 +7,7 @@ public class Character_Spawner : MonoBehaviour
     public Transform[] SpawnTransform = new Transform[6];
     public static Player[] players = new Player[6];
 
-    private void Start()
+    private void Awake()
     {
         for (int i = 0; i < transform.childCount; i++)
         {
@@ -27,7 +27,7 @@ public class Character_Spawner : MonoBehaviour
                 // 영웅들이 이미 있다면 삭제하고 다시 생성
                 if (players[i] != null)
                 {
-                    if (players[i].CH_Data != data.data)
+                    if (players[i].CH_Data != data.Data)
                     {
                         Destroy(players[i].gameObject);
                         MakePlayer(data, i);
@@ -43,7 +43,7 @@ public class Character_Spawner : MonoBehaviour
 
     private void MakePlayer(Character_Holder data, int value)
     {
-        string temp = data.data.m_Character_Name;
+        string temp = data.Data.m_Character_Name;
         var go = Instantiate(Resources.Load<GameObject>("Character/" + temp));
         players[value] = go.GetComponent<Player>();
         go.transform.position = SpawnTransform[value].position;

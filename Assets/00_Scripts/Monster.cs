@@ -29,7 +29,7 @@ public class Monster : Character
         isDead = false;
         ATK = isBoss ? Utils.Data.stageData.ATK() * 10 : Utils.Data.stageData.ATK();
         HP = isBoss ? Utils.Data.stageData.HP() * 10 : Utils.Data.stageData.HP();
-
+        ATK_Speed = 1.0f;
         maxHP = HP;
 
         Attack_Range = R_Attack_Range;

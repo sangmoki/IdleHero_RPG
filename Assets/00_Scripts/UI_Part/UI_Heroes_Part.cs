@@ -43,7 +43,7 @@ public class UI_Heroes_Part : MonoBehaviour
         {
             if (Base_Manager.Character.m_Set_Character[i] != null)
             {
-                if (Base_Manager.Character.m_Set_Character[i].data == m_Character)
+                if (Base_Manager.Character.m_Set_Character[i].Data == m_Character)
                 {
                     get = true;
                 }

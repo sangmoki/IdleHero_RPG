@@ -26,7 +26,7 @@ public class Render_Hero : MonoBehaviour
             if (Base_Manager.Character.m_Set_Character[i] != null && GetCharacter[i] == false)
             {
                 // Resources 내의 오브젝트를 꺼내와 circle 위치에 생성한다.
-                string temp = Base_Manager.Character.m_Set_Character[i].data.m_Character_Name;
+                string temp = Base_Manager.Character.m_Set_Character[i].Data.m_Character_Name;
                 var go = Instantiate(Resources.Load<GameObject>("Character/" + temp));
 
                 // 레이어 변경

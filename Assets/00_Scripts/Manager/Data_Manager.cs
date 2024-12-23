@@ -7,7 +7,7 @@ using UnityEngine;
 // 동료 용병 정보
 public class Character_Holder
 {
-    public Character_Scriptable data;   // 용병 데이터
+    public Character_Scriptable Data;   // 용병 데이터
     public int Level;           // 용병 레벨
     public int Count;           // 용병 조각 개수
 }
@@ -39,7 +39,7 @@ public class Data_Manager
             var character = new Character_Holder();
 
             // 용병 초기 정보
-            character.data = data;
+            character.Data = data;
             character.Level = 0;
             character.Count = 0;
 

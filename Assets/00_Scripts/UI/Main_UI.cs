@@ -144,7 +144,7 @@ public class Main_UI : MonoBehaviour
             if (data != null)
             {
                 indexValue++;
-                m_Main_Parts[i].InitData(data.data, false);
+                m_Main_Parts[i].InitData(data.Data, false);
                 // 데이터가 있을때에만 + 하여 순서 조정
                 m_Main_Parts[i].transform.SetSiblingIndex(indexValue);
                 m_Part.Add(Character_Spawner.players[i], m_Main_Parts[i]);
@@ -162,7 +162,7 @@ public class Main_UI : MonoBehaviour
             if (data != null)
             {
                 indexValue++;
-                m_Main_Parts[i].InitData(data.data, true);
+                m_Main_Parts[i].InitData(data.Data, true);
                 m_Main_Parts[i].transform.SetSiblingIndex(indexValue);
             }
         }
