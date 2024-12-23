@@ -1297,6 +1297,7 @@ MonoBehaviour:
   ATK_Speed: 0
   isDead: 0
   isGetSkill: 0
+  SkillNoneAttack: 0
   m_Target: {fileID: 0}
   m_BulletTransform: {fileID: 3837474695835884973}
   Bullet_Name: 

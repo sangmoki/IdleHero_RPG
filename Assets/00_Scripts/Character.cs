@@ -14,6 +14,7 @@ public class Character : MonoBehaviour
     protected float target_Range = 5.0f; // 타겟을 공격할 수 있는 인지 범위 
     protected bool isATTACK = false;     // 공격 상태
     public bool isGetSkill = false;      // 스킬 획득 여부
+    public bool SkillNoneAttack = false; // 스킬 공격 여부
 
     public Transform m_Target;           // 타겟
 
@@ -36,8 +37,13 @@ public class Character : MonoBehaviour
     // 동작 변경 함수
     public void AnimatorChange(string temp)
     {
-        // 스킬이 발동 중 일때는 Animator를 변경하지 않는다.
-        if (isGetSkill) return;
+        // 버프 형태가 아닌 공격 형태의 스킬일 경우에만 실행
+        if (SkillNoneAttack)
+        {
+            // 스킬이 발동 중 일때는 Animator를 변경하지 않는다.
+            if (isGetSkill) return;
+        }
+
 
         animator.SetBool("isIDLE", false);
         animator.SetBool("isMOVE", false);

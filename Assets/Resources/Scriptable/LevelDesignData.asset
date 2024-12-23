@@ -30,5 +30,5 @@ MonoBehaviour:
     M_HP: 1.6
     M_MONEY: 1.5
     B_ATK: 5
-    B_HP: 50
+    B_HP: 50000
     B_MONEY: 5

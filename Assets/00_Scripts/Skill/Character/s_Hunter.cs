@@ -7,6 +7,7 @@ public class s_Hunter : Skill_Base
     public override void SetSkill()
     {
         base.SetSkill();
+        StartCoroutine(Set_Skill_Coroutine());
     }
 
     // 5초 지속 공격속도 2배 상승 스킬

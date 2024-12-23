@@ -161,7 +161,8 @@ public class Player : Character
                     Get_MP(5);
 
                     // 공격 후 공격 상태 초기화 함수 호출
-                    Invoke("InitAttack", 1.0f);
+                    // 공격 속도에 따른 공격 딜레이 조정
+                    Invoke("InitAttack", 1.0f / ATK_Speed);
                 }
             }
         }
