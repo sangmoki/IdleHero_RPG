@@ -34,7 +34,7 @@ public class s_Barbarian : Skill_Base
                     monsters[i].GetDamage(SkillDamage(130));
                }
             }
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.3f);
         }
         ReturnSkill();
     }

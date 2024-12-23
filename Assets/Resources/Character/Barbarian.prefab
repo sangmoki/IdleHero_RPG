@@ -220,7 +220,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2116599015998264130}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: -0, y: -0.667765, z: -0, w: -0.7443721}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
@@ -229,7 +229,7 @@ Transform:
   - {fileID: 2882594212381897433}
   - {fileID: 6054473517687096164}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -3876.21, z: 0}
 --- !u!95 &4859269823325347204
 Animator:
   serializedVersion: 5
@@ -268,6 +268,7 @@ MonoBehaviour:
   ATK_Speed: 0
   isDead: 0
   isGetSkill: 0
+  SkillNoneAttack: 1
   m_Target: {fileID: 0}
   m_BulletTransform: {fileID: 0}
   Bullet_Name: 
@@ -337,7 +338,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6005149856073360724
 Transform:
   m_ObjectHideFlags: 0
@@ -347,7 +348,7 @@ Transform:
   m_GameObject: {fileID: 3681136999855582639}
   serializedVersion: 2
   m_LocalRotation: {x: 0.0009440339, y: 0.6901263, z: 0.0009002538, w: 0.72368777}
-  m_LocalPosition: {x: 0, y: 0.0090801325, z: 0}
+  m_LocalPosition: {x: 0.0541, y: 0.009, z: 0.0325}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -622,7 +623,7 @@ Transform:
   m_GameObject: {fileID: 4151279011425669581}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.08}
+  m_LocalPosition: {x: 0, y: -0, z: 0.0104}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -670,7 +671,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 1
+  m_Time: 0.3
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
@@ -701,7 +702,7 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.5754717, g: 0, b: 0, a: 1}
+      key0: {r: 0.7830189, g: 0.15881987, b: 0.15881987, a: 1}
       key1: {r: 0.3301887, g: 0.3301887, b: 0.3301887, a: 0}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
