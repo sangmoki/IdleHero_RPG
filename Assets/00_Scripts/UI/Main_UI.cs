@@ -97,6 +97,7 @@ public class Main_UI : MonoBehaviour
     [Space(20f)]
     [Header("##Hero_Frame")]
     [SerializeField] private UI_Main_Part[] m_Main_Parts;
+    public Image Main_Character_Skill_Fill;
     Dictionary<Player, UI_Main_Part> m_Part = new Dictionary<Player, UI_Main_Part>();
 
     public void Set_Boss_State()

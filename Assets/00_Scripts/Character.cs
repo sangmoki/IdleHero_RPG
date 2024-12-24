@@ -98,6 +98,20 @@ public class Character : MonoBehaviour
         //}
     }
 
+    // 힐 스킬 사용 시 이벤트
+    public virtual void Heal(double heal)
+    {
+        // 현재 체력에 힐량을 더한다.
+        HP += heal;
+
+        // 힐량 텍스트 생성
+        var goObj = Base_Manager.Pool.Pooling_Obj("HIT_TEXT").Get((value) =>
+        {
+            value.transform.position = transform.position;
+            value.GetComponent<HIT_TEXT>().Init(transform.position, heal, Color.green, true);
+        });
+    }
+
     // 타겟을 공격할 수 있는 인지 범위(추적)
     protected void FindClosetTarget<T>(T[] targets) where T : Component
     {

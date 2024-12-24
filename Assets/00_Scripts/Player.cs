@@ -208,7 +208,7 @@ public class Player : Character
         var goObj = Base_Manager.Pool.Pooling_Obj("HIT_TEXT").Get((value) =>
         {
             value.transform.position = transform.position;
-            value.GetComponent<HIT_TEXT>().Init(transform.position, dmg, true);
+            value.GetComponent<HIT_TEXT>().Init(transform.position, dmg, Color.red, true);
         });
 
         HP -= dmg;

@@ -25,7 +25,7 @@ public class HIT_TEXT : MonoBehaviour
         cam = Camera.main;
     }
 
-    public void Init(Vector3 pos, double dmg, bool monster = false, bool Critical = false)
+    public void Init(Vector3 pos, double dmg, Color color,bool monster = false, bool Critical = false)
     {
         // 텍스트 텍스트 위치 랜덤 설정 - 가시성 용이함 위해
         pos.x += Random.Range(-0.1f, 0.1f);
@@ -34,9 +34,11 @@ public class HIT_TEXT : MonoBehaviour
         target = pos;  // 타겟의 위치 정보
         m_Text.text = StringMethod.ToCurrencyString(dmg); // DMG 텍스트 표시
 
+        m_Text.color = color;
+
         // 몬스터와 플레이어의 공격 텍스트 구분
-        if (monster) m_Text.color = Color.red;
-        else m_Text.color = Color.white;
+        //if (monster) m_Text.color = Color.red;
+        //else m_Text.color = Color.white;
 
         transform.parent = Base_Canvas.instance.HOLDER_LAYER(1); // 캔버스의 자식으로 설정
 

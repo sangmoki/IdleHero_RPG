@@ -164,7 +164,7 @@ public class Monster : Character
         // 몬스터가 피격당했을 경우 HitText를 풀링으로 가져와서 피격당한 텍스트를 생성
         Base_Manager.Pool.Pooling_Obj("HIT_TEXT").Get((value) =>
         {
-            value.GetComponent<HIT_TEXT>().Init(transform.position, dmg, false, critical);
+            value.GetComponent<HIT_TEXT>().Init(transform.position, dmg, Color.white, false, critical);
         });
 
         HP -= dmg;

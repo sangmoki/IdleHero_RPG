@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Skill_Base : MonoBehaviour
 {
@@ -45,5 +46,26 @@ public class Skill_Base : MonoBehaviour
     {
         m_Player.isGetSkill = false;
         m_Player.AnimatorChange("isIDLE");
+    }
+
+    // HP가 가장 낮은 영웅을 찾는 함수
+    public Character HP_Check()
+    {
+        Character player = null;
+
+        double hpCount = Mathf.Infinity;
+
+        for (int i = 0; i < players.Length; i++)
+        {
+            double hp = players[i].HP;
+
+            if (hp < hpCount)
+            {
+                hpCount = hp;
+                player = players[i];
+            }
+        }
+
+        return player;
     }
 }
