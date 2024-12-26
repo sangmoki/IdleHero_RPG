@@ -11725,7 +11725,7 @@ GameObject:
   - component: {fileID: 1067433681}
   - component: {fileID: 1067433680}
   m_Layer: 5
-  m_Name: Inventory_Part
+  m_Name: INVENTORY_PART
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11747,10 +11747,10 @@ RectTransform:
   - {fileID: 2118859784}
   m_Father: {fileID: 1957156367}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 150, y: -150}
-  m_SizeDelta: {x: 200, y: 200}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1067433680
 MonoBehaviour:
@@ -15836,6 +15836,7 @@ GameObject:
   - component: {fileID: 1413477858}
   - component: {fileID: 1413477860}
   - component: {fileID: 1413477859}
+  - component: {fileID: 1413477861}
   m_Layer: 5
   m_Name: '#Inventory'
   m_TagString: Untagged
@@ -15901,6 +15902,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1413477857}
   m_CullTransparentMesh: 1
+--- !u!114 &1413477861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1413477857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0aa262d25af3d6e44a892b9ca5cc0287, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1430155041
 GameObject:
   m_ObjectHideFlags: 0
@@ -22172,7 +22185,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00061956764, y: -0.00012207031}
+  m_AnchoredPosition: {x: 0.00061956764, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1957156368
