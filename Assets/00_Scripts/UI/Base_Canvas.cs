@@ -22,6 +22,7 @@ public class Base_Canvas : MonoBehaviour
     private void Start()
     {
         HERO_BUTTON.onClick.AddListener(() => Get_UI("#Heroes", true));
+        INVENTORY_BUTTON.onClick.AddListener(() => Get_UI("#Inventory"));
     }
 
     // 코인의 위치 정보를 저장하기 위한 함수
@@ -30,7 +31,7 @@ public class Base_Canvas : MonoBehaviour
     // 순서를 조정하기 위한 레이어 변수
     [SerializeField] private Transform LAYER;
     // UI 하단 SystemBar 버튼
-    [SerializeField] private Button HERO_BUTTON;
+    [SerializeField] private Button HERO_BUTTON, INVENTORY_BUTTON;
 
     private void Update()
     {
