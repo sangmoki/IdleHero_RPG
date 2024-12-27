@@ -2,6 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 아이템 정보
+public class Item 
+{
+    public Item_Scriptable data;    // 아이템 데이터
+    public int Count;               // 아이템 갯수
+}
+
 public class Item_Manager
 {
     Dictionary<string, Item_Scriptable> Item_Datas = new Dictionary<string, Item_Scriptable>();

@@ -59,7 +59,8 @@ public class Item_OBJ : MonoBehaviour
 
         // 아이템을 획득하였다는 텍스트를 띄운다.
         Main_UI.instance.GetItem(m_Item);
-
+        // 아이템 획득 시 DB에 전달할 데이터를 넣는다.
+        Base_Manager.m_Inventory.GetItem(m_Item);
 
         // 0.5초 뒤에 루팅 이펙트를 풀에 반환한다.
         yield return new WaitForSeconds(0.5f);
