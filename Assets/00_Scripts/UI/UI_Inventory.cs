@@ -17,7 +17,10 @@ public class UI_Inventory : UI_Base
     [SerializeField]
     RectTransform m_Bar;
     [SerializeField]
-    private Button[] m_Top_buttons; 
+    private Button[] m_Top_buttons;
+    [SerializeField]
+    RectTransform TopContent;
+
     [SerializeField]
     Transform Content;
     public UI_Inventory_Part part;
@@ -50,7 +53,7 @@ public class UI_Inventory : UI_Base
         float current = 0;
         float percent = 0;
         Vector2 start = m_Bar.anchoredPosition;
-        Vector2 end = endPos;
+        Vector2 end = new Vector2(endPos.x, TopContent.anchoredPosition.y);
 
         while (percent < 1)
         {

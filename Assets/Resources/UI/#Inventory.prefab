@@ -568,6 +568,7 @@ MonoBehaviour:
   - {fileID: 279537616026609961}
   - {fileID: 5508468189452140944}
   - {fileID: 1427722119355614086}
+  TopContent: {fileID: 727802291993060845}
   Content: {fileID: 6220947845858010428}
   part: {fileID: 8023001458138743587, guid: fdbdca49e03ac6b44a2ca69569d1dbb4, type: 3}
 --- !u!1 &3045529399198363935
@@ -604,7 +605,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 124.08246, y: -55}
+  m_AnchoredPosition: {x: 155, y: -1}
   m_SizeDelta: {x: 248.16492, y: 110}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6421026424139247990
