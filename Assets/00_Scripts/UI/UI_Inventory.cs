@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,7 +28,10 @@ public class UI_Inventory : UI_Base
 
     public override bool Init()
     {
-        foreach(var item in Base_Manager.Inventory.m_Items)
+        // 딕셔너리 정렬
+        var sort_dictionary = Base_Manager.Inventory.m_Items.OrderByDescending(x => x.Value.data.rarity);
+
+        foreach (var item in sort_dictionary)
         {
             Instantiate(part, Content).Init(item.Value);
         }
@@ -60,8 +64,8 @@ public class UI_Inventory : UI_Base
         Vector2 end = new Vector2(endPos.x, TopContent.anchoredPosition.y);
 
         float startX = m_Bar.sizeDelta.x;
-        // 바 길이를 글자수 + 50.0f 만큼 설정
-        float endX = endXPos + 50.0f;
+        // 바 길이를 글자수 + 60.0f 만큼 설정
+        float endX = endXPos + 60.0f;
 
         while (percent < 1)
         {
