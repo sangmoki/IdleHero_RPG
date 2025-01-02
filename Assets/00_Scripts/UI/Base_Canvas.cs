@@ -32,6 +32,7 @@ public class Base_Canvas : MonoBehaviour
     [SerializeField] private Transform LAYER;
     // UI 하단 SystemBar 버튼
     [SerializeField] private Button HERO_BUTTON, INVENTORY_BUTTON;
+    public PopUp_UI popup = null;
 
     private void Update()
     {
@@ -70,6 +71,10 @@ public class Base_Canvas : MonoBehaviour
     // 아이템 정보 팝업 UI 호출
     public PopUp_UI PopUpItem()
     {
-        return Instantiate(Resources.Load<PopUp_UI>("UI/PopUp_Item"), transform);
+        // 기존 팝업이 있으면 기존 팝업을 파괴하고 생성한다.
+        if (popup != null) Destroy(popup.gameObject);
+
+        popup = Instantiate(Resources.Load<PopUp_UI>("UI/PopUp_Item"), transform);
+        return popup;
     }
 }
