@@ -18,5 +18,8 @@ public class UI_Inventory_Part : MonoBehaviour
         RarityImage.sprite = Utils.Get_Atlas(item.data.rarity.ToString());
         IconImage.sprite = Utils.Get_Atlas(item.data.name);
         CountText.text = item.Count.ToString();
+
+        // 전달받은 아이템의 정보 가져옴
+        GetComponent<PopUp_Handler>().Init(item.data);
     }
 }

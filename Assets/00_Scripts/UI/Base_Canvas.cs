@@ -66,4 +66,10 @@ public class Base_Canvas : MonoBehaviour
         var go = Instantiate(Resources.Load<UI_Base>("UI/" + temp), transform);
         Utils.UI_Holder.Push(go);
     }
+
+    // 아이템 정보 팝업 UI 호출
+    public PopUp_UI PopUpItem()
+    {
+        return Instantiate(Resources.Load<PopUp_UI>("UI/PopUp_Item"), transform);
+    }
 }

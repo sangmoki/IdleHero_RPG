@@ -24,4 +24,9 @@ public class PopUp_UI : MonoBehaviour
         RarityText.text = Utils.String_Color_Rarity(item.rarity) + " 등급</color>";
         ExplaneText.text = item.Item_Des;
     }
+
+    public Vector2 PivotPoint(Vector2 pos)
+    {
+
+    }
 }
