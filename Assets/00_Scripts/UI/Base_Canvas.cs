@@ -23,7 +23,10 @@ public class Base_Canvas : MonoBehaviour
     {
         HERO_BUTTON.onClick.AddListener(() => Get_UI("#Heroes", true));
         INVENTORY_BUTTON.onClick.AddListener(() => Get_UI("#Inventory"));
-        SAVINGMODE_BUTTON.onClick.AddListener(() => Get_UI("#SavingMode"));
+        SAVINGMODE_BUTTON.onClick.AddListener(() => {
+            Get_UI("#SavingMode");
+            isSave = true;
+        });
     }
 
     // 코인의 위치 정보를 저장하기 위한 함수
@@ -34,6 +37,8 @@ public class Base_Canvas : MonoBehaviour
     // UI 하단 SystemBar 버튼
     [SerializeField] private Button HERO_BUTTON, INVENTORY_BUTTON, SAVINGMODE_BUTTON;
     public PopUp_UI popup = null;
+    public UI_Base m_UI;
+    public static bool isSave = false;
 
     private void Update()
     {
@@ -64,8 +69,11 @@ public class Base_Canvas : MonoBehaviour
 
     void Get_PopupUI(string temp)
     {
+        if (m_UI != null) m_UI = null;
+
         // 가져온 UI를 UI_Holder에 저장
         var go = Instantiate(Resources.Load<UI_Base>("UI/" + temp), transform);
+        m_UI = go;
         Utils.UI_Holder.Push(go);
     }
 
