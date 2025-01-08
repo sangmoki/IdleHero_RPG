@@ -12,6 +12,7 @@ public class UI_SavingMode : UI_Base
     [SerializeField] private UI_Inventory_Part item_part;
 
     public Dictionary<string, Item> m_SaveItem = new Dictionary<string, Item>();
+    public Dictionary<string, UI_Inventory_Part> m_Parts = new Dictionary<string, UI_Inventory_Part>();
 
     // Color(0.0f, 0.0f, 0.0f, 1.0f) -> 검정색
     Color m_Stage_Color = new Color(0, 0.7295136f, 1.0f, 1.0f);
@@ -40,19 +41,18 @@ public class UI_SavingMode : UI_Base
         {
             // 있다면 개수 증가
             m_SaveItem[item.name].Count++;
+            m_Parts[item.name].Init(m_SaveItem[item.name]);
             return;
         } 
-        else
-        {
-            // 없다면 1개로 새로 생성한다.
-            Item items = new Item { data = item, Count = 1 };
+        // 없다면 1개로 새로 생성한다.
+        Item items = new Item { data = item, Count = 1 };
 
-            // 아이템을 생성하여 Content에 추가
-            m_SaveItem.Add(item.name, items);
-            var go = Instantiate(item_part, Content);
+        // 아이템을 생성하여 Content에 추가
+        m_SaveItem.Add(item.name, items);
+        var go = Instantiate(item_part, Content);
+        m_Parts.Add(item.name, go);
 
-            // Init으로 아이템 정보를 전달
-            go.Init(items);
-        }
+        // Init으로 아이템 정보를 전달
+        go.Init(items);
     }
 }
