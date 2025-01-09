@@ -4,6 +4,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+public delegate void OnSavingMode();
+
 public class UI_SavingMode : UI_Base
 {
     [SerializeField] private TextMeshProUGUI BatteryText, TimerText, StageText, FightText;
@@ -14,8 +16,11 @@ public class UI_SavingMode : UI_Base
     public Dictionary<string, Item> m_SaveItem = new Dictionary<string, Item>();
     public Dictionary<string, UI_Inventory_Part> m_Parts = new Dictionary<string, UI_Inventory_Part>();
 
+    public static OnSavingMode m_OnSaving;
+
     // 절전모드 해제 용도
     Vector2 StartPos, EndPos;
+    Camera camera;
 
     // Color(0.0f, 0.0f, 0.0f, 1.0f) -> 검정색
     Color m_Stage_Color = new Color(0, 0.7295136f, 1.0f, 1.0f);
@@ -23,13 +28,18 @@ public class UI_SavingMode : UI_Base
     // 카메라를 disable 하여 배터리 성능 최적화
     public override bool Init()
     {
-        Camera.main.enabled = false;
+        camera = Camera.main;
+        camera.enabled = false;
+
+        m_OnSaving?.Invoke();
+        
         return base.Init();
     }
     
     public override void DisableOBJ()
     {
-        Camera.main.enabled = true;
+        camera.enabled = true;
+        Base_Canvas.isSave = false;
         base.DisableOBJ();
     }
 

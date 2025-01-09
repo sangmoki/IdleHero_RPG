@@ -75,9 +75,25 @@ public class Item_OBJ : MonoBehaviour
     private void Update()
     {
         if (isCheck == false) return;
+        if (Base_Canvas.isSave) return;
 
         // 아이템은 이미지 이기 때문에 캔버스에 렌더링 되어야 한다.
         ItemTextRect.position = Camera.main.WorldToScreenPoint(transform.position);
+    }
+
+    private void OnSave()
+    {
+        // 아이템을 획득하였다는 텍스트를 띄운다.
+        Main_UI.instance.GetItem(m_Item);
+        // 아이템 획득 시 DB에 전달할 데이터를 넣는다.
+        Base_Manager.m_Inventory.GetItem(m_Item);
+
+        if (Base_Canvas.isSave)
+        {
+            Base_Canvas.instance.m_UI.GetComponent<UI_SavingMode>().GetItem(m_Item);
+        }
+
+        Base_Manager.Pool.m_pool_Dictionary["Item_OBJ"].Return(this.gameObject);
     }
 
     public void Init(Vector3 pos, Item_Scriptable data)
@@ -88,6 +104,8 @@ public class Item_OBJ : MonoBehaviour
         // 아이템 레어도 설정
         rarity = m_Item.rarity;
 
+        UI_SavingMode.m_OnSaving += OnSave;
+
         // 이동 확인 초기화
         isCheck = false;
         // 몬스터가 사망한 위치로 대입
@@ -96,6 +114,12 @@ public class Item_OBJ : MonoBehaviour
         Vector3 Target_Pos = new Vector3(pos.x + (Random.insideUnitSphere.x * 1.0f), 0.5f, pos.z + (Random.insideUnitSphere.z * 1.0f));
         // 어느 위치로 이동을하면서 곡선을 그릴 것이냐
         StartCoroutine(SimulateProjectile(Target_Pos));
+    }
+
+    // 꺼졌을 때 발동
+    private void OnDisable()
+    {
+        UI_SavingMode.m_OnSaving += OnSave;
     }
 
     // 곡선을 그리는 함수

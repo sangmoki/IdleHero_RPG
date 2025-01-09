@@ -27,6 +27,8 @@ public class HIT_TEXT : MonoBehaviour
 
     public void Init(Vector3 pos, double dmg, Color color,bool monster = false, bool Critical = false)
     {
+        UI_SavingMode.m_OnSaving += OnSave;
+
         // 텍스트 텍스트 위치 랜덤 설정 - 가시성 용이함 위해
         pos.x += Random.Range(-0.1f, 0.1f);
         pos.z += Random.Range(-0.1f, 0.1f);
@@ -61,6 +63,8 @@ public class HIT_TEXT : MonoBehaviour
 
     private void Update()
     {
+        if (Base_Canvas.isSave) return;
+
         // 텍스트가 몬스터보다 위로 보이게 설정
         Vector3 tragetPost = new Vector3(target.x, target.y + UpRange, target.z);
         // 월드좌표로 화면에 표시
@@ -70,6 +74,16 @@ public class HIT_TEXT : MonoBehaviour
             // 피격 텍스트가 위로 올라가는 속도
             UpRange += Time.deltaTime;
         }
+    }
+
+    private void OnDisable()
+    {
+        UI_SavingMode.m_OnSaving -= OnSave;
+    }
+
+    private void OnSave()
+    {
+        ReturnText();
     }
 
     // 오브젝트 풀에 반환
