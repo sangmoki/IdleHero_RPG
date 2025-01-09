@@ -656,7 +656,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.43137255}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.11764706}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1514,6 +1514,7 @@ MonoBehaviour:
   StageText: {fileID: 832184329518974924}
   FightText: {fileID: 6185027229223861714}
   BatteryFill: {fileID: 4176615712552974505}
+  LandImage: {fileID: 1886510951239862614}
   Content: {fileID: 3580836051901471554}
   item_part: {fileID: 8023001458138743587, guid: fdbdca49e03ac6b44a2ca69569d1dbb4, type: 3}
 --- !u!1 &7154090292569851925
