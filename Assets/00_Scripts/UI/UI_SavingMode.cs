@@ -20,6 +20,19 @@ public class UI_SavingMode : UI_Base
     // Color(0.0f, 0.0f, 0.0f, 1.0f) -> 검정색
     Color m_Stage_Color = new Color(0, 0.7295136f, 1.0f, 1.0f);
 
+    // 카메라를 disable 하여 배터리 성능 최적화
+    public override bool Init()
+    {
+        Camera.main.enabled = false;
+        return base.Init();
+    }
+    
+    public override void DisableOBJ()
+    {
+        Camera.main.enabled = true;
+        base.DisableOBJ();
+    }
+
     private void Update()
     {
         // SystemInfo.batteryLevel : 모바일 기준 배터리 잔량 (0.0f ~ 1.0f)
