@@ -86,7 +86,9 @@ public class Item_OBJ : MonoBehaviour
         // 아이템을 획득하였다는 텍스트를 띄운다.
         Main_UI.instance.GetItem(m_Item);
         // 아이템 획득 시 DB에 전달할 데이터를 넣는다.
-        Base_Manager.m_Inventory.GetItem(m_Item);
+        Base_Manager.m_Inventory.GetItem(m_Item);        
+        // 아이템을 비활성화
+        ItemTextRect.gameObject.SetActive(false);
 
         if (Base_Canvas.isSave)
         {

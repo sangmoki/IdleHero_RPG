@@ -32,7 +32,6 @@ public class COIN_PARENT : MonoBehaviour
             {
                 Base_Manager.Pool.m_pool_Dictionary["COIN_PARENT"].Return(this.gameObject);
             }
-            return;
         }
     }
 

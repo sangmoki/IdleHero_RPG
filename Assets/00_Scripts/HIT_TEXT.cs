@@ -42,7 +42,7 @@ public class HIT_TEXT : MonoBehaviour
         //if (monster) m_Text.color = Color.red;
         //else m_Text.color = Color.white;
 
-        transform.parent = Base_Canvas.instance.HOLDER_LAYER(1); // 캔버스의 자식으로 설정
+        transform.SetParent(Base_Canvas.instance.HOLDER_LAYER(1), false); // 캔버스의 자식으로 설정
 
         // 크리티컬 bool 결과에 따른
         m_Critical.SetActive(Critical);
@@ -61,6 +61,16 @@ public class HIT_TEXT : MonoBehaviour
         Base_Manager.instance.Return_Pool(2.0f, this.gameObject, "HIT_TEXT"); 
     }
 
+    private void OnDisable()
+    {
+        UI_SavingMode.m_OnSaving -= OnSave;
+    }
+
+    void OnSave()
+    {
+        ReturnText();
+    }
+
     private void Update()
     {
         if (Base_Canvas.isSave) return;
@@ -74,16 +84,6 @@ public class HIT_TEXT : MonoBehaviour
             // 피격 텍스트가 위로 올라가는 속도
             UpRange += Time.deltaTime;
         }
-    }
-
-    private void OnDisable()
-    {
-        UI_SavingMode.m_OnSaving -= OnSave;
-    }
-
-    private void OnSave()
-    {
-        ReturnText();
     }
 
     // 오브젝트 풀에 반환
