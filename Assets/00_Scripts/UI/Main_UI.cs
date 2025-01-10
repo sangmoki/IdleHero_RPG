@@ -100,6 +100,20 @@ public class Main_UI : MonoBehaviour
     public Image Main_Character_Skill_Fill;
     Dictionary<Player, UI_Main_Part> m_Part = new Dictionary<Player, UI_Main_Part>();
 
+    [Header("## ADS")]
+    // 배속
+    public Image Fast_Lock;
+
+
+    public void GetFast()
+    {
+        bool fast = !Base_Manager.isFast;
+        Fast_Lock.gameObject.SetActive(fast);
+        
+        // 게임의 속도 조정
+        Time.timeScale = fast ? 2.0f : 1.0f;
+    }
+
     public void Set_Boss_State()
     {
         Stage_Manager.isDead = false;

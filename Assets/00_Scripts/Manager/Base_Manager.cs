@@ -17,6 +17,8 @@ public class Base_Manager : MonoBehaviour
     public static Item_Manager s_Item = new Item_Manager();
     public static Inventory_Manager m_Inventory = new Inventory_Manager();
     public static Character_Manager s_Character = new Character_Manager();
+    
+    public static bool isFast = false;
 
     public static Pool_Manager Pool { get { return s_Pool; } }
     public static Player_Manager Player { get { return s_Player; } }
