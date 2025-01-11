@@ -25,8 +25,10 @@ public class Main_UI : MonoBehaviour
         // 몬스터 처치 슬라이더 초기화
         Monster_Count_Slider();
 
-        Fast_Lock.gameObject.SetActive(!Base_Manager.isFast);
-        Fast_Fade.SetActive(Base_Manager.isFast);
+        // 배속 데이터 Local에서 가져오기
+        Base_Manager.isFast = PlayerPrefs.GetInt("FAST") == 1 ? true : false;
+        TimeCheck();
+
 
         // 아이템 콘텐트의 자식들을 가져와서 리스트에 저장
         for (int i = 0; i < m_Item_Content.childCount; i++)
@@ -108,17 +110,27 @@ public class Main_UI : MonoBehaviour
     [SerializeField] private Image Fast_Lock;
     [SerializeField] private GameObject Fast_Fade;
 
+    private void TimeCheck()
+    {
+        // 게임의 속도 조정
+        Time.timeScale = Base_Manager.isFast ? 1.5f : 1.0f;
 
+        // 배속 버튼 활성화
+        Fast_Lock.gameObject.SetActive(!Base_Manager.isFast);
+        Fast_Fade.SetActive(Base_Manager.isFast);
+    }
+
+    // 유저의 Local로 저장하고 읽어오는 방법
+    // PlayerPrefs
     public void GetFast()
     {
         bool fast = !Base_Manager.isFast;
         Base_Manager.isFast = fast;
 
-        Fast_Lock.gameObject.SetActive(!fast);
-        Fast_Fade.SetActive(fast);
+        // 데이터 저장 
+        PlayerPrefs.SetInt("FAST", fast == true ? 1 : 0);
 
-        // 게임의 속도 조정
-        Time.timeScale = fast ? 1.5f : 1.0f;
+        TimeCheck();
     }
 
     public void Set_Boss_State()
