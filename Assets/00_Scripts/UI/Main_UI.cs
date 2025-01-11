@@ -25,6 +25,8 @@ public class Main_UI : MonoBehaviour
         // 몬스터 처치 슬라이더 초기화
         Monster_Count_Slider();
 
+        Fast_Lock.gameObject.SetActive(!Base_Manager.isFast);
+
         // 아이템 콘텐트의 자식들을 가져와서 리스트에 저장
         for (int i = 0; i < m_Item_Content.childCount; i++)
         {
@@ -108,10 +110,12 @@ public class Main_UI : MonoBehaviour
     public void GetFast()
     {
         bool fast = !Base_Manager.isFast;
-        Fast_Lock.gameObject.SetActive(fast);
+        Base_Manager.isFast = fast;
+
+        Fast_Lock.gameObject.SetActive(!fast);
         
         // 게임의 속도 조정
-        Time.timeScale = fast ? 2.0f : 1.0f;
+        Time.timeScale = fast ? 1.5f : 1.0f;
     }
 
     public void Set_Boss_State()
