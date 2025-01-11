@@ -474,7 +474,7 @@ public class Main_UI : MonoBehaviour
     // 레전더리 아이템 획득 후 종료
     IEnumerator Legendary_PopUp_Coroutine()
     {
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSecondsRealtime(2.0f);
         isPopUp = false;
         m_Legendary_PopUp.SetTrigger("Close");
     }
