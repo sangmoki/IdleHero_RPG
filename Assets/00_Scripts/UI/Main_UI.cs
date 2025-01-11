@@ -26,6 +26,7 @@ public class Main_UI : MonoBehaviour
         Monster_Count_Slider();
 
         Fast_Lock.gameObject.SetActive(!Base_Manager.isFast);
+        Fast_Fade.SetActive(Base_Manager.isFast);
 
         // 아이템 콘텐트의 자식들을 가져와서 리스트에 저장
         for (int i = 0; i < m_Item_Content.childCount; i++)
@@ -104,7 +105,8 @@ public class Main_UI : MonoBehaviour
 
     [Header("## ADS")]
     // 배속
-    public Image Fast_Lock;
+    [SerializeField] private Image Fast_Lock;
+    [SerializeField] private GameObject Fast_Fade;
 
 
     public void GetFast()
@@ -113,7 +115,8 @@ public class Main_UI : MonoBehaviour
         Base_Manager.isFast = fast;
 
         Fast_Lock.gameObject.SetActive(!fast);
-        
+        Fast_Fade.SetActive(fast);
+
         // 게임의 속도 조정
         Time.timeScale = fast ? 1.5f : 1.0f;
     }
