@@ -483,7 +483,7 @@ public class Main_UI : MonoBehaviour
     IEnumerator Item_Text_FadeOut(RectTransform rect)
     {
         // 2초 뒤 텍스트가 사라지면서 원래 위치로 이동
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSecondsRealtime(2.0f);
         rect.gameObject.SetActive(false);
         rect.anchoredPosition = new Vector2(0.0f, 0.0f);
     }
