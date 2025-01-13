@@ -46,10 +46,6 @@ public class UI_ADS_Buff : UI_Base
             // 배속 적용중일 시 
             if (Base_Manager.Data.Buff_timers[i] > 0.0f)
             {
-                // fill과 timertext를 갱신
-                // 배속 영향을 받을 수 없게 unscaledDeltaTime을 사용
-                Base_Manager.Data.Buff_timers[i] -= Time.unscaledDeltaTime;
-
                 // 1 - (남은 시간 / 총 시간)으로 fillAmount를 계산
                 m_Buttons_Fill[i].fillAmount = 1 - (Base_Manager.Data.Buff_timers[i] / 1800.0f);
 

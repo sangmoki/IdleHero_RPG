@@ -33,6 +33,20 @@ public class Base_Manager : MonoBehaviour
         Initalize();
     }
 
+    private void Update()
+    {
+        for (int i = 0; i < Data.Buff_timers.Length; i++)
+        {
+            // 배속 적용중일 시 
+            if (Data.Buff_timers[i] > 0.0f)
+            {
+                // fill과 timertext를 갱신
+                // 배속 영향을 받을 수 없게 unscaledDeltaTime을 사용
+                Data.Buff_timers[i] -= Time.unscaledDeltaTime;
+            }
+        }
+    }
+
     private void Initalize()
     {
         // 씬을 이동해도 파고되지 않고 계속 유지
