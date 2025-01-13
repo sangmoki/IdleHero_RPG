@@ -27,6 +27,7 @@ public class Base_Canvas : MonoBehaviour
             Get_UI("#SavingMode");
             isSave = true;
         });
+        ADSBUFF_BUTTON.onClick.AddListener(() => Get_UI("#ADS_Buff"));
     }
 
     // 코인의 위치 정보를 저장하기 위한 함수
@@ -35,9 +36,9 @@ public class Base_Canvas : MonoBehaviour
     // 순서를 조정하기 위한 레이어 변수
     [SerializeField] private Transform LAYER;
     // UI 하단 SystemBar 버튼
-    [SerializeField] private Button HERO_BUTTON, INVENTORY_BUTTON, SAVINGMODE_BUTTON;
-    public PopUp_UI popup = null;
-    public UI_Base m_UI;
+    [SerializeField] private Button HERO_BUTTON, INVENTORY_BUTTON, SAVINGMODE_BUTTON, ADSBUFF_BUTTON;
+    [HideInInspector] public PopUp_UI popup = null;
+    [HideInInspector] public UI_Base m_UI;
     public static bool isSave = false;
 
     private void Update()

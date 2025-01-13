@@ -15,10 +15,16 @@ public class Character_Holder
 // 유저 캐릭터 정보
 public class Data_Manager
 {
+    // 스테이지 변수
     public double Money;        // 현재 골드
     public int Level;           // 현재 레벨
     public double EXP;          // 경험치  
     public int Stage;           // 현재 스테이지
+
+    // 버프 지속 시간
+    public float[] Buff_timers = { 0.0f, 0.0f, 0.0f };
+    // 버프 레벨과 횟수
+    public int Buff_Level, Buff_Count; 
 
     // 플레이어가 가지고 있는 용병 정보
     public Dictionary<string, Character_Holder> m_Data_Character = new Dictionary<string, Character_Holder>();

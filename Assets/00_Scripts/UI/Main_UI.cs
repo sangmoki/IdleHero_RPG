@@ -27,7 +27,10 @@ public class Main_UI : MonoBehaviour
 
         // 배속 데이터 Local에서 가져오기
         Base_Manager.isFast = PlayerPrefs.GetInt("FAST") == 1 ? true : false;
+        // 배속 적용 여부 확인
         TimeCheck();
+        // 버프 적용 여부 확인
+        BuffCheck();
 
 
         // 아이템 콘텐트의 자식들을 가져와서 리스트에 저장
@@ -58,32 +61,32 @@ public class Main_UI : MonoBehaviour
     Color m_Stage_Color = new Color(0, 0.7295136f, 1.0f, 1.0f);
 
     [Space(20f)]
-    [Header("##Fade")]
+    [Header("## Fade")]
     // 페이드 인아웃 작업 위한 변수
     [SerializeField] private Image m_Fade;
     [SerializeField] private float m_FadeDuration;
 
     [Space(20f)]
-    [Header("##Monster_Slider")]
+    [Header("## Monster_Slider")]
     // 몬스터 처치 수 계산 위한 변수
     [SerializeField] private GameObject m_Monster_Count_Slider_OBJ;
     [SerializeField] private Image m_Monster_Count_Image;
     [SerializeField] private TextMeshProUGUI m_Monster_Count_Text;
 
     [Space(20f)]
-    [Header("##Boss_Slider")]
+    [Header("## Boss_Slider")]
     // 보스 슬라이더
     [SerializeField] private GameObject m_Boss_Slider_OBJ;
     [SerializeField] private Image m_Boss_HP_Slider;
     [SerializeField] private TextMeshProUGUI m_Boss_HP_Text, m_Boss_Stage_Text;
 
     [Space(20f)]
-    [Header("##Dead_Frame")]
+    [Header("## Dead_Frame")]
     // 죽었을 때 나오는 프레임
     [SerializeField] private GameObject m_Dead_Frame_OBJ;
 
     [Space(20f)]
-    [Header("##Legendary_PopUp")]
+    [Header("## Legendary_PopUp")]
     // 레전더리 등급 아이템 획득 시 애니메이션
     [SerializeField] private Animator m_Legendary_PopUp;
     [SerializeField] private Image m_Item_Frame;
@@ -94,22 +97,39 @@ public class Main_UI : MonoBehaviour
     bool isPopUp = false;
 
     [Space(20f)]
-    [Header("##Item_PopUp")]
+    [Header("## Item_PopUp")]
     [SerializeField] private Transform m_Item_Content;
     private List<TextMeshProUGUI> m_Item_Texts = new List<TextMeshProUGUI>();
     private List<Coroutine> m_Item_Coroutines = new List<Coroutine>();
 
     [Space(20f)]
-    [Header("##Hero_Frame")]
+    [Header("## Hero_Frame")]
     [SerializeField] private UI_Main_Part[] m_Main_Parts;
     public Image Main_Character_Skill_Fill;
     Dictionary<Player, UI_Main_Part> m_Part = new Dictionary<Player, UI_Main_Part>();
 
     [Header("## ADS")]
-    // 배속
     [SerializeField] private Image Fast_Lock;
     [SerializeField] private GameObject Fast_Fade;
+    [SerializeField] private GameObject[] Buffs_Lock;
 
+    // 버프 관련 함수
+    public void BuffCheck()
+    {
+        for (int i = 0; i < Base_Manager.Data.Buff_timers.Length; i++)
+        {
+            if (Base_Manager.Data.Buff_timers[i] > 0.0f)
+            {
+                Buffs_Lock[i].SetActive(false);
+            }
+            else
+            {
+                Buffs_Lock[i].SetActive(true);
+            }
+        }
+    }
+
+    // 배속 관련 함수
     private void TimeCheck()
     {
         // 게임의 속도 조정
@@ -133,6 +153,7 @@ public class Main_UI : MonoBehaviour
         TimeCheck();
     }
 
+    // 보스 스테이지로 전환
     public void Set_Boss_State()
     {
         Stage_Manager.isDead = false;
