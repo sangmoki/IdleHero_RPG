@@ -17,7 +17,8 @@ public class Base_Manager : MonoBehaviour
     public static Item_Manager s_Item = new Item_Manager();
     public static Inventory_Manager m_Inventory = new Inventory_Manager();
     public static Character_Manager s_Character = new Character_Manager();
-    
+    public static ADS_Manager s_ADS = new ADS_Manager();
+
     public static bool isFast = false;
 
     public static Pool_Manager Pool { get { return s_Pool; } }
@@ -26,6 +27,7 @@ public class Base_Manager : MonoBehaviour
     public static Item_Manager Item { get { return s_Item; } }
     public static Inventory_Manager Inventory { get { return m_Inventory; } }
     public static Character_Manager Character { get { return s_Character; } }
+    public static ADS_Manager ADS { get { return s_ADS; } }
     #endregion
 
     private void Awake()
@@ -55,6 +57,7 @@ public class Base_Manager : MonoBehaviour
             instance = this;
             // 해당 베이스 매니저를 가지고 있는 오브젝트가 된다.
             Pool.Initalize(transform);
+            ADS.Init();
             Data.Init();
             Item.Init();
             Character.GetCharacter(0, "Hunter");
