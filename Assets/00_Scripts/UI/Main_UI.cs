@@ -112,6 +112,8 @@ public class Main_UI : MonoBehaviour
     [SerializeField] private Image Fast_Lock;
     [SerializeField] private GameObject Fast_Fade;
     [SerializeField] private GameObject[] Buffs_Lock;
+    [SerializeField] private Image x2Fill;
+    [SerializeField] private TextMeshProUGUI x2Text;
 
     // 버프 관련 함수
     public void BuffCheck()
@@ -125,6 +127,15 @@ public class Main_UI : MonoBehaviour
             else
             {
                 Buffs_Lock[i].SetActive(true);
+            }
+
+            if (Base_Manager.Data.Buff_x2 > 0.0f)
+            {
+                x2Fill.transform.parent.gameObject.SetActive(true);
+            }
+            else
+            {
+                x2Fill.transform.parent.gameObject.SetActive(false);
             }
         }
     }

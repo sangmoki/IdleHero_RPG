@@ -23,6 +23,7 @@ public class Data_Manager
 
     // 버프 지속 시간
     public float[] Buff_timers = { 0.0f, 0.0f, 0.0f };
+    public float Buff_x2 = 0.0f;
     // 버프 레벨과 횟수
     public int Buff_Level, Buff_Count; 
 

@@ -46,6 +46,7 @@ public class Base_Manager : MonoBehaviour
                 // 배속 영향을 받을 수 없게 unscaledDeltaTime을 사용
                 Data.Buff_timers[i] -= Time.unscaledDeltaTime;
             }
+            if (Data.Buff_x2 > 0.0f) Data.Buff_x2 -= Time.unscaledDeltaTime;
         }
     }
 
@@ -58,6 +59,7 @@ public class Base_Manager : MonoBehaviour
             // 해당 베이스 매니저를 가지고 있는 오브젝트가 된다.
             Pool.Initalize(transform);
             ADS.Init();
+            //StartCoroutine(Ad_Coroutine());
             Data.Init();
             Item.Init();
             Character.GetCharacter(0, "Hunter");
@@ -71,6 +73,21 @@ public class Base_Manager : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
+    /*  광고 실행 코루틴
+    IEnumerator Ad_Coroutine()
+    {
+        // 3초 뒤 전면광고 실행
+        yield return new WaitForSeconds(3.0f);
+
+        // 보상형 광고 실행
+        ADS.ShowRewardedAds(GetReward);
+
+        // 전면형 광고
+        // ADS.ShowInterstitialAds();
+    }*/
+
+    private void GetReward() => Debug.Log("보상형 광고를 시청하여 아이템을 획득하였습니다.");
 
     // Resources 폴더에 있는 Prefab을 불러오기 위한 함수
     public GameObject Instantiate_Path(string path)
