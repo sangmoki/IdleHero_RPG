@@ -110,6 +110,11 @@ public class ADS_Manager
     public void ShowRewardedAds(Action rewardCallback)
     {
         _rewardedCallback = rewardCallback;
+        
+        // 광고 제거를 구매한 상황일 경우
+        //_rewardedCallback?.Invoke();
+        //return;
+
         // 광고가 준비됐거나 열렸다면
         if (_rewardedCallback != null && _rewardedAd.CanShowAd())
         {

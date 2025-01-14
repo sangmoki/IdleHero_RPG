@@ -11,42 +11,7 @@ public class Main_UI : MonoBehaviour
 {
     public static Main_UI instance = null;
 
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-    }
-    private void Start()
-    {
-        // UI 텍스트 초기화
-        TextCheck();
-        // 몬스터 처치 슬라이더 초기화
-        Monster_Count_Slider();
-
-        // 배속 데이터 Local에서 가져오기
-        Base_Manager.isFast = PlayerPrefs.GetInt("FAST") == 1 ? true : false;
-        // 배속 적용 여부 확인
-        TimeCheck();
-        // 버프 적용 여부 확인
-        BuffCheck();
-
-
-        // 아이템 콘텐트의 자식들을 가져와서 리스트에 저장
-        for (int i = 0; i < m_Item_Content.childCount; i++)
-        {
-            m_Item_Texts.Add(m_Item_Content.GetChild(i).GetComponent<TextMeshProUGUI>());
-            m_Item_Coroutines.Add(null);
-        }
-
-        // 이벤트 연결
-        Stage_Manager.m_ReadyEvent += OnReady;
-        Stage_Manager.m_BossEvent += OnBoss;
-        Stage_Manager.m_ClearEvent += OnClear;
-        Stage_Manager.m_DeadEvent += OnDead;
-    }
-
+    #region parameter
     [Header("##Default")]
     // 메인 UI 텍스트 변수
     [SerializeField] private TextMeshProUGUI m_Level_Text;
@@ -114,6 +79,52 @@ public class Main_UI : MonoBehaviour
     [SerializeField] private GameObject[] Buffs_Lock;
     [SerializeField] private Image x2Fill;
     [SerializeField] private TextMeshProUGUI x2Text;
+    #endregion
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+    private void Start()
+    {
+        // UI 텍스트 초기화
+        TextCheck();
+        // 몬스터 처치 슬라이더 초기화
+        Monster_Count_Slider();
+
+        // 배속 데이터 Local에서 가져오기
+        Base_Manager.isFast = PlayerPrefs.GetInt("FAST") == 1 ? true : false;
+        // 배속 적용 여부 확인
+        TimeCheck();
+        // 버프 적용 여부 확인
+        BuffCheck();
+
+
+        // 아이템 콘텐트의 자식들을 가져와서 리스트에 저장
+        for (int i = 0; i < m_Item_Content.childCount; i++)
+        {
+            m_Item_Texts.Add(m_Item_Content.GetChild(i).GetComponent<TextMeshProUGUI>());
+            m_Item_Coroutines.Add(null);
+        }
+
+        // 이벤트 연결
+        Stage_Manager.m_ReadyEvent += OnReady;
+        Stage_Manager.m_BossEvent += OnBoss;
+        Stage_Manager.m_ClearEvent += OnClear;
+        Stage_Manager.m_DeadEvent += OnDead;
+    }
+
+    private void Update()
+    {
+        if (Base_Manager.Data.Buff_x2 > 0.0f)
+        {
+            x2Fill.fillAmount = Base_Manager.Data.Buff_x2 / 1800.0f;
+            x2Text.text = Utils.GetTimer(Base_Manager.Data.Buff_x2);
+        }    
+    }
 
     // 버프 관련 함수
     public void BuffCheck()
@@ -156,11 +167,26 @@ public class Main_UI : MonoBehaviour
     public void GetFast()
     {
         bool fast = !Base_Manager.isFast;
-        Base_Manager.isFast = fast;
 
+        if (fast == true)
+        {
+            if (Base_Manager.Data.Buff_x2 <= 0.0f)
+            {
+                // 만약 0초보다 작으면
+                Base_Manager.ADS.ShowRewardedAds(() =>
+                {
+                    // 배속 남은 시간 30분으로 설정
+                    Base_Manager.Data.Buff_x2 = 1800.0f;
+                    BuffCheck();
+                    TimeCheck();
+                });
+            }
+        }
+        Base_Manager.isFast = fast;
         // 데이터 저장 
         PlayerPrefs.SetInt("FAST", fast == true ? 1 : 0);
 
+        BuffCheck();
         TimeCheck();
     }
 
