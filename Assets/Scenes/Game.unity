@@ -2862,6 +2862,8 @@ MonoBehaviour:
   - {fileID: 1367137999}
   - {fileID: 827364203}
   - {fileID: 546714286}
+  x2Fill: {fileID: 511065163}
+  x2Text: {fileID: 1549726732}
 --- !u!1 &362334959
 GameObject:
   m_ObjectHideFlags: 0
@@ -4948,7 +4950,7 @@ GameObject:
   - component: {fileID: 511065164}
   - component: {fileID: 511065163}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12631,7 +12633,7 @@ GameObject:
   - component: {fileID: 1199281518}
   - component: {fileID: 1199281517}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Timer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16340,7 +16342,7 @@ GameObject:
   - component: {fileID: 1549726733}
   - component: {fileID: 1549726732}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Timer_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

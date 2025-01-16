@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class Firebase_Manager : MonoBehaviour
+public partial class Firebase_Manager
 {
     public void GuestLogin()
     {
