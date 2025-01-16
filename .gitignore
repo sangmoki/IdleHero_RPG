@@ -55,6 +55,23 @@ ExportedObj/
 # Unity3D generated file on crash reports
 sysinfo.txt
 
+# Firebase 설정 파일
+google-services.json
+GoogleService-Info.plist
+
+# Plugins 폴더 내 Firebase SDK
+Assets/Plugins/Firebase/**
+
+# Gradle 관련 파일 (Firebase 추가 시 생성됨)
+android/**/google-services.json
+android/**/gradle-wrapper.properties
+android/**/build.gradle
+android/**/settings.gradle
+
+# Unity Firebase 관련 임시 파일 및 설정 파일
+Library/FirebaseConfigCache.json
+Library/FirebaseEditorSettings.json
+
 # Builds
 *.apk
 *.aab

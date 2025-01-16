@@ -11,13 +11,14 @@ public class Base_Manager : MonoBehaviour
     public static Base_Manager instance = null;
 
     #region Parmeter
-    public static Pool_Manager s_Pool = new Pool_Manager();
-    public static Player_Manager s_Player = new Player_Manager();
-    public static Data_Manager s_Data = new Data_Manager();
-    public static Item_Manager s_Item = new Item_Manager();
+    private static Pool_Manager s_Pool = new Pool_Manager();
+    private static Player_Manager s_Player = new Player_Manager();
+    private static Data_Manager s_Data = new Data_Manager();
+    private static Item_Manager s_Item = new Item_Manager();
     public static Inventory_Manager m_Inventory = new Inventory_Manager();
-    public static Character_Manager s_Character = new Character_Manager();
-    public static ADS_Manager s_ADS = new ADS_Manager();
+    private static Character_Manager s_Character = new Character_Manager();
+    private static ADS_Manager s_ADS = new ADS_Manager();
+    private static Firebase_Manager s_Firebase = new Firebase_Manager();
 
     public static bool isFast = false;
 
@@ -28,6 +29,7 @@ public class Base_Manager : MonoBehaviour
     public static Inventory_Manager Inventory { get { return m_Inventory; } }
     public static Character_Manager Character { get { return s_Character; } }
     public static ADS_Manager ADS { get { return s_ADS; } }
+    public static Firebase_Manager Firebase { get { return s_Firebase; } }
     #endregion
 
     private void Awake()
@@ -62,8 +64,9 @@ public class Base_Manager : MonoBehaviour
             //StartCoroutine(Ad_Coroutine());
             Data.Init();
             Item.Init();
-            Character.GetCharacter(0, "Hunter");
+            Firebase.Init();
 
+            Character.GetCharacter(0, "Hunter");
             StartCoroutine(Action_Coroutine(() => Stage_Manager.State_Change(Stage_State.Ready), 0.3f));
             DontDestroyOnLoad(this.gameObject);
         }

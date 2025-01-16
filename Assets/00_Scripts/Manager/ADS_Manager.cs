@@ -58,7 +58,8 @@ public class ADS_Manager
         _adRequest = new AdRequest();
         _adRequest.Keywords.Add("unity-admob-sample");
 
-        RewardedAd.Load(reward, _adRequest, OnAdRewardCallback);
+        // 보상형 광고
+        //RewardedAd.Load(reward, _adRequest, OnAdRewardCallback);
 
         // 전면 광고
         //InterstitialAd.Load(interstitial, _adRequest, OnAdLoadCallback);
@@ -110,11 +111,6 @@ public class ADS_Manager
     public void ShowRewardedAds(Action rewardCallback)
     {
         _rewardedCallback = rewardCallback;
-        
-        // 광고 제거를 구매한 상황일 경우
-        //_rewardedCallback?.Invoke();
-        //return;
-
         // 광고가 준비됐거나 열렸다면
         if (_rewardedCallback != null && _rewardedAd.CanShowAd())
         {

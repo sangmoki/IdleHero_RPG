@@ -49,7 +49,9 @@ public class UI_ADS_Buff : UI_Base
                 // 1 - (남은 시간 / 총 시간)으로 fillAmount를 계산
                 m_Buttons_Fill[i].fillAmount = 1 - (Base_Manager.Data.Buff_timers[i] / 1800.0f);
 
-                m_Text_Timer[i].text = Utils.GetTimer(Base_Manager.Data.Buff_timers[i]);
+                TimeSpan timespan = TimeSpan.FromSeconds(Base_Manager.Data.Buff_timers[i]);
+                string timer = string.Format("{0:00}:{1:00}", timespan.Minutes, timespan.Seconds);
+                m_Text_Timer[i].text = timer;
             }
         }
     }
@@ -57,20 +59,16 @@ public class UI_ADS_Buff : UI_Base
     // 버프 활성화 시 이벤트
     public void GetBuff(ADS_Buff_State m_State)
     {
-        // 리워드 광고 시청이 완료되면 배속 실행
-        Base_Manager.ADS.ShowRewardedAds(() =>
-        {
-            int stateValue = (int)m_State;
+        int stateValue = (int)m_State;
 
-            // 버프 횟수 증가
-            Base_Manager.Data.Buff_Count++;
-            // 버프 지속시간 기본 30분
-            Base_Manager.Data.Buff_timers[(int)m_State] = 1800.0f;
-            // 현재 버프 적용 상태 확인
-            Main_UI.instance.BuffCheck();
-            // 버프 활성화
-            SetBuff(stateValue, true);
-        });
+        // 버프 횟수 증가
+        Base_Manager.Data.Buff_Count++;
+        // 버프 지속시간 기본 30분
+        Base_Manager.Data.Buff_timers[(int)m_State] = 1800.0f;
+        // 현재 버프 적용 상태 확인
+        Main_UI.instance.BuffCheck();
+        // 버프 활성화
+        SetBuff(stateValue, true);
     }
 
     // 버프 상태에 따른 버튼 활성화
