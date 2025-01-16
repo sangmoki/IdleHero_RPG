@@ -22,6 +22,8 @@ public class Base_Manager : MonoBehaviour
 
     public static bool isFast = false;
 
+    float Save_Timer = 0.0f;
+
     public static Pool_Manager Pool { get { return s_Pool; } }
     public static Player_Manager Player { get { return s_Player; } }
     public static Data_Manager Data { get { return s_Data; } }
@@ -39,6 +41,14 @@ public class Base_Manager : MonoBehaviour
 
     private void Update()
     {
+        Save_Timer += Time.unscaledDeltaTime;
+
+        if (Save_Timer >= 10.0f)
+        {
+            Save_Timer = 0.0f;
+            Firebase.WriteData();
+        }
+
         for (int i = 0; i < Data.Buff_timers.Length; i++)
         {
             // 배속 적용중일 시 
@@ -120,5 +130,11 @@ public class Base_Manager : MonoBehaviour
     {
         yield return new WaitForSeconds(timer);
         action?.Invoke();
+    }
+
+    // 게임이 종료될 때 데이터를 저장
+    private void OnDestroy()
+    {
+        Firebase.WriteData();
     }
 }
