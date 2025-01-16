@@ -61,6 +61,7 @@ GoogleService-Info.plist
 
 # Plugins 폴더 내 Firebase SDK
 Assets/Plugins/Firebase/**
+Assets/Firebase/**
 
 # Gradle 관련 파일 (Firebase 추가 시 생성됨)
 android/**/google-services.json
