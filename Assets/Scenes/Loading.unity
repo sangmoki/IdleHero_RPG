@@ -646,7 +646,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &612957779
 RectTransform:
   m_ObjectHideFlags: 0
@@ -934,6 +934,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad6e78add2d0d9d43ad2aeff4f7ab74b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slider: {fileID: 1292159685}
+  percentageText: {fileID: 1958276876}
+  versionText: {fileID: 211539955}
+  tabToStart: {fileID: 612957778}
+  loadingBar: {fileID: 1527811619}
 --- !u!1 &1292159683
 GameObject:
   m_ObjectHideFlags: 0
@@ -991,7 +996,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -1011,7 +1016,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 1711343807}
   m_HandleRect: {fileID: 0}
@@ -1303,7 +1308,7 @@ GameObject:
   - component: {fileID: 1958276877}
   - component: {fileID: 1958276876}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text_Percent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
