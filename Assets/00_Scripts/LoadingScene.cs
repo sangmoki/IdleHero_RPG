@@ -23,6 +23,15 @@ public class LoadingScene : MonoBehaviour
         StartCoroutine(LoadDataCoroutine());
     }
 
+    private void Update()
+    {
+        // 데이터 로드가 90퍼 이상이고 마우스 클릭이 되었다면 게임 씬으로 전환
+        if (asyncOperation.progress >= 0.9f && Input.GetMouseButtonDown(0))
+        {
+            asyncOperation.allowSceneActivation = true;
+        }
+    }
+
     IEnumerator LoadDataCoroutine()
     {
         // 씬을 미리 로드하여 메모리에 올려놓음
