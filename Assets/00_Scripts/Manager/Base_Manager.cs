@@ -77,7 +77,6 @@ public class Base_Manager : MonoBehaviour
             Firebase.Init();
 
             Character.GetCharacter(0, "Hunter");
-            StartCoroutine(Action_Coroutine(() => Stage_Manager.State_Change(Stage_State.Ready), 0.3f));
             DontDestroyOnLoad(this.gameObject);
         }
         else if (instance != this)

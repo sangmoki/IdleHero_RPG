@@ -7,10 +7,17 @@ using UnityEngine.UI;
 
 public class LoadingScene : MonoBehaviour
 {
+    public static LoadingScene instance = null;
+
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+    }
+
     GameObject sliderParent;
     public Slider slider;
-    public TextMeshProUGUI percentageText;
-    public TextMeshProUGUI versionText;
+    public TextMeshProUGUI versionText, percentText;
     public GameObject tabToStart;
     public GameObject loadingBar;
     private AsyncOperation asyncOperation;
@@ -20,16 +27,20 @@ public class LoadingScene : MonoBehaviour
     {
         versionText.text = "Version " + Application.version;
         sliderParent = slider.transform.parent.gameObject;
-        StartCoroutine(LoadDataCoroutine());
     }
 
     private void Update()
     {
-        // 데이터 로드가 90퍼 이상이고 마우스 클릭이 되었다면 게임 씬으로 전환
-        if (asyncOperation.progress >= 0.9f && Input.GetMouseButtonDown(0))
+        // asyncOperation이 null이 아닐 때 (즉, Main 씬을 가지고 
+        if (asyncOperation != null)
         {
-            asyncOperation.allowSceneActivation = true;
+            // 데이터 로드가 90퍼 이상이고 마우스 클릭이 되었다면 게임 씬으로 전환
+            if (asyncOperation.progress >= 0.9f && Input.GetMouseButtonDown(0))
+            {
+                asyncOperation.allowSceneActivation = true;
+            }
         }
+
     }
 
     IEnumerator LoadDataCoroutine()
@@ -51,9 +62,14 @@ public class LoadingScene : MonoBehaviour
         
     }
 
+    public void LoadingMain()
+    {
+        StartCoroutine(LoadDataCoroutine());
+    }
+
     private void LoadingUpdate(float progress)
     {
         slider.value = progress;
-        percentageText.text = string.Format("데이터를 가져오고 있습니다..<color=#FFFF00>{0}%", progress * 100.0f);
+        percentText.text = string.Format("{0}%", progress * 100.0f);
     }
 }

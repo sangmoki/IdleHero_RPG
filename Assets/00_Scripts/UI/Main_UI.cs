@@ -45,6 +45,9 @@ public class Main_UI : MonoBehaviour
         Stage_Manager.m_BossEvent += OnBoss;
         Stage_Manager.m_ClearEvent += OnClear;
         Stage_Manager.m_DeadEvent += OnDead;
+
+        // 로딩 후 씬 전환 시 초기 스테이지 준비 상태 
+        Stage_Manager.State_Change(Stage_State.Ready);
     }
 
     [Header("##Default")]

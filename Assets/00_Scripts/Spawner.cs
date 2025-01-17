@@ -24,6 +24,8 @@ public class Spawner : MonoBehaviour
         //m_Count = int.Parse(CSV_Importer.Spawn_Design[Base_Manager.Data.Stage]["Spawn_Count"].ToString());
         //m_SpawnTime = float.Parse(CSV_Importer.Spawn_Design[Base_Manager.Data.Stage]["Spawn_Timer"].ToString());
 
+        // Initalize();
+
         m_Count = 5;
         m_SpawnTime = 2.0f;
     }
@@ -51,6 +53,21 @@ public class Spawner : MonoBehaviour
         m_Monsters.Clear();
 
         StartCoroutine(BossSpawnCoroutine());
+    }
+
+    private void Initalize()
+    {
+        if (coroutine != null)
+        {
+            StopCoroutine(coroutine);
+        }
+
+        for (int i = 0; i < m_Monsters.Count; i++)
+        {
+            m_Monsters[i].isDead = true;
+            Base_Manager.Pool.m_pool_Dictionary["Monster"].Return(m_Monsters[i].gameObject);
+        }
+        m_Monsters.Clear();
     }
 
     // 보스 소환
