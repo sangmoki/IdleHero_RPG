@@ -73,7 +73,7 @@ public class Utils
 
     public static bool CoinUpgradeCheck(double value)
     {
-        if (Base_Manager.Data.Money >= value) return true;
+        if (Data_Manager.m_data.Money >= value) return true;
         else return false;
     }
 }

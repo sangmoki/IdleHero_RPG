@@ -24,12 +24,12 @@ public class UI_ADS_Buff : UI_Base
 
     public override bool Init()
     {
-        for (int i = 0; i < Base_Manager.Data.Buff_timers.Length; i++)
+        for (int i = 0; i < Data_Manager.m_data.Buff_timers.Length; i++)
         {
             int index = i;
             m_Buttons[i].onClick.AddListener(() => GetBuff((ADS_Buff_State)index));
             
-            if (Base_Manager.Data.Buff_timers[i] > 0.0f)
+            if (Data_Manager.m_data.Buff_timers[i] > 0.0f)
             {
 
                 SetBuff(i, true);
@@ -41,15 +41,15 @@ public class UI_ADS_Buff : UI_Base
 
     private void Update()
     {
-        for (int i = 0; i < Base_Manager.Data.Buff_timers.Length; i++)
+        for (int i = 0; i < Data_Manager.m_data.Buff_timers.Length; i++)
         {
             // 배속 적용중일 시 
-            if (Base_Manager.Data.Buff_timers[i] > 0.0f)
+            if (Data_Manager.m_data.Buff_timers[i] > 0.0f)
             {
                 // 1 - (남은 시간 / 총 시간)으로 fillAmount를 계산
-                m_Buttons_Fill[i].fillAmount = 1 - (Base_Manager.Data.Buff_timers[i] / 1800.0f);
+                m_Buttons_Fill[i].fillAmount = 1 - (Data_Manager.m_data.Buff_timers[i] / 1800.0f);
 
-                TimeSpan timespan = TimeSpan.FromSeconds(Base_Manager.Data.Buff_timers[i]);
+                TimeSpan timespan = TimeSpan.FromSeconds(Data_Manager.m_data.Buff_timers[i]);
                 string timer = string.Format("{0:00}:{1:00}", timespan.Minutes, timespan.Seconds);
                 m_Text_Timer[i].text = timer;
             }
@@ -62,9 +62,9 @@ public class UI_ADS_Buff : UI_Base
         int stateValue = (int)m_State;
 
         // 버프 횟수 증가
-        Base_Manager.Data.Buff_Count++;
+        Data_Manager.m_data.Buff_Count++;
         // 버프 지속시간 기본 30분
-        Base_Manager.Data.Buff_timers[(int)m_State] = 1800.0f;
+        Data_Manager.m_data.Buff_timers[(int)m_State] = 1800.0f;
         // 현재 버프 적용 상태 확인
         Main_UI.instance.BuffCheck();
         // 버프 활성화

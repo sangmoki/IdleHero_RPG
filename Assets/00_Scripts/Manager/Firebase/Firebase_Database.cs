@@ -19,7 +19,7 @@ public partial class Firebase_Manager
         User user = new User();
 
         user.userName = currentUser.UserId;
-        user.Stage = Base_Manager.Data.Stage;
+        user.Stage = Data_Manager.m_data.Stage;
 
         // Class를 Json String으로 변환
         string json = JsonUtility.ToJson(user);
@@ -46,7 +46,7 @@ public partial class Firebase_Manager
                 DataSnapshot snapshot = task.Result;
                 // Json 문자열을 클래스로 변환
                 User user = JsonUtility.FromJson<User>(snapshot.GetRawJsonValue());
-                Base_Manager.Data.Stage = user.Stage;
+                Data_Manager.m_data.Stage = user.Stage;
 
                 // 데이터를 가져온 후 메인 로딩
                 LoadingScene.instance.LoadingMain();

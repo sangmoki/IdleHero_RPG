@@ -27,7 +27,7 @@ public class COIN_PARENT : MonoBehaviour
     {
         if (Base_Canvas.isSave)
         {
-            Base_Manager.Data.Money += Utils.Data.stageData.MONEY();
+            Data_Manager.m_data.Money += Utils.Data.stageData.MONEY();
             if (Distance_Boolean_World(0.5f))
             {
                 Base_Manager.Pool.m_pool_Dictionary["COIN_PARENT"].Return(this.gameObject);
@@ -60,7 +60,7 @@ public class COIN_PARENT : MonoBehaviour
         // 캔버스의 자식으로 설정
         transform.parent = Base_Canvas.instance.HOLDER_LAYER(0);
 
-        Base_Manager.Data.Money += Utils.Data.stageData.MONEY();
+        Data_Manager.m_data.Money += Utils.Data.stageData.MONEY();
 
         StartCoroutine(Coin_Effect());
     }

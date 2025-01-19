@@ -49,16 +49,16 @@ public class Base_Manager : MonoBehaviour
             Firebase.WriteData();
         }
 
-        for (int i = 0; i < Data.Buff_timers.Length; i++)
+        for (int i = 0; i < Data_Manager.m_data.Buff_timers.Length; i++)
         {
             // 배속 적용중일 시 
-            if (Data.Buff_timers[i] > 0.0f)
+            if (Data_Manager.m_data.Buff_timers[i] > 0.0f)
             {
                 // fill과 timertext를 갱신
                 // 배속 영향을 받을 수 없게 unscaledDeltaTime을 사용
-                Data.Buff_timers[i] -= Time.unscaledDeltaTime;
+                Data_Manager.m_data.Buff_timers[i] -= Time.unscaledDeltaTime;
             }
-            if (Data.Buff_x2 > 0.0f) Data.Buff_x2 -= Time.unscaledDeltaTime;
+            if (Data_Manager.m_data.Buff_x2 > 0.0f) Data_Manager.m_data.Buff_x2 -= Time.unscaledDeltaTime;
         }
     }
 

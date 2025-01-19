@@ -121,9 +121,9 @@ public class Main_UI : MonoBehaviour
     // 버프 관련 함수
     public void BuffCheck()
     {
-        for (int i = 0; i < Base_Manager.Data.Buff_timers.Length; i++)
+        for (int i = 0; i < Data_Manager.m_data.Buff_timers.Length; i++)
         {
-            if (Base_Manager.Data.Buff_timers[i] > 0.0f)
+            if (Data_Manager.m_data.Buff_timers[i] > 0.0f)
             {
                 Buffs_Lock[i].SetActive(false);
             }
@@ -132,7 +132,7 @@ public class Main_UI : MonoBehaviour
                 Buffs_Lock[i].SetActive(true);
             }
 
-            if (Base_Manager.Data.Buff_x2 > 0.0f)
+            if (Data_Manager.m_data.Buff_x2 > 0.0f)
             {
                 x2Fill.transform.parent.gameObject.SetActive(true);
             }
@@ -383,7 +383,7 @@ public class Main_UI : MonoBehaviour
     // 레벨업이 될 때마다 UI 상단 텍스트를 변경
     public void TextCheck()
     {
-        m_Level_Text.text = "LV." + (Base_Manager.Data.Level + 1).ToString();
+        m_Level_Text.text = "LV." + (Data_Manager.m_data.Level + 1).ToString();
         m_AvgDPS_Text.text = StringMethod.ToCurrencyString(Base_Manager.Player.Average_DPS());
 
         // 현재 가지고 있는 코인에 따라 색상 변경
@@ -391,7 +391,7 @@ public class Main_UI : MonoBehaviour
         m_LevelUp_Money_Text.text = StringMethod.ToCurrencyString(levelupMoneyValue);
         m_LevelUp_Money_Text.color = Utils.CoinUpgradeCheck(levelupMoneyValue) ? Color.white : Color.red;
         
-        m_Gold_Text.text = StringMethod.ToCurrencyString(Base_Manager.Data.Money);
+        m_Gold_Text.text = StringMethod.ToCurrencyString(Data_Manager.m_data.Money);
 
         m_Stage_Text.text = Stage_Manager.isDead ? "반복중..." : "진행중...";
         m_Stage_Text.color = Stage_Manager.isDead ? Color.yellow : m_Stage_Color;
@@ -402,7 +402,7 @@ public class Main_UI : MonoBehaviour
         // ex) 201
         // 2-1 스테이지로 되어야 함
         // 그럼 Stage % 100 + 1
-        int stageValue = Base_Manager.Data.Stage + 1;
+        int stageValue = Data_Manager.m_data.Stage + 1;
         int stageForward = (stageValue / 1000) + 1;
         int stageBack = stageValue % 1000;
 
