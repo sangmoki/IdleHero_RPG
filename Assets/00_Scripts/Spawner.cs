@@ -14,20 +14,23 @@ public class Spawner : MonoBehaviour
 
     private void Start()
     {
-        Stage_Manager.m_ReadyEvent += OnReady;
         Stage_Manager.m_PlayEvent += OnPlay;
         Stage_Manager.m_BossEvent += OnBoss;
+    }
+
+    private void Awake()
+    {
+        Stage_Manager.m_ReadyEvent += OnReady;
     }
 
     public void OnReady()
     {
         //m_Count = int.Parse(CSV_Importer.Spawn_Design[Base_Manager.Data.Stage]["Spawn_Count"].ToString());
         //m_SpawnTime = float.Parse(CSV_Importer.Spawn_Design[Base_Manager.Data.Stage]["Spawn_Timer"].ToString());
-
-        // Initalize();
-
         m_Count = 5;
         m_SpawnTime = 2.0f;
+
+        // Initalize();
     }
 
     // 게임 시작 시 몬스터 스폰
