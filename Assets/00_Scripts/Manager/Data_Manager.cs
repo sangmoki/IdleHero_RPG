@@ -30,7 +30,7 @@ public class Data
 // 유저 캐릭터 정보
 public class Data_Manager
 {
-    public static Data m_data;
+    public static Data m_Data;
 
     // 플레이어가 가지고 있는 용병 정보
     public Dictionary<string, Character_Holder> m_Data_Character = new Dictionary<string, Character_Holder>();

@@ -14,15 +14,15 @@ public class Player_Manager
     public void EXP_UP()
     {
         // 경험치, 공격력, 체력 증가
-        Data_Manager.m_data.EXP += Utils.Data.levelData.EXP();
+        Data_Manager.m_Data.EXP += Utils.Data.levelData.EXP();
         ATK += Utils.Data.levelData.ATK();
         HP += Utils.Data.levelData.HP();
 
         // 현재 레벨에서 얻는 경험치가 레벨업에 필요한 경험치보다 높으면
-        if (Data_Manager.m_data.EXP >= Utils.Data.levelData.MAXEXP())
+        if (Data_Manager.m_Data.EXP >= Utils.Data.levelData.MAXEXP())
         {
-            Data_Manager.m_data.Level++;
-            Data_Manager.m_data.EXP = 0;
+            Data_Manager.m_Data.Level++;
+            Data_Manager.m_Data.EXP = 0;
             Main_UI.instance.TextCheck();
         }
 
@@ -35,7 +35,7 @@ public class Player_Manager
     public float EXP_Percentage()
     {
         float exp = (float)Utils.Data.levelData.MAXEXP();
-        double myEXP = Data_Manager.m_data.EXP;
+        double myEXP = Data_Manager.m_Data.EXP;
 
         return (float) myEXP / exp;
     }
