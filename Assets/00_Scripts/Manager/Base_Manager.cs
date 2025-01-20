@@ -21,6 +21,7 @@ public class Base_Manager : MonoBehaviour
     private static Firebase_Manager s_Firebase = new Firebase_Manager();
 
     public static bool isFast = false;
+    public static bool GetGameStart = false;
 
     float Save_Timer = 0.0f;
 
@@ -41,6 +42,8 @@ public class Base_Manager : MonoBehaviour
 
     private void Update()
     {
+        if (GetGameStart == false) return;
+
         Save_Timer += Time.unscaledDeltaTime;
 
         if (Save_Timer >= 10.0f)
@@ -134,6 +137,6 @@ public class Base_Manager : MonoBehaviour
     // 게임이 종료될 때 데이터를 저장
     private void OnDestroy()
     {
-        Firebase.WriteData();
+        if (GetGameStart) Firebase.WriteData();
     }
 }

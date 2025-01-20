@@ -8,6 +8,11 @@ using UnityEngine;
 public class Character_Holder
 {
     public Character_Scriptable Data;   // 용병 데이터
+    public Holder holder;               // 용병 정보
+}
+
+public class Holder
+{
     public int Level;           // 용병 레벨
     public int Count;           // 용병 조각 개수
 }
@@ -30,7 +35,9 @@ public class Data
 // 유저 캐릭터 정보
 public class Data_Manager
 {
-    public static Data m_Data;
+    public static Data m_Data = new Data();
+
+    public Dictionary<string, Holder> Character_Holder = new Dictionary<string, Holder>();
 
     // 플레이어가 가지고 있는 용병 정보
     public Dictionary<string, Character_Holder> m_Data_Character = new Dictionary<string, Character_Holder>();
@@ -52,8 +59,8 @@ public class Data_Manager
 
             // 용병 초기 정보
             character.Data = data;
-            character.Level = 0;
-            character.Count = 0;
+            Holder s_holder = new Holder();
+            character.holder = s_holder;
 
             m_Data_Character.Add(data.m_Character_Name, character);
         }
