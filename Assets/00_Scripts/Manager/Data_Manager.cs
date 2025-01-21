@@ -60,6 +60,16 @@ public class Data_Manager
             // 용병 초기 정보
             character.Data = data;
             Holder s_holder = new Holder();
+
+            if (Character_Holder.ContainsKey(data.m_Character_Name))
+            {
+                s_holder = Character_Holder[data.m_Character_Name];
+                Debug.Log(data.m_Character_Name + " : " + s_holder.Level + " : " + s_holder.Count);
+            }
+            else
+            {
+                Character_Holder.Add(data.m_Character_Name, s_holder);
+            }
             character.holder = s_holder;
 
             m_Data_Character.Add(data.m_Character_Name, character);

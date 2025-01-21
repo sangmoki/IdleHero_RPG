@@ -74,12 +74,12 @@ public class Base_Manager : MonoBehaviour
             // 해당 베이스 매니저를 가지고 있는 오브젝트가 된다.
             Pool.Initalize(transform);
             ADS.Init();
-            //StartCoroutine(Ad_Coroutine());
-            Data.Init();
             Item.Init();
             Firebase.Init();
+            //StartCoroutine(Ad_Coroutine());
+            //Data.Init();
 
-            Character.GetCharacter(0, "Hunter");
+            // Character.GetCharacter(0, "Hunter");
             DontDestroyOnLoad(this.gameObject);
         }
         else if (instance != this)
