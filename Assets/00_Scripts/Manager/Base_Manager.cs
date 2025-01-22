@@ -77,7 +77,7 @@ public class Base_Manager : MonoBehaviour
             Item.Init();
             Firebase.Init();
             //StartCoroutine(Ad_Coroutine());
-            //Data.Init();
+            Data.Init();
 
             // Character.GetCharacter(0, "Hunter");
             DontDestroyOnLoad(this.gameObject);
