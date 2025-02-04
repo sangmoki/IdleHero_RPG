@@ -58,6 +58,14 @@ public class Utils
         return "<color=#B3C0C4>";
     }
 
+    public static string GetTimer(float time)
+    {
+        TimeSpan timespan = TimeSpan.FromSeconds(time);
+        string timer = string.Format("{0:00}:{1:00}", timespan.Minutes, timespan.Seconds);
+
+        return timer;
+    }
+
     // 지수 증가 공식
     // 값이 일정한 비율로 지속적으로 증가한다.
     // 레벨이 높아질 수록 추후에 증가할 값도 높아진다.
