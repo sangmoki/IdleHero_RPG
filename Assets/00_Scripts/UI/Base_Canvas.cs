@@ -22,6 +22,9 @@ public class Base_Canvas : MonoBehaviour
     private void Start()
     {
         HERO_BUTTON.onClick.AddListener(() => Get_UI("#Heroes", true));
+        SHOP_BUTTON.onClick.AddListener(() => Get_UI("#Shop", false, true));
+        SHOP_BUTTON.onClick.AddListener(() => Main_UI.instance.LayerCheck(5));
+
         INVENTORY_BUTTON.onClick.AddListener(() => Get_UI("#Inventory"));
         SAVINGMODE_BUTTON.onClick.AddListener(() => {
             Get_UI("#SavingMode");
@@ -36,7 +39,7 @@ public class Base_Canvas : MonoBehaviour
     // 순서를 조정하기 위한 레이어 변수
     [SerializeField] private Transform LAYER;
     // UI 하단 SystemBar 버튼
-    [SerializeField] private Button HERO_BUTTON, INVENTORY_BUTTON, SAVINGMODE_BUTTON, ADSBUFF_BUTTON;
+    [SerializeField] private Button HERO_BUTTON, SHOP_BUTTON, INVENTORY_BUTTON, SAVINGMODE_BUTTON, ADSBUFF_BUTTON;
     [HideInInspector] public PopUp_UI popup = null;
     [HideInInspector] public UI_Base m_UI;
     public static bool isSave = false;
@@ -57,8 +60,10 @@ public class Base_Canvas : MonoBehaviour
         return LAYER.GetChild(value);
     }
 
-    public void Get_UI(string temp, bool Fade = false)
+    public void Get_UI(string temp, bool Fade = false, bool Back = false)
     {
+        // 다른 팝업이 떠 있으면 닫는다.
+        Utils.CloseAllPopupUI();
 
         if (Fade)
         {
